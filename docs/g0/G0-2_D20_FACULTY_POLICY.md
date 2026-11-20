@@ -85,3 +85,12 @@ facts in section 2 neutrally, so the faculty can answer accurately.
 2. Track C authorisation, if granted, follows that policy exactly; the CIA matrix section 0 table is updated.
 3. Any disclosure text is drafted only then, to the faculty's required form.
 4. **P1 (Track P) does not depend on this answer.**
+
+
+---
+
+## Status update 2026-11-20 (appended)
+The owner confirmed the faculty approvals recorded in **DECISION_LOG D-31**. F1, F3, F6 and F7 are now resolved as
+stated by the owner; the written confirmation should be attached when available. **Still open:** F2 (disclosure
+form), F4 (CO definitions and mapping), F5 (dates), F8 (syllabus), F9 (format). The draft request in section 4 is
+now needed only for those items; it has not been sent.

@@ -110,3 +110,22 @@ D-21 was drafted in this log on 2026-11-20 and recorded the same day after the o
 - **Alternatives:** 4.1.3 (more mature line; OSS support ends 2027-07-31). Not chosen by the owner.
 - **Trade-offs:** a `.0` release with no patch history yet, mitigated by the pre-P1 patch evaluation; a longer support window.
 - **Confidence:** n/a (owner's call). **Reversibility:** high (catalogue + locks + verification metadata). **Dependencies:** ADR-0002 (status remains *Proposed* for the other pins); G0-2, G0-3 and G0-SEC remain open.
+
+### D-31 · 2026-11-20 · Faculty approvals confirmed by the owner; Track C implementation authorised as an isolated assessment track · **owner decision**
+- **What the owner confirmed (owner's statement in the working session, 2026-11-20):** the professors have explicitly approved (1) treatment as an **individual portfolio project**; (2) **AI assistance for the assessed Java algorithms**; (3) AI-assisted infrastructure and implementation; (4) the `core-api` SPI contracts; (5) the wider product direction and the CIA-3 scope.
+- **Evidence held in this repository:** the owner's confirmation only. **No written faculty policy document, quotation or date of approval is held here.** D-20 asked for the policy "in writing"; this entry records the owner's decision to proceed on the basis of the confirmed approval. **The owner should attach or link the written confirmation (e-mail or notice) when available** (`docs/g0/G0-2_D20_FACULTY_POLICY.md`, item F1).
+- **Decision:** Track C implementation may proceed, covering C1 (assessed algorithms, their tests and benchmarks) and C2 (the `cia-demo` application). The work is confined to the isolated `cia/` modules (`cia-algorithms`, `cia-bench`, `cia-demo`).
+- **Boundaries kept:** the platform must never depend on `cia-*` (enforced by `verifyBoundaries` and ArchUnit); assessed implementations may depend only on `core-api`; any production use needs the seven-point promotion process and a separate architecture review (ARCHITECTURE_OVERVIEW section 2). **P1 remains NOT AUTHORISED**; G0-SEC remains mandatory before P1 security-critical work.
+- **Still open (not covered by the confirmation):**
+  - **F2:** the disclosure form and wording. AI assistance will be disclosed wherever faculty policy requires; the form is not yet specified.
+  - **F4:** CO1–CO5 definitions and the unit-to-CO mapping.
+  - **F5:** actual dates.
+  - **F8:** the full syllabus.
+  - **F9:** framework and report-format expectations.
+- **Resolved by the confirmation:**
+  - **F1:** AI assistance is permitted for the assessed algorithms (as stated by the owner).
+  - **F3:** AI-authored infrastructure and SPIs are acceptable.
+  - **F6:** individual project.
+  - **F7:** scope approved.
+- **Effect on earlier entries:** supersedes the D-20 prohibition, and D-21 clauses 4 and 8, **for Track C only**, as described above. D-20 and D-21 remain as historical records. The authorisation ledger now reads: Track C (C1–C2) **AUTHORISED (D-31)**; C3 (report and viva) material may be prepared alongside; P1–P7 **NOT AUTHORISED**.
+- **Rationale (as stated by the owner):** the faculty approvals above. **Reversibility:** high (isolated modules). **Dependencies:** the written confirmation (F1 evidence); F2 before any submission.
