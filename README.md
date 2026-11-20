@@ -8,10 +8,10 @@ An India-first personal consumer-intelligence platform ([PROJECT_FOUNDATION.md](
 | Item | Status |
 |---|---|
 | Architecture | **APPROVED v0.2.1 direction** (D-21, 2026-11-20), subject to unresolved decisions, limitations and review gates |
-| Implementation | **Track P, P0 only** (repository, build, CI, SPIs, dev stack). P1–P7 and Track C are **not authorised** |
+| Implementation | **Track P, P0** (repository, build, CI, SPIs, dev stack). **Track C (C1–C2) authorised by D-31** in isolated `cia-*` modules. P1–P7 **not authorised** |
 | This code base | **P0 scaffolding.** No product functionality. Not secure, not production-ready, no compliance claim. **No real documents or personal data.** |
 | P0 acceptance | All criteria demonstrated locally and in CI ([verification record](docs/evidence/p0/VERIFICATION.md)); **closes at G0** with owner confirmation |
-| Next gates | **G0**: Spring Boot 4.2.x line decided (D-30); the remaining version pins, the D-20 path and the SeaweedFS substitution (ADR-0005) await the owner ([briefs](docs/g0/G0_DECISION_BRIEFS.md)). **G0-SEC**: security-specialist review before P1 ([package](docs/g0/G0-SEC_HANDOVER.md)) |
+| Next gates | **G0**: Spring Boot 4.2.x line decided (D-30); the remaining version pins and the SeaweedFS substitution (ADR-0005) await the owner ([briefs](docs/g0/G0_DECISION_BRIEFS.md)). **G0-SEC**: security-specialist review before P1 ([package](docs/g0/G0-SEC_HANDOVER.md)) |
 
 ## Repository map
 
@@ -23,7 +23,7 @@ platform/domains/    domain modules: empty placeholders; must not depend on each
 api/                 OpenAPI 3.1 skeleton (/api/v1) + validation test
 architecture-tests/  ArchUnit boundary rules + fixture proofs
 build-logic/         Gradle conventions + verifyBoundaries plugin (+ TestKit tests)
-cia/                 isolated academic track: placeholder README only (Track C not authorised)
+cia/                 isolated academic track (D-31): cia-algorithms (KMP, Bloom), cia-bench, cia-demo
 doc-worker/ web/ db/ data/   placeholders for later phases
 ops/compose/         development stack (Postgres, S3 stub, dev IdP, inert worker stub)
 ops/scripts/         stack verification, commit-attribution check
