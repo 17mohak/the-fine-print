@@ -1,0 +1,34 @@
+# TECHNOLOGY_DECISIONS.md
+
+Status: PROPOSED. Each entry: options · recommendation · rationale · trade-offs · cost/complexity · reversibility · evidence/assumptions. Versions are **ASSUMPTIONS to be confirmed by Opus at build start** (my knowledge of releases may lag; pin exact versions in the repo and record them).
+
+| # | Area | Options | **Recommendation** | Rationale / trade-offs | Cost / complexity | Reversibility | Evidence / assumptions |
+|---|---|---|---|---|---|---|---|
+| 1 | Backend language/framework | Spring Boot; Javalin; Quarkus; Micronaut | **Java 21 LTS + Spring Boot (current GA line, pinned)**, Gradle (Kotlin DSL) multi-module | CIA names Spring Boot as recommended; mature security/data/testing ecosystem; large hiring/learning base. Trade-off: heavier startup/memory than Javalin | Low–med | Med (module boundaries keep domain code framework-light) | CIA guide §2/§6 (VERIFIED FACT); Java 25 LTS may exist — ASSUMPTION: 21 chosen for ecosystem maturity |
+| 2 | Architecture style | Microservices; modular monolith; serverless | **Modular monolith** + Python worker | Small team; one DB; ArchUnit enforces boundaries; fewer failure modes | Low | High (extract modules later) | Principle: complexity only when required |
+| 3 | Frontend | React+TS (Vite); Next.js; Vue; Angular | **React + TypeScript (Vite SPA), TanStack Query, Radix/headless UI, CSS variables tokens** | CIA allows any JS framework; SPA keeps all logic in Java; accessibility via headless primitives. Next.js SSR unnecessary for authenticated app (a marketing site can differ) | Low | High | CIA §2; ASSUMPTION |
+| 4 | Primary DB | PostgreSQL; MySQL; MongoDB | **PostgreSQL 16+** | ACID, JSONB for extraction payloads, FTS, row-level security, SKIP LOCKED queue, pgvector available if needed. One store | Low | Med | — |
+| 5 | Object storage | S3-compatible (MinIO dev; managed in prod); local FS | **S3-compatible API**, per-user prefix, SSE-KMS + app-level envelope keys | Originals are source of truth, immutable, versioned buckets | Low–med | High | Region/residency decision pending (OPEN) |
+| 6 | Search | Postgres FTS; OpenSearch/Elastic; Lucene embedded | **Postgres FTS (with Indic-aware config reviewed) for v1** | Corpus per user is small; avoids a second datastore; quote verification is exact-match via algo-engine, not search | Low | High | **Revisit trigger:** FTS recall/latency fails benchmark on 10k+ docs or multilingual needs |
+| 7 | Vector retrieval | pgvector; dedicated vector DB; none | **None initially; pgvector behind interface if benchmark shows recall gain** | Clause retrieval in single documents works with FTS+structure; embeddings add cost and a data-exposure surface | — | High | ASSUMPTION — to be tested (backlog A-6) |
+| 8 | OCR | Tesseract (+Indic traineddata); PaddleOCR; cloud (Google Document AI/Azure/AWS Textract); hybrid | **Pluggable OCR port; Tesseract as local baseline; evaluate ≥1 cloud OCR with legal review** | Local keeps data in-house; cloud likely better on handwriting/tables but exposes data. Decide by benchmark + legal | Med | High (port) | Unbenchmarked (backlog A-5) |
+| 9 | PDF processing | Apache PDFBox (Java); PyMuPDF/pdfplumber (Python); Docling | **PDFBox in Java for text-layer detection/metadata/page rendering; Python worker for layout/tables** | Java keeps core logic; Python tooling better for tables | Med | High | — |
+| 10 | Queue / background | Postgres queue (JobRunr/own, SKIP LOCKED); RabbitMQ; Kafka; SQS | **Postgres-backed jobs** (library chosen by Opus: JobRunr vs custom, with ADR) | Transactional with data; one less system | Low | High | Revisit if throughput >> single DB capacity |
+| 11 | AuthN | Keycloak; Auth0/Cognito/managed; Spring Authorization Server | **OIDC with Spring Security resource server; IdP = Keycloak (dev) / managed IdP (prod, decision deferred)** | No password handling in app; MFA via IdP | Med | High | Residency, cost, OTP-by-SMS needs (India) |
+| 12 | AuthZ | RBAC only; ABAC; Postgres RLS + service checks | **Owner-scoped checks in service layer + Postgres RLS as defence-in-depth; roles: USER, REVIEWER (knowledge), ADMIN (no data access)** | Cross-user leakage is top risk | Med | Med | — |
+| 13 | Encryption | App-level envelope; DB TDE; KMS | **TLS1.2+/HSTS; at-rest: storage + DB encryption; per-user data keys wrapped by KMS for documents** | Limits insider/backup exposure | Med–high | Med | Key management service choice OPEN |
+| 14 | Observability | OpenTelemetry + Prometheus/Grafana/Loki; vendor APM | **OpenTelemetry; Prometheus metrics; JSON logs with mandatory PII scrubber** | Vendor-neutral | Low–med | High | — |
+| 15 | Testing | JUnit 5; AssertJ; Testcontainers; jqwik; ArchUnit; JMH; Playwright; Pact/OpenAPI contract tests | **All listed** | CIA needs correctness tests + JMH benchmarks; golden corpus for provenance | Med | High | CIA §5 |
+| 16 | Migrations | Flyway; Liquibase | **Flyway** | Simple, SQL-first | Low | High | — |
+| 17 | Deployment | Docker Compose; single VM; managed containers; K8s | **Docker Compose for dev + CIA demo; single-node managed containers later; K8s deferred** | CIA accepts local app (guide §10) | Low | High | Revisit when multi-node need is evidenced |
+| 18 | AI model access | Single provider; multi-provider via gateway; self-hosted open model | **Provider-agnostic Java gateway; ≥2 providers + optional local model; decision per data class** | Sensitive docs: provider terms don't automatically satisfy obligations — need DPA/residency review (OPEN, legal) | Med | High | Provider list not chosen here |
+| 19 | Document parsing/extraction | Single LLM call; hybrid pipeline | **Hybrid: deterministic regex/layout + conventional NLP + LLM schema-constrained extraction + Java verifiers + human review queue** | Single call is unauditable | Med–high | High | Unbenchmarked |
+| 20 | Rules representation | Drools/DMN; code; declarative JSON/YAML + Java evaluator | **Declarative versioned rule records + small Java evaluator; code for complex date logic** | Avoids engine lock-in; rules reviewed as data | Med | Med | Regulatory text only partly deterministic — see SYSTEM_DESIGN §6 |
+| 21 | Version control | Git monorepo | **Monorepo; conventional commits; ADRs in `docs/adr`; commits attributed per author (CIA requires attribution)** | CIA §8B | Low | — | CIA guide |
+| 22 | Email ingestion | Gmail/IMAP | **Deferred** (needs authorised OAuth, privacy review) | — | — | — | — |
+
+## Revisit triggers
+Split service when a module needs independent scaling/security boundary; add search engine on FTS failure; vector store on measured recall gain; K8s on multi-node need; managed OCR if local accuracy below threshold and legal approves.
+
+## Unresolved decisions [DEFERRED]
+IdP product; KMS; hosting region/provider; LLM providers; OCR vendor; queue library; Indic FTS configuration; whether to adopt Next.js for a public site.
