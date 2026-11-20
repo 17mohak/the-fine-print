@@ -6,7 +6,8 @@
 #
 # Every image is pinned by tag AND digest (ADR-0002). All published ports bind to 127.0.0.1 only.
 # These are development stubs. None implements encryption, RLS, tenant context, a worker or a broker.
-# This configuration has NOT yet been started or verified: Docker engine was unavailable when P0 was built.
+# Verified 2026-11-20 on Docker 29.2.0 and in CI (docs/evidence/p0/VERIFICATION.md). If 5432 or 8081 is taken on
+# your machine, override POSTGRES_PORT / IDP_PORT in your local .env (docs/runbooks/local-setup.md, step 5).
 name: fineprint-dev
 
 services:

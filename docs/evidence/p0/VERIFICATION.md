@@ -114,3 +114,94 @@ metadata incomplete on clean machines (`e1ea7b1`).
 
 No P1 or Track C work was started. `cia/` contains only `README.md`. No assessed algorithm material exists. No
 real or personal data was used; the only data is a synthetic user and an empty probe database.
+
+---
+
+## Revision 3 — PR verification and P0 closure preparation (appended 2026-11-20)
+
+The revision 1 and 2 records above are preserved unchanged.
+
+### Pull request
+- **PR:** https://github.com/17mohak/the-fine-print/pull/1, "P0: repository scaffolding and verification".
+  **Draft, open, unmerged.** `p0/scaffolding` → `main`.
+- **Head verified:** `28fd103` (all checks below), plus the follow-up documentation commit described at the end of
+  this section.
+
+### PR-triggered CI (`pull_request` event)
+Run [44667402291](https://github.com/17mohak/the-fine-print/actions/runs/44667402291), event `pull_request`, head
+`28fd103`, conclusion **success**. GitHub tested its temporary merge commit `f84cf10`
+(`Merge 28fd103 into 1e8af08`), which never enters the repository history.
+
+| Job | Result | Key log line |
+|---|---|---|
+| [Build, tests, ArchUnit, boundaries, SBOM](https://github.com/17mohak/the-fine-print/actions/runs/44667402291/job/136059935776) | ✅ success | `BUILD SUCCESSFUL`; runtime-classpath cia check passed; SBOM artefact uploaded |
+| [Dependency vulnerability scan (OSV-Scanner)](https://github.com/17mohak/the-fine-print/actions/runs/44667402291/job/136059935796) | ✅ success | `Filtered 1 ignored package/s` · `No issues found` |
+| [Secret scan (gitleaks, full history)](https://github.com/17mohak/the-fine-print/actions/runs/44667402291/job/136059935757) | ✅ success | `11 commits scanned` · `no leaks found` |
+| [Commit-attribution rules](https://github.com/17mohak/the-fine-print/actions/runs/44667402291/job/136059935555) | ✅ success | `passed for 12 commit(s)` (the 11 branch commits plus GitHub's merge commit) |
+| [Compose stack smoke test](https://github.com/17mohak/the-fine-print/actions/runs/44667402291/job/136059935904) | ✅ success | `All dev-stack checks passed` (11/11) |
+
+### Checks performed in revision 3 (all at `28fd103` unless noted)
+
+| Area | Check | Result |
+|---|---|---|
+| Scope | PR diff `main...p0/scaffolding`: 162 files, **all additions**; 0 governing or research documents modified or deleted | PASS |
+| Scope | Main-source Java: only build-logic plugins, `core-api` interfaces/records/enums, `FinePrintApplication`, and `package-info` placeholders | PASS |
+| Scope | No SPI implementation anywhere (`implements QuoteVerifier/ApproximateMembership/ReminderIndex/DocumentLinker`: none) | PASS |
+| Scope | No excluded capability in main sources (crypto, RLS/`set_config`, tenant context, HTTP clients, PDF/OCR, normalisation/segmentation, process spawning): none | PASS |
+| Scope | `cia/` contains only `README.md` | PASS |
+| Sensitive data | No `.env`, keys, certificates, keystores, documents or images in the diff. Only binary: `gradle-wrapper.jar`, SHA-256 `621008af…3cdaf8`, matching Gradle's published checksum for 9.9.2 | PASS |
+| Sensitive data | No tokens or private keys in added lines. E-mails present: the owner's commit identity (attribution evidence), `synthetic.user@example.test`, and `noreply@anthropic.com` only inside the text of the attribution prohibition. No phone, PAN or Aadhaar-like values | PASS |
+| Authorship | Local and GitHub API: every commit author = committer = `Mohak Mandwani <mohak2k6@gmail.com>`, GitHub login `17mohak`, 0 `Co-authored-by` trailers | PASS |
+| Secrets | gitleaks (pinned digest) locally: 11 commits, no leaks | PASS |
+| Dependencies | OSV-Scanner (pinned digest) locally: 26 lockfiles + verification metadata, "No issues found", 1 documented override | PASS |
+| Locks | `resolveAndLockAll --write-locks` produces **0** changed files (locks in sync); STRICT locking active | PASS |
+| SBOM | CycloneDX 1.6, 74 components, every one with a purl; 0 cia; 0 test-tooling entries; build-time Guava absent; Spring Boot 4.2.0 / Spring Framework 7.1.0 / Tomcat 11.0.27. The 25 components without hashes are our own modules plus 2 POM-only BOMs | PASS |
+| Boundaries | `verifyBoundaries` in all projects; ArchUnit 8 + 6 fixture tests; app runtime classpath has no cia coordinate and is **identical** to [platform-runtime-classpath.txt](platform-runtime-classpath.txt) | PASS |
+| Clean clone | Fresh clone **from GitHub** of `pull/1/head` (`28fd103`) into a path with spaces; empty `GRADLE_USER_HOME`; `--no-build-cache`; `build verifyBoundaries cyclonedxBom`: BUILD SUCCESSFUL in 5m 22s, 111/111 tasks executed, 36 tests / 0 failures / 0 skipped, SBOM generated, working tree unchanged | PASS |
+| Docker | Stack restarted (healthy in 74 s); `verify-dev-stack.sh` 11/11 ([dev-stack-verify-pr.txt](dev-stack-verify-pr.txt)); inspection facts unchanged from revision 2, with cosmetic differences only ([dev-stack-inspection-pr.txt](dev-stack-inspection-pr.txt)); stack stopped afterwards with volumes kept | PASS |
+| Documentation | 20 Markdown files in the PR, 45 relative links, 0 broken; all 8 ADRs indexed | PASS |
+
+### Defect found and fixed in revision 3
+1. **Stale statement:** the `ops/compose/compose.yaml` header still said the stack had never been started. It is
+   corrected to point at the verification evidence and the port-override note; `docker compose config` still
+   validates. ADR body texts that predate verification are left as written (ADR-0001 immutability); their dated
+   addenda supersede them.
+
+No test, scan rule or security control was weakened in any revision.
+
+### Final P0 acceptance checklist
+
+**Technically verified (all PASS):**
+
+| # | Criterion | Evidence |
+|---|---|---|
+| 1 | Prerequisites and documented setup | Runbook executed, locally and from a clean GitHub clone |
+| 2 | Gradle build | Clean clone from GitHub, empty cache, no build cache; CI on Linux |
+| 3 | Automated checks | 36/36 tests; `verifyBoundaries`; CI (push and `pull_request`) |
+| 4 | Compose environment starts | Local (3 start cycles) and CI `compose-smoke` |
+| 5 | Services and stubs verified | 11/11 locally (twice) and in CI; detailed inspection |
+| 6 | Architecture tests enforce boundaries | ArchUnit plus fixture proofs; TestKit proofs |
+| 7 | `cia-*` absent from the platform runtime classpath | Gradle check, CI grep, SBOM, recorded classpath |
+| 8 | SBOM, dependency and secret scans | CycloneDX 1.6; OSV clean (1 justified override); gitleaks clean |
+| — | CI green remotely on push **and** `pull_request` | Runs 44666164953, 44666598736, 44667402291 |
+| — | Exclusive human authorship | Local, GitHub API and CI checks |
+
+**Owner decisions still pending (P0 cannot formally close until they are recorded):** G0-1 versions (Spring Boot
+4.2.0 vs 4.1.3), G0-2 the D-20 path, and G0-3 the SeaweedFS substitution. See
+[G0_DECISION_BRIEFS.md](../../g0/G0_DECISION_BRIEFS.md). **G0-SEC** (before P1):
+[G0-SEC_HANDOVER.md](../../g0/G0-SEC_HANDOVER.md); not started.
+
+### Closure recommendation
+**P0 is technically complete and ready for G0.** The recommendation is to close P0 once the owner records the
+G0-1 to G0-3 decisions in DECISION_LOG. After that, PR #1 may be marked ready and merged at the owner's discretion.
+If the owner selects Spring Boot 4.1.3, re-pin, regenerate the locks and verification metadata, and re-run this
+checklist before closing. **Do not start P1** until G0-SEC findings are recorded and P1 has its own authorisation.
+**Track C stays blocked** pending the faculty's written policy (D-20).
+
+### Scope confirmation (revision 3)
+No P1 or Track C work was started. The PR was not merged.
+
+### Follow-up commit
+This section, the G0 briefs, the G0-SEC handover, the corrected Compose header and the revision-3 evidence files
+are committed on top of `28fd103`. That commit's own CI results are reported in the session handover, because a
+file cannot record the CI result of the commit that contains it.

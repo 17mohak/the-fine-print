@@ -30,6 +30,7 @@ ops/scripts/         stack verification, commit-attribution check
 docs/adr/            architecture decision records
 docs/runbooks/       local setup
 docs/evidence/p0/    P0 verification record
+docs/g0/             G0 decision briefs and G0-SEC security-review handover
 *.md (root)          governing documents (v0.2.1) — authoritative specifications
 Gate1B/, WS0*.md     historical research (unchanged); _archive/ = superseded v0.1
 ```
