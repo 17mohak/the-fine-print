@@ -1,5 +1,6 @@
-# Build output
+# Build output. Source packages that happen to be named "build" (e.g. com/thefineprint/build) are re-included.
 build/
+!**/src/**/build/
 .gradle/
 .kotlin/
 out/
