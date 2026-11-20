@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Optional local hook (enable with: git config core.hooksPath ops/git-hooks).
+# Rejects AI co-author trailers and AI identities before a commit is created. CI enforces the same rule.
+set -euo pipefail
+
+msg_file="$1"
+# Matches AI product names and Anthropic addresses, not human names such as "Claude Martin".
+pattern='(anthropic|claude[ -]?(code|opus|sonnet|haiku|fable|ai)([^a-z]|$))'
+
+if grep -iE '^[[:space:]]*co-authored-by:' "$msg_file" | grep -qiE "$pattern"; then
+  echo "commit-msg: AI co-author trailers are not permitted (CONTRIBUTING.md#commit-attribution)" >&2
+  exit 1
+fi
+
+identity="$(git var GIT_AUTHOR_IDENT) $(git var GIT_COMMITTER_IDENT)"
+if printf '%s' "$identity" | grep -qiE "$pattern"; then
+  echo "commit-msg: commits must use a human contributor's identity (CONTRIBUTING.md#commit-attribution)" >&2
+  exit 1
+fi
