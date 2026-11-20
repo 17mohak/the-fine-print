@@ -99,3 +99,14 @@ D-21 was drafted in this log on 2026-11-20 and recorded the same day after the o
 *Product validation:* demand, willingness to pay, PMF, trust to upload, acceptance of abstention, five-kind UI comprehension, general-AI parity, hands-on competitor testing — all unvalidated; building proceeds under the waiver (D-10), which is a sequencing choice, not evidence.
 *Technical:* grapheme-segmenter choice and Unicode version (A-11); per-cluster NFC assumption (A-12); canonicalisation heuristics unproven on real Indian-language documents; Hindi quotation-matching failure rate unknown; Indic OCR quality; cost per document.
 *Decisions still owner/legal/security/faculty:* KMS/HSM, hosting/region/residency, IdP, LLM providers, cloud OCR, retention, reminder channels, UI languages, CIA scope.
+
+## G0 decisions (gate G0, end of P0)
+
+### D-30 · 2026-11-20 · G0-1 (partial) — Spring Boot baseline: 4.2.0, retaining the 4.2.x line · **owner decision**
+- **Decision:** Spring Boot **4.2.0** is the P0 baseline. The project stays on the **4.2.x** release line. **Before P1 begins, the latest stable 4.2.x patch must be evaluated** and adopted, or a documented reason given for not adopting it. This decision does **not** authorise any upgrade during P0.
+- **Scope of this decision:** the Spring Boot line only. **All other pinned versions in ADR-0002 remain proposed and are awaiting owner confirmation** (see `docs/g0/TOOLCHAIN_INVENTORY.md`). G0-1 is therefore only partly resolved.
+- **Rationale (as stated by owner; none added):** owner approval of the recommendation in `docs/g0/G0_DECISION_BRIEFS.md` (G0-1).
+- **Evidence:** the build pins `spring-boot = "4.2.0"` (`gradle/libs.versions.toml`); the locked runtime resolves `org.springframework.boot:spring-boot:4.2.0` and `org.springframework:spring-core:7.1.0` (`platform/app/gradle.lockfile`); P0 verification is green on this baseline (`docs/evidence/p0/VERIFICATION.md`). Release status checked 2026-11-20: tag `v4.2.0` published 2026-11-19; spring.io OSS support for 4.2.x until 2027-12-31.
+- **Alternatives:** 4.1.3 (more mature line; OSS support ends 2027-07-31). Not chosen by the owner.
+- **Trade-offs:** a `.0` release with no patch history yet, mitigated by the pre-P1 patch evaluation; a longer support window.
+- **Confidence:** n/a (owner's call). **Reversibility:** high (catalogue + locks + verification metadata). **Dependencies:** ADR-0002 (status remains *Proposed* for the other pins); G0-2, G0-3 and G0-SEC remain open.

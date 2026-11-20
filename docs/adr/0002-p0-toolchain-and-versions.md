@@ -67,3 +67,10 @@ No, apart from the object-store product (ADR-0005).
 - OSV-Scanner image observed for action v2.7.1: `ghcr.io/google/osv-scanner-action@sha256:3fa25659…d08f243`.
 - No change to the versions awaiting owner confirmation. **Spring Boot 4.2.0 versus 4.1.3 remains the owner's
   choice at G0.**
+
+## Addendum 2026-11-20 — owner decision on the Spring Boot line (D-30)
+- **Spring Boot 4.2.0 is the P0 baseline, retaining the 4.2.x line (DECISION_LOG D-30, owner decision).** The
+  latest stable 4.2.x patch must be evaluated before P1. No upgrade was made.
+- **All other pins in this ADR remain Proposed**, awaiting owner confirmation. The exact inventory and findings are
+  in `docs/g0/TOOLCHAIN_INVENTORY.md`. This ADR therefore stays *Proposed* until the remaining confirmations are
+  recorded.
