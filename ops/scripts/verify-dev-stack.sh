@@ -5,9 +5,11 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/../.."
-COMPOSE=(docker compose -f ops/compose/compose.yaml --env-file "${ENV_FILE:-ops/compose/.env}")
-IDP_PORT="${IDP_PORT:-8081}"
-S3_PORT="${S3_PORT:-8333}"
+ENV_FILE="${ENV_FILE:-ops/compose/.env}"
+COMPOSE=(docker compose -f ops/compose/compose.yaml --env-file "$ENV_FILE")
+# Read host-port overrides (e.g. IDP_PORT=18081 when 8081 is taken) from the same env file Compose used.
+IDP_PORT="$(sed -n 's/^IDP_PORT=//p' "$ENV_FILE" | tail -1)"; IDP_PORT="${IDP_PORT:-8081}"
+S3_PORT="$(sed -n 's/^S3_PORT=//p' "$ENV_FILE" | tail -1)"; S3_PORT="${S3_PORT:-8333}"
 failures=0
 
 check() {
