@@ -55,4 +55,4 @@ include(":architecture-tests")
 
 // Isolated academic track (Track C, authorised by D-31). The platform must never depend on these modules:
 // verifyBoundaries (build-logic) and ArchUnit enforce it.
-include(":cia:cia-algorithms", ":cia:cia-bench")
+include(":cia:cia-algorithms", ":cia:cia-bench", ":cia:cia-demo")

@@ -1,0 +1,13 @@
+# Track C demo: loopback only, synthetic input only, no persistence.
+spring:
+  application:
+    name: fineprint-cia-demo
+  main:
+    banner-mode: "off"
+
+server:
+  address: 127.0.0.1
+  port: 8090
+  error:
+    include-message: never
+    include-stacktrace: never
