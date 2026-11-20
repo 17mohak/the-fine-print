@@ -135,3 +135,14 @@ until its findings are recorded and addressed or consciously accepted.
 | G0-3 | Approve SeaweedFS as the dev-only S3 stub? | Approve (dev only) |
 | G0-SEC | Engage a security specialist? | Yes, before any P1 authorisation |
 | — | Merge PR #1 into `main`? | After G0-1 to G0-3 are recorded |
+
+---
+
+## Status update 2026-11-20 (appended; the briefs above are unchanged)
+
+| # | Status |
+|---|---|
+| G0-1 | **Partly decided.** Spring Boot 4.2.0 / 4.2.x line recorded as DECISION_LOG **D-30** (owner decision). The remaining pins (Java, Gradle, test libraries, CycloneDX, PostgreSQL, Keycloak, busybox, gitleaks, OSV-Scanner, CI actions) are still **awaiting owner confirmation**: see [TOOLCHAIN_INVENTORY.md](TOOLCHAIN_INVENTORY.md) |
+| G0-2 | **Open.** Checklist and draft (unsent) faculty request: [G0-2_D20_FACULTY_POLICY.md](G0-2_D20_FACULTY_POLICY.md) |
+| G0-3 | **Open (Proposed).** Assessment: [G0-3_OBJECT_STORE_ASSESSMENT.md](G0-3_OBJECT_STORE_ASSESSMENT.md) |
+| G0-SEC | **Not started.** Reviewer package revised: [G0-SEC_HANDOVER.md](G0-SEC_HANDOVER.md) |
