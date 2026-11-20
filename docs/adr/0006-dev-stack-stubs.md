@@ -1,6 +1,6 @@
 # ADR-0006: P0 development stack and stubs
 
-- **Status:** Accepted (engineering) — owner review at G0. **Not yet run** (Docker engine unavailable during P0)
+- **Status:** Accepted (engineering) — owner review at G0. Verified on a running engine 2026-11-20 (see addendum)
 - **Date:** 2026-11-20
 - **Phase / authorisation:** Track P, P0 (D-21: "Docker Compose dev stack with stubs")
 - **Decision owner:** Engineering
@@ -44,3 +44,22 @@ High. Revisit at P1, when real integration (OIDC, Flyway, object storage) begins
 
 ## Deviation from the approved architecture?
 No (see ADR-0005 for the object-store product).
+
+## Addendum 2026-11-20 — verified on a running engine
+Docker 29.2.0 / Compose 5.0.2, commit `a401007`. Evidence: `docs/evidence/p0/dev-stack-*.txt`.
+- All four images pulled; each local RepoDigest equals the pinned digest.
+- `up -d --wait`: all four services healthy. `verify-dev-stack.sh`: 11/11 PASS. The healthchecks previously
+  flagged as unverified (SeaweedFS `wget`, Keycloak `/dev/tcp`) work as written.
+- Published ports are on 127.0.0.1 only. SeaweedFS internal ports (9333/8080/8888/18080/19333) and the Keycloak
+  management port (9000) are not reachable from the host.
+- Worker stub: `NetworkMode=none`, only the `lo` interface, egress unreachable, read-only root, uid 65534,
+  `CapEff=0`, `no-new-privileges`, pids 16, memory 32 MiB.
+- Keycloak: the password grant is refused, PKCE `plain` and missing PKCE are both rejected (S256 required), and
+  OIDC discovery works.
+- Lifecycle: `restart`, `down`/`up` (volumes and data persist) and `down -v`/`up` (clean slate) all return to
+  11/11 PASS.
+- **Defect fixed:** `verify-dev-stack.sh` ignored host-port overrides from the env file (`99de45c`). On this
+  machine, 5432 and 8081 are taken by other local services, so the local `.env` uses 15432/18081 (runbook step 5).
+- Clarification: only the worker stub is network-isolated. The other three services share the default
+  (non-internal) bridge network and can reach the internet. That is as designed for P0 and is not a P1 isolation
+  control.

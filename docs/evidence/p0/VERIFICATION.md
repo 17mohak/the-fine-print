@@ -1,120 +1,116 @@
 # P0 verification record
 
-- **Date:** 2026-11-20
-- **Branch / commit verified:** `p0/scaffolding` @ `e1ea7b1`
-- **Environment:** Windows 11 (10.0.26200); Oracle JDK 21.0.4; Gradle 9.9.2 (wrapper); Git 2.46; Docker client 29.2.0 /
-  Compose v5.0.2 with **the Docker engine not running**
-- **Authorisation:** Track P, P0 only (D-21). Owner instruction for this session: proceed without Docker Desktop
-  and mark container-dependent checks as blocked.
+- **Revision 2:** 2026-11-20, Docker-dependent verification and first CI runs. Revision 1 (Docker unavailable) is in
+  git history at `93939ae`.
+- **Repository:** https://github.com/17mohak/the-fine-print (**private**; sole collaborator `17mohak`)
+- **Branch / commit verified:** `p0/scaffolding` (`main` = `1e8af08`, the document import only)
+- **Environment:** Windows 11 (10.0.26200); Oracle JDK 21.0.4; Gradle 9.9.2 (wrapper); Git 2.46; Docker Engine
+  29.2.0 / Compose 5.0.2. CI: GitHub-hosted `ubuntu-24.04`, Temurin 21.
+- **Authorisation:** Track P, P0 only (D-21). The owner approved the private repository and the Docker
+  verification at G0 on 2026-11-20.
 
-> **P0 acceptance is NOT complete.** Criteria 4 and 5, the containerised scans in criterion 8, and CI execution
-> are outstanding. Status below is reported exactly as observed.
+> **Status:** every P0 acceptance criterion has now been demonstrated, locally and on GitHub Actions; the CI
+> results are linked below. **P0 still closes only at gate G0, with owner confirmation of the decisions listed
+> at the end.** Nothing here is a claim that the system is secure or production-ready.
 
-## Acceptance checklist (IMPLEMENTATION_ROADMAP P0 and the P0 directive)
+## Acceptance checklist
 
 | # | Criterion | Status | Evidence |
 |---|---|---|---|
-| 1 | Install prerequisites and follow documented setup | **PASS (partial)**: JVM path only | [local-setup.md](../../runbooks/local-setup.md), steps 1–3 followed in a fresh clone. Docker steps 5–7 not exercised |
-| 2 | Build the Gradle project | **PASS** | Fresh clone + empty `GRADLE_USER_HOME`: `./gradlew build verifyBoundaries cyclonedxBom`, giving `BUILD SUCCESSFUL in 2m 58s`, 111/111 tasks executed |
-| 3 | Run the available automated checks | **PASS** (JVM checks) | 36 tests, 0 failures, 0 errors, 0 skipped (breakdown below); `verifyBoundaries` OK in all 23 Java projects |
-| 4 | Start the development Compose environment | **BLOCKED / NOT RUN — DOCKER ENGINE UNAVAILABLE** | Only static validation: `docker compose … config --quiet` exits 0, and a missing `.env` fails loudly as designed |
-| 5 | Verify the expected services and stubs | **BLOCKED / NOT RUN — DOCKER ENGINE UNAVAILABLE** | `ops/scripts/verify-dev-stack.sh` written; only its shell syntax was checked (`bash -n`) |
-| 6 | Architecture tests enforce module boundaries | **PASS** | `PlatformArchitectureTest` (8) over the real classes, plus `ArchitectureFixturesTest` (6) proving each rule catches a violation |
-| 7 | `cia-*` absent from the platform runtime classpath | **PASS** | `verifyBoundaries` (resolved graph, 4 classpaths) in every project; TestKit proofs that direct, transitive and test-scope cia dependencies fail; [platform-runtime-classpath.txt](platform-runtime-classpath.txt) has no cia coordinate; no cia component in the SBOM |
-| 8a | Generate the SBOM | **PASS** | `build/reports/cyclonedx/bom.{json,xml}`: CycloneDX 1.6, 74 runtime components, 0 cia |
-| 8b | Dependency vulnerability scan | **BLOCKED / NOT RUN — DOCKER ENGINE UNAVAILABLE** (and CI not executed) | OSV-Scanner is configured in CI job `dependency-scan`; it has not been run anywhere |
-| 8c | Secret scan | **BLOCKED / NOT RUN — DOCKER ENGINE UNAVAILABLE** (and CI not executed) | gitleaks configured in CI job `secret-scan`. A manual grep sweep found no secrets (below); that is **not** a substitute |
-| — | CI pipeline runs green | **NOT RUN**: no remote | `.github/workflows/ci.yml` parses as YAML (5 jobs); never executed |
-| — | Commit-attribution rules | **PASS** | `check-commit-attribution.sh HEAD` passes on all commits; hook and CI check tested in a scratch repo (an AI trailer was rejected; a hook-bypassed AI trailer was caught by the check) |
+| 1 | Install prerequisites and follow the documented setup | **PASS** | [local-setup.md](../../runbooks/local-setup.md) steps 1–7 executed. Runbook corrected for the port-override and clean-cache findings |
+| 2 | Build the Gradle project | **PASS** | Fresh clone + empty `GRADLE_USER_HOME` (rev. 1), regeneration clone (rev. 2), and the CI `build` job on Linux |
+| 3 | Run the available automated checks | **PASS** | 36 tests, 0 failures; `verifyBoundaries` in 23 projects; locally and in CI |
+| 4 | Start the development Compose environment | **PASS** | `up -d --wait`: 4/4 services healthy (local, and the CI `compose-smoke` job) |
+| 5 | Verify the expected services and stubs | **PASS** | `verify-dev-stack.sh` 11/11 PASS ([initial](dev-stack-verify-initial.txt)); detailed [inspection](dev-stack-inspection.txt); [lifecycle](dev-stack-lifecycle.txt) |
+| 6 | Architecture tests enforce module boundaries | **PASS** | ArchUnit 8 rules over real classes + 6 fixture proofs (local and CI) |
+| 7 | `cia-*` absent from the platform runtime classpath | **PASS** | `verifyBoundaries` + TestKit proofs; CI classpath grep step; [platform-runtime-classpath.txt](platform-runtime-classpath.txt); SBOM has 0 cia components |
+| 8a | SBOM generated | **PASS** | CycloneDX 1.6 aggregate; CI artefact `sbom-cyclonedx` |
+| 8b | Dependency scan | **PASS after fix** | 2 initial findings, fixed or justified ([security-scans.md](security-scans.md)); now "No issues found" |
+| 8c | Secret scan | **PASS** | gitleaks: no leaks in full history, with and without the allow-list |
+| — | CI runs green remotely | **PASS** | Run [44666164953](https://github.com/17mohak/the-fine-print/actions/runs/44666164953): all 5 jobs green (details below) |
+| — | Commit attribution | **PASS** | All commits: author = committer = `Mohak Mandwani <mohak2k6@gmail.com>`, linked to GitHub user `17mohak`; 0 `Co-authored-by` trailers; checked locally, through the GitHub API, and by CI job `attribution` |
 
-## Test breakdown (fresh clone run)
+## Docker service verification (local, 2026-11-20)
 
-| Suite | Tests | Result |
-|---|---|---|
-| `build.BoundaryPolicyTest` | 5 | pass |
-| `build.BoundariesPluginFunctionalTest` (TestKit) | 7 | pass |
-| `core.api.CoreApiTypesTest` | 3 | pass |
-| `api.OpenApiSpecTest` | 4 | pass |
-| `architecture.PlatformArchitectureTest` | 8 | pass |
-| `architecture.ArchitectureFixturesTest` | 6 | pass |
-| `platform.app.FinePrintApplicationTest` (health UP; only health exposed; no business endpoints) | 3 | pass |
-| **Total** | **36** | **36 pass** |
-
-## Commands executed (key ones) and results
-
-| Command | Result |
+| Check | Result |
 |---|---|
-| `git init -b main`; import commit of the 39 existing files; `git switch -c p0/scaffolding` | OK. The governing documents are byte-identical to the originals (`core.autocrlf=false` set locally; `.gitattributes` leaves `*.md` untouched) |
-| `./gradlew resolveAndLockAll --write-locks` | 25 lockfiles written. A fresh-clone build reproduces them exactly |
-| `./gradlew --write-verification-metadata sha256 …` | 334 components with SHA-256 (after the clean-cache completion in `e1ea7b1`) |
-| `./gradlew build` (working copy) | BUILD SUCCESSFUL |
-| `./gradlew cyclonedxBom` | SBOM generated |
-| `docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env.example config --quiet` | exit 0 (static validation only) |
-| Fresh clone into a path containing spaces, empty `GRADLE_USER_HOME`, `./gradlew build verifyBoundaries cyclonedxBom --no-daemon` | **BUILD SUCCESSFUL**; working tree still clean afterwards |
-| `bash ops/scripts/check-commit-attribution.sh HEAD` | passed (all commits) |
-| Secret sweep: grep for password/secret/key/token/private-key/AKIA patterns outside the allow-listed dev files | only `${VAR}` references in compose.yaml and a Javadoc "must not store passwords"; no secrets |
+| Pinned images | Postgres, SeaweedFS, Keycloak and busybox pulled; each local RepoDigest equals the digest in `compose.yaml` |
+| Health | All four `healthy` (first start about 160 s, mostly Keycloak) |
+| PostgreSQL 18.7 | Accepts connections; 0 user tables, 0 RLS policies, 0 RLS-enabled tables; only role `fineprint_dev` |
+| SeaweedFS S3 (ADR-0005, *still Proposed*) | Anonymous request 403; wrong secret 403; dev identity ListBuckets 200 with 0 buckets |
+| Keycloak 26.8.2 | OIDC discovery for `fineprint-dev`; password grant refused (`unauthorized_client`); PKCE `plain` and missing PKCE rejected (S256 enforced); management port 9000 not reachable from the host |
+| Worker stub | `NetworkMode=none`, only `lo`, egress "Network unreachable", read-only root, uid/gid 65534, `CapEff=0`, `no-new-privileges`, pids 16, memory 32 MiB; logs state it is an inert P0 stub; no processing code |
+| Port bindings | 127.0.0.1 only (15432, 8333, 18081 locally; 5432, 8333, 8081 in CI). SeaweedFS internal ports 9333/8080/8888/18080/19333 not reachable from the host |
+| Network scope | Only the worker stub is network-isolated. The other services use the default non-internal bridge network; that is as designed for P0 dev stubs |
+| Lifecycle | `restart` → 11/11; `down` (volumes kept, probe database persisted) → `up` → 11/11; `down -v` (volumes removed, probe gone) → `up` → 11/11; a killed worker stub stays exited (no restart policy) until `up` |
 
-## Defects found and fixed during verification (honest record)
+The synthetic persistence probe was an empty database named `p0_persistence_probe`. It was removed by `down -v`.
 
-1. **Build-logic sources were not committed.** The `.gitignore` pattern `build/` also matched the source package
-   `com/thefineprint/build`. The working copy built, but a fresh clone could not. Found by the clean-checkout
-   test and fixed in `1a3947f` (re-include `**/src/**/build/`).
-2. **Dependency verification metadata was incomplete.** Parent POMs already in the local Gradle cache were not
-   recorded, so a clean machine failed verification. Regenerated from an empty cache in a fresh clone (additions
-   only) in `e1ea7b1`.
-3. Minor: the OpenAPI test failed on paths containing spaces. It now uses a file URI.
+## Security scans
 
-## Environmental and other limitations
+Details in [security-scans.md](security-scans.md); raw output in [scan-gitleaks.txt](scan-gitleaks.txt) and
+[scan-osv.txt](scan-osv.txt).
+- **gitleaks:** no leaks, both locally and in CI.
+- **OSV-Scanner:**
+  - Guava 33.7.1 (High, build-time plugin classpath only): **fixed** by moving to 33.7.2.
+  - commons-lang3 3.16.0 (Medium): **false positive**, never resolved; covered by an expiring override.
+  - Result: no issues.
 
-- **Docker engine unavailable** (owner chose not to restart). Nothing container-based has run: the Compose stack,
-  service healthchecks (the SeaweedFS `wget` probe, the Keycloak `/dev/tcp` probe, SeaweedFS command flags),
-  `verify-dev-stack.sh`, gitleaks, OSV-Scanner, and the `docker run` scan commands in the runbook are all
-  **unverified**.
-- **CI has never executed.** No git remote exists, and creating one was not authorised. Workflow correctness
-  (action inputs, the gitleaks container invocation, OSV-Scanner arguments) is unverified.
-- **"Clean machine" was approximated.** I used a fresh clone plus an empty Gradle home on the same Windows host
-  with the same JDK 21.0.4. Linux, macOS and a different JDK vendor have not been tested (CI on Ubuntu with
-  Temurin 21 would cover Linux).
-- The local JDK 21.0.4 (July 2024) lacks recent security patches. Updating it is recommended.
-- The ArchUnit provider-SDK list is a deny-list; it must be kept current when a provider is chosen (P2).
-- The commit-attribution pattern does not catch a bare "Claude" trailer with a non-Anthropic e-mail
-  (ADR-0008 residual gap).
-- **No security claim.** The dev stack is loopback-only and synthetic, and that is all. Nothing here is secure,
-  production-ready or DPDP-compliant.
+## GitHub Actions
 
-## Outstanding owner decisions (for G0)
+Workflow `.github/workflows/ci.yml`:
+- triggers on `push` to `main` and `p0/**`, and on `pull_request`;
+- top-level `permissions: contents: read`;
+- 10/10 `uses:` pinned to full commit SHAs;
+- gitleaks image pinned by digest;
+- no secrets used;
+- no warning annotations on run 1.
 
-1. **Exact versions** (TECHNOLOGY_DECISIONS #2): confirm [ADR-0002](../../adr/0002-p0-toolchain-and-versions.md),
-   notably Spring Boot **4.2.0** (GA one day before this record) versus 4.1.3.
-2. **D-20 path**: the faculty AI-assistance policy is still OPEN. No Track C work happens until it is supplied
-   in writing and recorded.
-3. **MinIO substitute** ([ADR-0005](../../adr/0005-dev-object-store-minio-unavailable.md), a deviation): MinIO's
-   Docker Hub repository returns 404 and its GitHub repository is archived. SeaweedFS is proposed for
-   development only.
-4. **CI remote**: whether to create a (private) GitHub repository so CI can run.
-5. **G0-SEC**: engage a security specialist before P1 (RESEARCH_BACKLOG A-13).
+| Run | Commit | Conclusion | Jobs |
+|---|---|---|---|
+| [44663133885](https://github.com/17mohak/the-fine-print/actions/runs/44663133885) | `93939ae` | **failure** (expected; it surfaced the OSV findings) | build ✅ · attribution ✅ · secret-scan ✅ · compose-smoke ✅ · dependency-scan ❌ (2 advisories) |
+| [44666164953](https://github.com/17mohak/the-fine-print/actions/runs/44666164953) | `a401007` | **success** | build ✅ (BUILD SUCCESSFUL; classpath step passed; SBOM and test-report artefacts uploaded) · attribution ✅ (10 commits) · secret-scan ✅ (no leaks) · compose-smoke ✅ (11/11 PASS) · dependency-scan ✅ ("No issues found", 1 filtered) |
+| Run for the commit that adds this record | see the GitHub Actions tab; its conclusion is reported in the session handover, not in this file (it cannot contain its own result) | | |
 
-## Minor inconsistencies noticed in the governing documents (not edited)
+The `pull_request` trigger is verified from configuration only. No pull request has been opened.
 
-- CIA_REQUIREMENTS_MATRIX section 5 refers to `algo-bench`; elsewhere the module is `cia-bench`.
-- RESEARCH_BACKLOG B-11 cites "SYSTEM_DESIGN 2.6" for the fixtures; the test catalogue is section 2.7.
-- CIA_REQUIREMENTS_MATRIX section 0 would allow `cia-demo` scaffolding and stub classes after approval, but D-21
-  restricts `cia/` to placeholders. D-21 was followed.
+## Defects found and fixed in revision 2
 
-## Remaining to complete P0 acceptance (next session, with Docker running)
+1. `verify-dev-stack.sh` ignored host-port overrides. It now reads `IDP_PORT`/`S3_PORT` from the env file (`99de45c`).
+2. Guava 33.7.1 (GHSA-xxph-c9ww-hj94) on the build's plugin classpath. Constrained to 33.7.2, the plugin classpath
+   is now locked, and the verification metadata was regenerated from an empty cache (`a401007`).
+3. The commons-lang3 OSV false positive is handled by an exact-version, expiring override, passed to CI with
+   `--config` (`a401007`).
+4. The build-logic test classpath was not locked. It is now (`a401007`).
 
-1. Start Docker Desktop.
-2. Bring the stack up:
-   - `cp ops/compose/.env.example ops/compose/.env`
-   - `docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env up -d --wait`
-3. Run `bash ops/scripts/verify-dev-stack.sh` and fix any healthcheck or flag issues.
-4. Run gitleaks and OSV-Scanner (runbook section 7) and record the results.
-5. Optionally push to an owner-approved remote and confirm all five CI jobs are green.
-6. Update this record. Declare P0 complete only when every row above is PASS.
+Revision-1 defects (unchanged): the `.gitignore` that hid the build-logic sources (`1a3947f`); verification
+metadata incomplete on clean machines (`e1ea7b1`).
+
+## Remaining limitations
+
+- Local JDK 21.0.4 (July 2024) is missing security patches. CI uses the current Temurin 21.
+- macOS has not been tested. Linux is covered by CI only.
+- The OSV action pulls its scanner image by tag (the action itself is SHA-pinned).
+- The ArchUnit provider-SDK list is a deny-list (ADR-0003). The bare-"Claude" trailer gap is unchanged (ADR-0008).
+- The SBOM's "disconnected graph" notices for the folder-only parent projects are cosmetic.
+- **No security claim.** G0-SEC is still required before P1.
+
+## Outstanding G0 decisions (owner)
+
+1. **Exact versions** ([ADR-0002](../../adr/0002-p0-toolchain-and-versions.md)), not selected on your behalf:
+   - Java 21 (`--release 21`; local Oracle 21.0.4, CI Temurin 21)
+   - Gradle 9.9.2
+   - **Spring Boot 4.2.0** (GA 2026-11-19), with **4.1.3** as the more mature alternative
+   - JUnit 6.1.3, AssertJ 3.27.7, ArchUnit 1.5.1, swagger-parser 2.1.49, CycloneDX plugin 3.6.1
+   - PostgreSQL 18.7 (19 is RC only), Keycloak 26.8.2, SeaweedFS 4.54, busybox 1.37.0
+   - gitleaks 8.30.1, OSV-Scanner 2.7.1
+   - Build-time Guava 33.7.2-jre (security constraint)
+2. **D-20 faculty AI-assistance policy:** OPEN. Not treated as resolved; no Track C work.
+3. **MinIO → SeaweedFS** (ADR-0005, deviation): still Proposed.
+4. **G0-SEC:** security-specialist engagement before P1 (RESEARCH_BACKLOG A-13).
+5. Whether to open a `p0/scaffolding` → `main` pull request, which would also exercise the `pull_request` trigger.
 
 ## Scope confirmation
 
-No P1 or later work was started. No encryption, key management, RLS, tenant context, worker or broker,
-canonicalisation, provenance, search index, production SPI adapter, LLM integration or domain logic exists.
-`cia/` contains only `README.md`. No assessed algorithm code, tests, benchmarks or analysis were written. No real
-or personal data is in the repository.
+No P1 or Track C work was started. `cia/` contains only `README.md`. No assessed algorithm material exists. No
+real or personal data was used; the only data is a synthetic user and an empty probe database.

@@ -42,3 +42,9 @@ maintenance changes.
 
 ## Deviation from the approved architecture?
 **Yes (product named in the roadmap).** Proposed only; awaiting owner approval in DECISION_LOG.
+
+## Addendum 2026-11-20 — development behaviour verified (status unchanged: still Proposed)
+SeaweedFS 4.54 started healthy and passed the stack checks. S3 requests are refused without credentials (403) or
+with a wrong secret (403). The dev identity's ListBuckets returns 200 with zero buckets. Only the S3 port
+(127.0.0.1:8333) is published. **This verifies the development stub only. The owner decision on the substitution
+is still required at G0.**

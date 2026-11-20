@@ -10,7 +10,7 @@ An India-first personal consumer-intelligence platform ([PROJECT_FOUNDATION.md](
 | Architecture | **APPROVED v0.2.1 direction** (D-21, 2026-11-20), subject to unresolved decisions, limitations and review gates |
 | Implementation | **Track P, P0 only** (repository, build, CI, SPIs, dev stack). P1–P7 and Track C are **not authorised** |
 | This code base | **P0 scaffolding.** No product functionality. Not secure, not production-ready, no compliance claim. **No real documents or personal data.** |
-| P0 acceptance | **Not complete**: Docker-dependent checks are outstanding ([verification record](docs/evidence/p0/VERIFICATION.md)) |
+| P0 acceptance | All criteria demonstrated locally and in CI ([verification record](docs/evidence/p0/VERIFICATION.md)); **closes at G0** with owner confirmation |
 | Next gates | **G0**: owner confirms versions and the D-20 path. **G0-SEC**: security-specialist review before P1 |
 
 ## Repository map

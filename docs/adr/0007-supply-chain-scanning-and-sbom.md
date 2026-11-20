@@ -44,3 +44,19 @@ High. Revisit when container images are built for the app (add image scanning) a
 
 ## Deviation from the approved architecture?
 No.
+
+## Addendum 2026-11-20 — first scan results and resulting changes
+Both scanners ran locally (pinned images) and in CI. gitleaks: no leaks, both with and without the allow-list.
+OSV-Scanner found two advisories, recorded in `docs/evidence/p0/security-scans.md`:
+1. Guava 33.7.1 on the build's own plugin classpath, via CycloneDX. Fixed with a buildscript constraint to
+   33.7.2-jre.
+2. commons-lang3 3.16.0, present only as a conflict-resolution candidate in the verification metadata. Treated
+   as a false positive through an exact-version override with an expiry date in `osv-scanner.toml`, which CI passes
+   with `--config`.
+
+Two further decisions:
+- The build's plugin classpath is now locked as well (`buildscript-gradle.lockfile`).
+- Verification metadata must be regenerated from an empty cache (runbook), because a warm cache omits parent
+  POMs.
+
+Residual: the OSV action pulls its scanner image by tag, not digest.

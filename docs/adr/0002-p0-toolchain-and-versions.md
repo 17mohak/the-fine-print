@@ -60,3 +60,10 @@ High. Revisit at G0, on any CVE affecting a pinned component (OSV-Scanner in CI)
 
 ## Deviation from the approved architecture?
 No, apart from the object-store product (ADR-0005).
+
+## Addendum 2026-11-20 — additional pins found during verification (status unchanged: still Proposed)
+- Build-time constraint `com.google.guava:guava:33.7.2-jre` on the build's own plugin classpath, for security
+  (GHSA-xxph-c9ww-hj94; see ADR-0007). The plugin classpath is now locked in `buildscript-gradle.lockfile`.
+- OSV-Scanner image observed for action v2.7.1: `ghcr.io/google/osv-scanner-action@sha256:3fa25659…d08f243`.
+- No change to the versions awaiting owner confirmation. **Spring Boot 4.2.0 versus 4.1.3 remains the owner's
+  choice at G0.**

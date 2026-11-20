@@ -1,0 +1,14 @@
+# verify-dev-stack.sh — initial start (stack started with: up -d --wait; host ports 15432/18081 via local .env)
+PASS  postgres container is healthy
+PASS  object-store container is healthy
+PASS  idp container is healthy
+PASS  doc-worker-stub container is healthy
+PASS  postgres accepts connections
+PASS  postgres has no application schema yet (P1)
+PASS  object store answers S3 requests on 127.0.0.1:8333
+PASS  dev IdP publishes OIDC discovery for realm fineprint-dev
+PASS  worker stub has no network (network_mode none)
+PASS  worker stub announces it is an inert stub
+PASS  published ports bind to loopback only
+All dev-stack checks passed
+exit=0
