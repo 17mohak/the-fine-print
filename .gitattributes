@@ -1,0 +1,18 @@
+# Line endings for files created from P0 onwards. Existing Markdown documents are left untouched
+# (no `text` attribute on *.md), so the imported governing documents stay byte-identical.
+*.java       text eol=lf
+*.kts        text eol=lf
+*.gradle     text eol=lf
+*.toml       text eol=lf
+*.properties text eol=lf
+*.yaml       text eol=lf
+*.yml        text eol=lf
+*.json       text eol=lf
+*.xml        text eol=lf
+*.sh         text eol=lf
+*.lockfile   text eol=lf
+gradlew      text eol=lf
+ops/git-hooks/* text eol=lf
+*.bat        text eol=crlf
+*.cmd        text eol=crlf
+*.jar        binary

@@ -1,0 +1,23 @@
+# Build output
+build/
+.gradle/
+.kotlin/
+out/
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Local environment and secrets (never commit real values)
+.env
+*.env.local
+ops/compose/.env
+
+# OS
+.DS_Store
+Thumbs.db
