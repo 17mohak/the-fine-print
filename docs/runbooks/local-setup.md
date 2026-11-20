@@ -81,7 +81,7 @@ Stop and delete the stack's data:
 docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env down -v
 ```
 
-## 7. Supply-chain scans (container-based; also run in CI)
+## 7. Supply-chain scans (container-based; also run in CI) — not yet verified, Docker was unavailable during P0
 
 ```bash
 docker run --rm -v "$PWD:/repo" -w /repo zricethezav/gitleaks:v8.30.1 git --config /repo/.gitleaks.toml --redact /repo
