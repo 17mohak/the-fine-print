@@ -205,3 +205,27 @@ No P1 or Track C work was started. The PR was not merged.
 This section, the G0 briefs, the G0-SEC handover, the corrected Compose header and the revision-3 evidence files
 are committed on top of `28fd103`. That commit's own CI results are reported in the session handover, because a
 file cannot record the CI result of the commit that contains it.
+
+
+---
+
+## Revision 4 — G0 status update (appended 2026-11-20)
+
+Revisions 1–3 above are unchanged.
+
+- **G0-1:** Spring Boot **4.2.0 / 4.2.x line recorded as an owner decision (DECISION_LOG D-30)**. The build agrees:
+  the catalogue pins `spring-boot = "4.2.0"`, and the lockfile resolves `spring-boot:4.2.0` and `spring-core:7.1.0`.
+  The remaining pins are still awaiting owner confirmation ([TOOLCHAIN_INVENTORY.md](../../g0/TOOLCHAIN_INVENTORY.md)).
+- **New informational evidence:** a container image scan ([image-scan-trivy.md](image-scan-trivy.md)):
+  - Postgres: 27 HIGH/CRITICAL findings, all in the bundled `gosu` helper.
+  - Keycloak: 6 HIGH findings (base OS, with no fix yet, plus bundled Guava).
+  - SeaweedFS and busybox: clean.
+
+  No pin was changed.
+- **G0-2:** open ([checklist and draft request, unsent](../../g0/G0-2_D20_FACULTY_POLICY.md)).
+  **G0-3:** open, proposed ([assessment](../../g0/G0-3_OBJECT_STORE_ASSESSMENT.md)).
+  **G0-SEC:** not started ([package revision 2](../../g0/G0-SEC_HANDOVER.md)).
+- **CI** on `de57d99` (after D-30 and the G0 documents): push run 44672134465 ✅ and `pull_request` run
+  44672138940 ✅, all 5 jobs each.
+- **P0 technical acceptance:** unchanged, all criteria PASS. **Formal closure** still awaits the remaining G0
+  decisions.

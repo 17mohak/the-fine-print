@@ -11,7 +11,7 @@ An India-first personal consumer-intelligence platform ([PROJECT_FOUNDATION.md](
 | Implementation | **Track P, P0 only** (repository, build, CI, SPIs, dev stack). P1–P7 and Track C are **not authorised** |
 | This code base | **P0 scaffolding.** No product functionality. Not secure, not production-ready, no compliance claim. **No real documents or personal data.** |
 | P0 acceptance | All criteria demonstrated locally and in CI ([verification record](docs/evidence/p0/VERIFICATION.md)); **closes at G0** with owner confirmation |
-| Next gates | **G0**: owner confirms versions and the D-20 path. **G0-SEC**: security-specialist review before P1 |
+| Next gates | **G0**: Spring Boot 4.2.x line decided (D-30); the remaining version pins, the D-20 path and the SeaweedFS substitution (ADR-0005) await the owner ([briefs](docs/g0/G0_DECISION_BRIEFS.md)). **G0-SEC**: security-specialist review before P1 ([package](docs/g0/G0-SEC_HANDOVER.md)) |
 
 ## Repository map
 
