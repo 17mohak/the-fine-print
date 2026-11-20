@@ -1,0 +1,14 @@
+{
+  "identities": [
+    {
+      "name": "fineprint-dev",
+      "credentials": [
+        {
+          "accessKey": "fineprint-dev-access",
+          "secretKey": "dev-only-s3-not-a-secret"
+        }
+      ],
+      "actions": ["Admin", "Read", "Write", "List", "Tagging"]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "realm": "fineprint-dev",
+  "displayName": "THE FINE PRINT (development, synthetic only)",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "bruteForceProtected": true,
+  "clients": [
+    {
+      "clientId": "fineprint-web-dev",
+      "name": "fineprint web (dev)",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "implicitFlowEnabled": false,
+      "redirectUris": ["http://localhost:5173/*", "http://127.0.0.1:5173/*"],
+      "webOrigins": ["http://localhost:5173", "http://127.0.0.1:5173"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "synthetic.user",
+      "email": "synthetic.user@example.test",
+      "firstName": "Synthetic",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "dev-only-synthetic-user-not-a-secret",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}

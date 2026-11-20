@@ -1,0 +1,98 @@
+# THE FINE PRINT — development stack (Track P, P0). Synthetic data only; never real documents (D-21 clause 7).
+#
+#   cp ops/compose/.env.example ops/compose/.env
+#   docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env up -d --wait
+#   bash ops/scripts/verify-dev-stack.sh
+#
+# Every image is pinned by tag AND digest (ADR-0002). All published ports bind to 127.0.0.1 only.
+# These are development stubs. None implements encryption, RLS, tenant context, a worker or a broker.
+# This configuration has NOT yet been started or verified: Docker engine was unavailable when P0 was built.
+name: fineprint-dev
+
+services:
+  postgres:
+    image: postgres:18.7-alpine3.23@sha256:f3ee138d5fce80ffaeb315b8bea7610f0c4f2304fb2aceb4ec8e457b92fc41a0
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?set in ops/compose/.env}
+      POSTGRES_USER: ${POSTGRES_USER:?set in ops/compose/.env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in ops/compose/.env}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    # No schema, roles or RLS policies here: Flyway DDL and RLS are P1 work after G0-SEC.
+
+  # S3-compatible object store stub. MinIO is named in the roadmap, but its public images are no longer
+  # published and its repository is archived; SeaweedFS is the PROPOSED dev-only substitute (ADR-0005,
+  # owner confirmation at G0). No buckets, encryption or lifecycle configuration in P0.
+  object-store:
+    image: chrislusf/seaweedfs:4.54@sha256:4b42c212543a0acd4c0e675215ecdcaf62a186ef98def76c7e12701871222d15
+    command: ["server", "-dir=/data", "-s3", "-s3.port=8333", "-s3.config=/etc/seaweedfs/s3.json", "-ip.bind=0.0.0.0"]
+    ports:
+      - "127.0.0.1:${S3_PORT:-8333}:8333"
+    volumes:
+      - object-store-data:/data
+      - ./seaweedfs/s3.dev.json:/etc/seaweedfs/s3.json:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:9333/cluster/status || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  # Development OpenID Connect IdP (TECHNOLOGY_DECISIONS #13: Keycloak in dev; production IdP undecided).
+  # Imports one synthetic realm with one public client and one synthetic user. The application is not wired
+  # to it in P0: OIDC integration is P1 (identity-access).
+  idp:
+    image: quay.io/keycloak/keycloak:26.8.2@sha256:7e66a96e4739239070aeaf72e4c5decf0f7f682cfc725b9f7ea2b336eaba38b3
+    command: ["start-dev", "--import-realm", "--http-port=8080"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_ADMIN_USERNAME:?set in ops/compose/.env}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD:?set in ops/compose/.env}
+      KC_HEALTH_ENABLED: "true"
+    ports:
+      - "127.0.0.1:${IDP_PORT:-8081}:8080"
+    volumes:
+      - ./keycloak/fineprint-dev-realm.json:/opt/keycloak/data/import/fineprint-dev-realm.json:ro
+    healthcheck:
+      # The image has no curl/wget; probe the management port with bash's /dev/tcp.
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && grep -q '\"UP\"' <&3"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  # INERT worker stub. It contains no parsing, OCR, broker protocol, mTLS or job handling: the worker and
+  # broker are P1 work after G0-SEC (D-21 exclusions). It only proves the slot exists in the stack.
+  # The settings below are conservative defaults for an inert container, NOT the P1 worker-isolation design.
+  doc-worker-stub:
+    image: busybox:1.37.0-musl@sha256:f6a95d611e0a8780fabdb2aec43e31275b2720dfefa3e41b16835bfc42454478
+    command:
+      - sh
+      - -c
+      - >-
+        echo 'doc-worker STUB (P0): no processing implemented; worker and broker are P1 and not authorised.';
+        touch /tmp/ready;
+        exec sleep 2147483647
+    network_mode: "none"
+    read_only: true
+    tmpfs:
+      - /tmp:size=1m,mode=1777
+    user: "65534:65534"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 16
+    mem_limit: 32m
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/ready"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
+volumes:
+  postgres-data:
+  object-store-data:
