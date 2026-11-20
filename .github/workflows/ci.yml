@@ -1,6 +1,6 @@
 # THE FINE PRINT — P0 CI pipeline (IMPLEMENTATION_ROADMAP P0; ADR-0007).
 # Third-party actions are pinned by full commit SHA (tag in the trailing comment). Images are pinned by digest.
-# Status: written in P0 but NOT YET EXECUTED. No GitHub remote exists yet; see docs/evidence/p0/VERIFICATION.md.
+# Runs on GitHub (private repository 17mohak/the-fine-print). Results: docs/evidence/p0/VERIFICATION.md.
 name: ci
 
 on:
@@ -57,11 +57,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      # Scans the committed Gradle lockfiles (exact resolved versions) against the OSV database.
+      # Scans the committed Gradle lockfiles (including the build's own plugin classpath) and the dependency
+      # verification metadata against the OSV database. Reviewed overrides: osv-scanner.toml.
       - uses: google/osv-scanner-action/osv-scanner-action@32d3cd482bdadfb38b186c0ad1b031902d55d932 # v2.7.1
         with:
           scan-args: |-
             --recursive
+            --config=./osv-scanner.toml
             ./
 
   secret-scan:

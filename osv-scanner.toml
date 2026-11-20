@@ -1,0 +1,15 @@
+# OSV-Scanner configuration (ADR-0007). Every entry must name one exact package version and give evidence.
+# Overrides are reviewed at every gate; remove an entry as soon as its reason no longer holds.
+
+[[PackageOverrides]]
+name = "org.apache.commons:commons-lang3"
+version = "3.16.0"
+ecosystem = "Maven"
+ignore = true
+effectiveUntil = 2027-05-20
+reason = """
+GHSA-j288-q9x7-2f5v (CVE-2025-48924). False positive for this repository: 3.16.0 appears only in
+gradle/verification-metadata.xml because Gradle downloads the metadata of versions it considers during conflict
+resolution. It is never selected: every lockfile resolves commons-lang3 3.20.0 (patched), test-only, in :api.
+Verified 2026-11-20 (docs/evidence/p0/security-scans.md). Not on any runtime classpath or in the SBOM.
+"""

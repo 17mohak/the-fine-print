@@ -1,5 +1,20 @@
 import org.cyclonedx.gradle.CyclonedxDirectTask
 
+buildscript {
+    // Lock the build's own plugin classpath too, so it is pinned and visible to OSV-Scanner
+    // (buildscript-gradle.lockfile). Build-time only: none of this reaches the application runtime.
+    configurations.classpath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+    dependencies {
+        constraints {
+            classpath("com.google.guava:guava:33.7.2-jre") {
+                because("GHSA-xxph-c9ww-hj94 / CVE-2026-102554 fixed in 33.7.2; pulled in by the CycloneDX plugin")
+            }
+        }
+    }
+}
+
 plugins {
     base
     alias(libs.plugins.cyclonedx)
