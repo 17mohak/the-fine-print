@@ -15,9 +15,9 @@
 <circle cx="275.0" cy="296.9" r="3" fill="#9c3f1d"/>
 <circle cx="480.0" cy="296.9" r="3" fill="#9c3f1d"/>
 <line x1="492" y1="50" x2="512" y2="50" stroke="#9c3f1d" stroke-width="2"/><text x="518" y="54" fill="#1d1f23">bloom (10 bits/elem)</text>
-<path d="M70.0,67.5 L275.0,54.9 L480.0,64.8" fill="none" stroke="#555" stroke-width="2"/>
+<path d="M70.0,67.5 L275.0,55.2 L480.0,64.8" fill="none" stroke="#555" stroke-width="2"/>
 <circle cx="70.0" cy="67.5" r="3" fill="#555"/>
-<circle cx="275.0" cy="54.9" r="3" fill="#555"/>
+<circle cx="275.0" cy="55.2" r="3" fill="#555"/>
 <circle cx="480.0" cy="64.8" r="3" fill="#555"/>
 <line x1="492" y1="70" x2="512" y2="70" stroke="#555" stroke-width="2"/><text x="518" y="74" fill="#1d1f23">hashSet&lt;Long> (approx.)</text>
 </svg>

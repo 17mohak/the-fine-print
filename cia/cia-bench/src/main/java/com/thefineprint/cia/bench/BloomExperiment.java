@@ -16,8 +16,9 @@ import java.util.Set;
 /**
  * Deterministic measurement of false-positive rate and memory, Bloom filter vs {@code HashSet<Long>}.
  *
- * <p>For each size {@code n} and bits-per-element {@code b}: insert keys {@code 0..n-1}, probe 1,000,000 keys
- * that were never inserted, and count false positives. Memory: the Bloom figure is the exact bit-array payload;
+ * <p>For each size {@code n}, bits-per-element {@code b} and hash seed: insert keys {@code 0..n-1}, probe
+ * 1,000,000 keys that were never inserted, and count false positives. Several seeds per configuration show the
+ * seed-to-seed spread of the measured rate. Memory: the Bloom figure is the exact bit-array payload;
  * the HashSet figure is an <b>approximation</b> from the change in used heap after forced GCs (median of three
  * builds). It includes the boxed {@code Long}s and table entries, which is the real cost of exact membership in
  * Java.
@@ -25,42 +26,50 @@ import java.util.Set;
 public final class BloomExperiment {
 
     static final int NEGATIVE_PROBES = 1_000_000;
+    static final long[] SEEDS = {7L, 11L, 13L, 17L, 19L};
 
     /** One output row. */
-    public record Row(int elements, int bitsPerElement, int hashCount, double theoreticalFpr, double measuredFpr,
-                      long bloomBytes, long hashSetBytesApprox, double bloomBuildMillis) {
+    public record Row(int elements, int bitsPerElement, long seed, int hashCount, double theoreticalFpr,
+                      double measuredFpr, long bloomBytes, long hashSetBytesApprox, double bloomBuildMillis) {
     }
 
     public static void main(String[] args) throws IOException {
         Path out = Path.of(args.length > 0 ? args[0] : "bloom-experiment.csv");
-        List<Row> rows = run(new int[] {10_000, 100_000, 1_000_000}, new int[] {6, 10, 14}, NEGATIVE_PROBES);
+        List<Row> rows = run(new int[] {10_000, 100_000, 1_000_000}, new int[] {6, 10, 14}, SEEDS, NEGATIVE_PROBES);
         write(rows, out);
         System.out.println("Wrote " + rows.size() + " rows to " + out.toAbsolutePath());
     }
 
-    public static List<Row> run(int[] sizes, int[] bitsPerElementValues, int negativeProbes) {
+    public static List<Row> run(int[] sizes, int[] bitsPerElementValues, long[] seeds, int negativeProbes) {
         List<Row> rows = new ArrayList<>();
         for (int n : sizes) {
             long hashSetBytes = measureHashSetBytes(n);
             for (int b : bitsPerElementValues) {
-                BloomParameters params = BloomParameters.withBitsPerElement(n, b);
-                long start = System.nanoTime();
-                BloomFilter filter = new BloomFilter(params, 7L);
-                for (long i = 0; i < n; i++) {
-                    filter.add(BloomBenchmark.bytes(i));
+                for (long seed : seeds) {
+                    rows.add(measure(n, b, seed, negativeProbes, hashSetBytes));
                 }
-                double buildMillis = (System.nanoTime() - start) / 1e6;
-                int falsePositives = 0;
-                for (long i = 0; i < negativeProbes; i++) {
-                    if (filter.mightContain(BloomBenchmark.bytes(1_000_000_000L + i))) {
-                        falsePositives++;
-                    }
-                }
-                rows.add(new Row(n, b, params.hashCount(), params.theoreticalFalsePositiveRate(n),
-                        (double) falsePositives / negativeProbes, filter.memoryBytes(), hashSetBytes, buildMillis));
             }
         }
         return rows;
+    }
+
+    /** Builds one filter and counts false positives among {@code negativeProbes} never-inserted keys. */
+    private static Row measure(int n, int bitsPerElement, long seed, int negativeProbes, long hashSetBytes) {
+        BloomParameters params = BloomParameters.withBitsPerElement(n, bitsPerElement);
+        long start = System.nanoTime();
+        BloomFilter filter = new BloomFilter(params, seed);
+        for (long i = 0; i < n; i++) {
+            filter.add(BloomBenchmark.bytes(i));
+        }
+        double buildMillis = (System.nanoTime() - start) / 1e6;
+        int falsePositives = 0;
+        for (long i = 0; i < negativeProbes; i++) {
+            if (filter.mightContain(BloomBenchmark.bytes(1_000_000_000L + i))) {
+                falsePositives++;
+            }
+        }
+        return new Row(n, bitsPerElement, seed, params.hashCount(), params.theoreticalFalsePositiveRate(n),
+                (double) falsePositives / negativeProbes, filter.memoryBytes(), hashSetBytes, buildMillis);
     }
 
     /** Approximate retained size of a HashSet of {@code n} boxed longs (median of three measurements). */
@@ -101,12 +110,12 @@ public final class BloomExperiment {
             w.println("# Bloom filter FPR and memory experiment; java=" + System.getProperty("java.version")
                     + " vm=" + System.getProperty("java.vm.name") + " os=" + System.getProperty("os.name")
                     + " cpus=" + Runtime.getRuntime().availableProcessors() + " negativeProbes=" + NEGATIVE_PROBES
-                    + " seed=7");
-            w.println("elements,bitsPerElement,hashCount,theoreticalFpr,measuredFpr,bloomBytes,"
+                    + " probeStrategy=coprime-step");
+            w.println("elements,bitsPerElement,seed,hashCount,theoreticalFpr,measuredFpr,bloomBytes,"
                     + "hashSetBytesApprox,bloomBuildMillis");
             for (Row r : rows) {
-                w.println(String.format(Locale.ROOT, "%d,%d,%d,%.6f,%.6f,%d,%d,%.2f", r.elements(),
-                        r.bitsPerElement(), r.hashCount(), r.theoreticalFpr(), r.measuredFpr(), r.bloomBytes(),
+                w.println(String.format(Locale.ROOT, "%d,%d,%d,%d,%.6f,%.6f,%d,%d,%.2f", r.elements(),
+                        r.bitsPerElement(), r.seed(), r.hashCount(), r.theoreticalFpr(), r.measuredFpr(), r.bloomBytes(),
                         r.hashSetBytesApprox(), r.bloomBuildMillis()));
             }
         }

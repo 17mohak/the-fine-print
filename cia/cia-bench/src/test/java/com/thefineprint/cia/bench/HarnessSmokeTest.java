@@ -38,7 +38,7 @@ class HarnessSmokeTest {
 
     @Test
     void bloomExperimentProducesPlausibleRows() {
-        List<BloomExperiment.Row> rows = BloomExperiment.run(new int[] {2_000}, new int[] {10}, 50_000);
+        List<BloomExperiment.Row> rows = BloomExperiment.run(new int[] {2_000}, new int[] {10}, new long[] {7L}, 50_000);
         assertThat(rows).hasSize(1);
         BloomExperiment.Row row = rows.get(0);
         assertThat(row.measuredFpr()).isBetween(0.002, 0.02); // theory about 0.008 at 10 bits/element

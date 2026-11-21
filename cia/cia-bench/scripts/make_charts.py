@@ -2,7 +2,8 @@
 """Generate SVG charts from the committed benchmark results (no third-party packages).
 
 Usage:  python cia/cia-bench/scripts/make_charts.py
-Reads   cia/cia-bench/results/jmh-results.json and results/bloom-experiment.csv
+Reads   cia/cia-bench/results/jmh-results.json (KMP), results/jmh-bloom-results.json (Bloom throughput,
+        falls back to jmh-results.json) and results/bloom-experiment.csv (mean over seeds per configuration)
 Writes  cia/cia-bench/results/charts/*.svg
 """
 import csv
@@ -103,20 +104,23 @@ def bloom_experiment_charts():
     rows = [r for r in csv.DictReader(l for l in (RESULTS / "bloom-experiment.csv").open(encoding="utf-8")
                                       if not l.startswith("#"))]
     n_max = max(int(r["elements"]) for r in rows)
-    fpr = {"bloom measured": [], "theory": []}
+    groups = {}
     for r in rows:
-        if int(r["elements"]) == n_max:
-            b = int(r["bitsPerElement"])
-            fpr["bloom measured"].append((b, float(r["measuredFpr"])))
-            fpr["theory"].append((b, float(r["theoreticalFpr"])))
-    line_chart(CHARTS / "bloom-fpr.svg", f"False-positive rate at n = {n_max:,} (1M negative probes)",
+        groups.setdefault((int(r["elements"]), int(r["bitsPerElement"])), []).append(r)
+    seeds = len(next(iter(groups.values())))
+    fpr = {"bloom measured (mean)": [], "theory": []}
+    for (n, b), rs in sorted(groups.items()):
+        if n == n_max:
+            fpr["bloom measured (mean)"].append((b, sum(float(r["measuredFpr"]) for r in rs) / len(rs)))
+            fpr["theory"].append((b, float(rs[0]["theoreticalFpr"])))
+    line_chart(CHARTS / "bloom-fpr.svg",
+               f"False-positive rate at n = {n_max:,} (1M negative probes x {seeds} seeds)",
                "bits per element", "false-positive rate (log)", fpr, log_x=False)
     mem = {"bloom (10 bits/elem)": [], "hashSet<Long> (approx.)": []}
-    for r in rows:
-        if r["bitsPerElement"] == "10":
-            n = int(r["elements"])
-            mem["bloom (10 bits/elem)"].append((n, int(r["bloomBytes"]) / n))
-            mem["hashSet<Long> (approx.)"].append((n, int(r["hashSetBytesApprox"]) / n))
+    for (n, b), rs in sorted(groups.items()):
+        if b == 10:
+            mem["bloom (10 bits/elem)"].append((n, int(rs[0]["bloomBytes"]) / n))
+            mem["hashSet<Long> (approx.)"].append((n, int(rs[0]["hashSetBytesApprox"]) / n))
     line_chart(CHARTS / "bloom-memory.svg", "Memory per element", "elements n", "bytes per element (log)", mem)
 
 
@@ -124,9 +128,11 @@ def main():
     CHARTS.mkdir(parents=True, exist_ok=True)
     jmh = RESULTS / "jmh-results.json"
     if jmh.exists():
-        results = json.loads(jmh.read_text(encoding="utf-8"))
-        kmp_charts(results)
-        bloom_throughput_chart(results)
+        kmp_charts(json.loads(jmh.read_text(encoding="utf-8")))
+    bloom_jmh = RESULTS / "jmh-bloom-results.json"
+    source = bloom_jmh if bloom_jmh.exists() else jmh
+    if source.exists():
+        bloom_throughput_chart(json.loads(source.read_text(encoding="utf-8")))
     bloom_experiment_charts()
 
 
