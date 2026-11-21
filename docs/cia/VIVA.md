@@ -60,12 +60,29 @@ walkthroughs on paper; an examiner may change the inputs.
 18. **Derive the optimal k and m.**
     Minimising over k gives `k = (m/n) ln 2`; substituting gives `p = 2^{−k}`, so `m = −n ln p / (ln 2)²`.
     Example: n = 1000, p = 0.01 gives m = 9586 and k = 7 (tested).
-19. **What is double hashing and why use it?**
-    `g_i = (h1 + i·h2) mod m`: k positions from two hashes, with the same asymptotic false-positive rate as k
-    independent hashes (Kirsch–Mitzenmacher). It saves k − 2 hash passes.
-20. **Why force `h2` odd?**
-    If `h2` shared a factor with m (for example both even), the probe sequence would cycle through fewer distinct
-    positions.
+19. **What is double hashing and how do you compute the positions?**
+    Two hashes per key instead of k. Our version (`ProbeSequence`):
+    - start `a = h1 mod m`;
+    - step `b = 1 + (h2 mod (m − 1))`, then increase `b` until `gcd(b, m) = 1`;
+    - `g_{i+1} = (g_i + b) mod m`.
+
+    Kirsch and Mitzenmacher showed double hashing matches k independent hashes asymptotically, analysed with a
+    prime modulus. For our composite m the textbook formula is an approximation, and the measured rates are
+    the evidence.
+20. **Why must the step be coprime with m? Isn't "make it odd" enough?**
+    The sequence `a + i·b (mod m)` cycles after `m / gcd(b, m)` positions, so a step sharing a factor with m
+    visits fewer positions, and a key could set fewer than k bits. "Odd" only removes the factor 2: with m = 15,
+    the odd step 5 reaches only 3 positions (test `oddStepSharingAFactorWithAnOddModulusIsAdjusted`). With
+    `gcd(b, m) = 1` the map is a bijection on `0..m−1`, so the first `min(k, m)` positions are always distinct.
+    The search terminates by `m − 1`, because consecutive integers are coprime.
+20a. **Can the position arithmetic overflow?**
+    No. Both hashes are reduced modulo m first, so every value is below m < 2³⁷. Each step is one addition and
+    a conditional subtraction, with no multiplication. A test compares against `BigInteger` up to the maximum m,
+    with extreme hash values.
+20b. **Is the step uniformly distributed?**
+    Only when m is prime. Otherwise, coprime values that follow non-coprime ones are chosen more often. Sizing m
+    to a prime would fix that. We report the measured false-positive rates instead of claiming the formula is
+    exact.
 21. **Describe your hash function.**
     A seeded 64-bit block hash: little-endian 8-byte blocks, each multiplied, rotated and multiplied by odd
     constants, folded into the state, the tail handled the same way, the length mixed in, and the fmix64

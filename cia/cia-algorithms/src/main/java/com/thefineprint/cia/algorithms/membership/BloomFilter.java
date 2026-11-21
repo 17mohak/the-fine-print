@@ -10,10 +10,13 @@ import java.util.Objects;
  * positives are possible, at roughly {@link BloomParameters#theoreticalFalsePositiveRate} once {@code n} keys are
  * in. A positive answer is <b>never proof of membership</b>; callers must confirm it with an exact check.
  *
- * <p><b>Bit positions (double hashing, Kirsch–Mitzenmacher).</b> Two independent 64-bit hashes {@code h1} and
- * {@code h2} are computed once per key. The {@code i}-th position is {@code (h1 + i * h2) mod m} for
- * {@code i = 0 .. k-1}. {@code h2} is forced odd so the sequence does not collapse when it shares a factor with
- * {@code m}. This gives the asymptotic false-positive rate of {@code k} independent hashes for the cost of two.
+ * <p><b>Bit positions (double hashing).</b> Two independent 64-bit hashes {@code h1} and {@code h2} are computed
+ * once per key and turned into {@code k} positions by {@code ProbeSequence}: start {@code h1 mod m}, a step
+ * derived from {@code h2} that is <i>coprime with m</i>, and {@code g_(i+1) = (g_i + step) mod m}. Because the
+ * step is coprime with {@code m}, a key's first {@code min(k, m)} positions are always distinct, for any
+ * {@code m}, and the arithmetic is reduced modulo {@code m} before it can overflow. Two hash passes replace
+ * {@code k}. The textbook false-positive formula assumes independent uniform positions; this scheme approximates
+ * it, and the measured rates are reported in {@code docs/cia/BENCHMARKS.md}.
  *
  * <p><b>Limitations.</b> No deletion (clearing a bit could erase other keys). The false-positive rate degrades
  * once insertions exceed the design capacity: saturation, reported by {@link #fillRatio()}. Duplicate additions
@@ -44,10 +47,12 @@ public final class BloomFilter implements ApproximateMembership {
     @Override
     public void add(byte[] key) {
         Objects.requireNonNull(key, "key");
-        long h1 = SeededHash64.hash(key, seed1);
-        long h2 = SeededHash64.hash(key, seed2) | 1L;
+        long m = parameters.bitCount();
+        long position = ProbeSequence.start(SeededHash64.hash(key, seed1), m);
+        long step = ProbeSequence.step(SeededHash64.hash(key, seed2), m);
         for (int i = 0; i < parameters.hashCount(); i++) {
-            bits.set(position(h1, h2, i));
+            bits.set(position);
+            position = ProbeSequence.next(position, step, m);
         }
         insertions++;
     }
@@ -55,12 +60,14 @@ public final class BloomFilter implements ApproximateMembership {
     @Override
     public boolean mightContain(byte[] key) {
         Objects.requireNonNull(key, "key");
-        long h1 = SeededHash64.hash(key, seed1);
-        long h2 = SeededHash64.hash(key, seed2) | 1L;
+        long m = parameters.bitCount();
+        long position = ProbeSequence.start(SeededHash64.hash(key, seed1), m);
+        long step = ProbeSequence.step(SeededHash64.hash(key, seed2), m);
         for (int i = 0; i < parameters.hashCount(); i++) {
-            if (!bits.get(position(h1, h2, i))) {
+            if (!bits.get(position)) {
                 return false; // one clear bit proves the key was never added
             }
+            position = ProbeSequence.next(position, step, m);
         }
         return true;
     }
@@ -68,18 +75,10 @@ public final class BloomFilter implements ApproximateMembership {
     /** The {@code k} bit positions for {@code key}, in probe order (for explanation and tests). */
     public long[] positionsOf(byte[] key) {
         Objects.requireNonNull(key, "key");
-        long h1 = SeededHash64.hash(key, seed1);
-        long h2 = SeededHash64.hash(key, seed2) | 1L;
         long[] positions = new long[parameters.hashCount()];
-        for (int i = 0; i < positions.length; i++) {
-            positions[i] = position(h1, h2, i);
-        }
+        ProbeSequence.positions(SeededHash64.hash(key, seed1), SeededHash64.hash(key, seed2),
+                parameters.bitCount(), positions);
         return positions;
-    }
-
-    /** {@code (h1 + i * h2) mod m}, computed on unsigned 64-bit values. */
-    private long position(long h1, long h2, int i) {
-        return Long.remainderUnsigned(h1 + i * h2, parameters.bitCount());
     }
 
     public BloomParameters parameters() {
