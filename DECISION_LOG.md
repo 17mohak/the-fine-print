@@ -110,3 +110,17 @@ D-21 was drafted in this log on 2026-11-20 and recorded the same day after the o
 - **Alternatives:** 4.1.3 (more mature line; OSS support ends 2027-07-31). Not chosen by the owner.
 - **Trade-offs:** a `.0` release with no patch history yet, mitigated by the pre-P1 patch evaluation; a longer support window.
 - **Confidence:** n/a (owner's call). **Reversibility:** high (catalogue + locks + verification metadata). **Dependencies:** ADR-0002 (status remains *Proposed* for the other pins); G0-2, G0-3 and G0-SEC remain open.
+
+### D-32 · 2026-11-23 · G0 decisions: toolchain pins retained, SeaweedFS kept for development only, development-image findings recorded · **owner decision**
+- **G0-1, versions (completes D-30):** the owner keeps every remaining pin in ADR-0002 and `docs/g0/TOOLCHAIN_INVENTORY.md` **as it stands, for now**. That includes the floating Temurin `21` CI JDK (patch level resolved at CI run time) and `busybox:1.37.0-musl`. **No dependency is upgraded by this decision.** The revisit triggers in ADR-0002 still apply: any CVE affecting a pin, and before P1. D-30's evaluation of the latest 4.2.x patch before P1 is unchanged.
+- **G0-3, development object store (ADR-0005):** SeaweedFS 4.54 is kept as the **development-only** S3-compatible stand-in for the archived MinIO. **This is not a production storage decision.** Production object storage stays an OWNER + LEGAL decision (TECHNOLOGY_DECISIONS #9, #12).
+- **Development-image findings** (`docs/g0/TOOLCHAIN_INVENTORY.md` F-4 and F-5; `docs/evidence/p0/image-scan-trivy.md`): the HIGH findings reported by Trivy in the pinned PostgreSQL image (27, in the bundled `gosu` helper) and Keycloak image (6) are recorded as **known, unresolved findings in development-only images**. They are **not resolved and not assessed as harmless**. They must be reassessed before any of these images, or the services they stand in for, is used anywhere other than local development.
+- **G0-2, the D-20 path:** resolved by the owner's later decision **D-31** (dated 2026-11-20). Its record is carried on the Track C branch (`cia/a1-a2-kmp-bloom`, PR #2) and reaches `main` when that PR merges. D-31 records the owner's **statement** that the professors approved AI assistance for the assessed algorithms and related items. **No written faculty evidence is held in the repository**, and the faculty items D-31 lists as open stay open. For G0 purposes this line supersedes the "D-20 path" item under "Pending approvals and open decisions" above; that section is kept unchanged as history.
+- **Unchanged by this entry:**
+  - P1–P7 remain **NOT AUTHORISED**.
+  - **G0-SEC** remains mandatory before P1 implements encryption, RLS/tenant context or worker isolation.
+  - No production storage, hosting or security acceptance is made.
+- **Effect:**
+  - ADR-0002 becomes *Accepted* (D-30 for Spring Boot; D-32 for the rest).
+  - ADR-0005 becomes *Accepted for development only* (D-32).
+- **Rationale (as stated by owner; none added):** owner direction on 2026-11-23 to keep the current pins and SeaweedFS for development, and to record the image findings as known development-only findings. **Reversibility:** high. **Dependencies:** D-31 for G0-2 (PR #2).
