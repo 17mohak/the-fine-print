@@ -1,0 +1,28 @@
+# THE FINE PRINT — single source of truth for build dependency versions.
+# Every version is pinned exactly. Rationale and verification dates: docs/adr/0002-p0-toolchain-and-versions.md
+# These versions are PROVISIONAL until the owner confirms them at gate G0 (TECHNOLOGY_DECISIONS #2).
+
+[versions]
+spring-boot = "4.2.0"
+junit = "6.1.3"          # aligned with the version managed by Spring Boot 4.2.0
+assertj = "3.27.7"       # aligned with the version managed by Spring Boot 4.2.0
+archunit = "1.5.1"
+swagger-parser = "2.1.49"
+cyclonedx = "3.6.1"
+
+[libraries]
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-starter-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+archunit = { module = "com.tngtech.archunit:archunit", version.ref = "archunit" }
+swagger-parser-v3 = { module = "io.swagger.parser.v3:swagger-parser-v3", version.ref = "swagger-parser" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+cyclonedx = { id = "org.cyclonedx.bom", version.ref = "cyclonedx" }

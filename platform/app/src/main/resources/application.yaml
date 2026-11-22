@@ -1,0 +1,22 @@
+# P0 development defaults. Safe local defaults only; no secrets, no data source.
+spring:
+  application:
+    name: fineprint-api
+  main:
+    banner-mode: "off"
+
+server:
+  address: 127.0.0.1   # loopback only
+  port: 8080
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never

@@ -1,0 +1,20 @@
+# Dev-stack shutdown/restart lifecycle test — 2026-11-20T02:55:38Z — git 93939ae
+## 0. Create synthetic persistence probe (empty database p0_persistence_probe; no user data)
+probe present: 1
+## 1. docker compose restart
+healthy again after 54s
+All dev-stack checks passed
+probe present after restart: 1
+## 2. docker compose down (volumes kept) then up --wait
+containers after down: 0; volumes kept: fineprint-dev_object-store-data fineprint-dev_postgres-data 
+healthy after 92s
+All dev-stack checks passed
+probe present after down/up (expect 1 = data persisted): 1
+## 3. docker compose down -v (volumes removed) then up --wait
+containers: 0; volumes left: 0
+healthy after 64s
+All dev-stack checks passed
+probe present after down -v (expect 0 = clean slate): 0
+## 4. worker stub restart policy check: kill PID 1, container should exit (no auto-restart configured)
+worker state after kill: exited
+worker after up: healthy

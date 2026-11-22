@@ -1,0 +1,110 @@
+# THE FINE PRINT — P0 CI pipeline (IMPLEMENTATION_ROADMAP P0; ADR-0007).
+# Third-party actions are pinned by full commit SHA (tag in the trailing comment). Images are pinned by digest.
+# Runs on GitHub (private repository 17mohak/the-fine-print). Results: docs/evidence/p0/VERIFICATION.md.
+name: ci
+
+on:
+  push:
+    branches: [main, "p0/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build, tests, ArchUnit, boundaries, SBOM
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: "21"
+      # setup-gradle validates the wrapper JAR checksum against Gradle's published checksums.
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+        with:
+          validate-wrappers: true
+      - name: Build and test (includes ArchUnit, TestKit boundary tests and verifyBoundaries)
+        run: ./gradlew build --console=plain
+      - name: Platform runtime classpath contains no cia-* artefacts
+        run: |
+          ./gradlew :platform:app:dependencies --configuration runtimeClasspath --console=plain -q > runtime-classpath.txt
+          if grep -iE '(:cia|cia-|com\.thefineprint\.cia)' runtime-classpath.txt; then
+            echo "cia-* found on the platform runtime classpath"; exit 1
+          fi
+      - name: Generate SBOM (CycloneDX)
+        run: ./gradlew cyclonedxBom --console=plain
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sbom-cyclonedx
+          path: build/reports/cyclonedx/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: test-reports
+          path: "**/build/reports/tests/"
+
+  dependency-scan:
+    name: Dependency vulnerability scan (OSV-Scanner)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Scans the committed Gradle lockfiles (including the build's own plugin classpath) and the dependency
+      # verification metadata against the OSV database. Reviewed overrides: osv-scanner.toml.
+      - uses: google/osv-scanner-action/osv-scanner-action@32d3cd482bdadfb38b186c0ad1b031902d55d932 # v2.7.1
+        with:
+          scan-args: |-
+            --recursive
+            --config=./osv-scanner.toml
+            ./
+
+  secret-scan:
+    name: Secret scan (gitleaks, full history)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: gitleaks v8.30.1
+        run: >-
+          docker run --rm -v "$PWD:/repo" -w /repo
+          zricethezav/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+          git --config /repo/.gitleaks.toml --redact --verbose /repo
+
+  attribution:
+    name: Commit-attribution rules
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - run: bash ops/scripts/check-commit-attribution.sh HEAD
+
+  compose-smoke:
+    name: Compose stack smoke test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Validate Compose configuration
+        run: docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env.example config --quiet
+      - name: Start the development stack
+        run: docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env.example up -d --wait --wait-timeout 300
+      - name: Verify services and stubs
+        run: ENV_FILE=ops/compose/.env.example bash ops/scripts/verify-dev-stack.sh
+      - name: Logs on failure
+        if: failure()
+        run: docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env.example logs --no-color
+      - name: Tear down
+        if: always()
+        run: docker compose -f ops/compose/compose.yaml --env-file ops/compose/.env.example down -v

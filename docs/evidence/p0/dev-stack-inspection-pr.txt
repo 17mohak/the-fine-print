@@ -1,0 +1,63 @@
+
+== Context
+date_utc: 2026-11-20T03:31:34Z
+git_head: 28fd103
+docker_server: 29.2.0
+compose: 5.0.2
+
+== Images (configured reference -> local RepoDigest)
+quay.io/keycloak/keycloak:26.8.2@sha256:7e66a96e4739239070aeaf72e4c5decf0f7f682cfc725b9f7ea2b336eaba38b3 -> quay.io/keycloak/keycloak@sha256:7e66a96e4739239070aeaf72e4c5decf0f7f682cfc725b9f7ea2b336eaba38b3
+busybox:1.37.0-musl@sha256:f6a95d611e0a8780fabdb2aec43e31275b2720dfefa3e41b16835bfc42454478 -> busybox@sha256:f6a95d611e0a8780fabdb2aec43e31275b2720dfefa3e41b16835bfc42454478
+postgres:18.7-alpine3.23@sha256:f3ee138d5fce80ffaeb315b8bea7610f0c4f2304fb2aceb4ec8e457b92fc41a0 -> postgres@sha256:f3ee138d5fce80ffaeb315b8bea7610f0c4f2304fb2aceb4ec8e457b92fc41a0
+chrislusf/seaweedfs:4.54@sha256:4b42c212543a0acd4c0e675215ecdcaf62a186ef98def76c7e12701871222d15 -> chrislusf/seaweedfs@sha256:4b42c212543a0acd4c0e675215ecdcaf62a186ef98def76c7e12701871222d15
+
+== Services
+doc-worker-stub  Up About a minute (healthy)  
+idp  Up About a minute (healthy)  127.0.0.1:18081->8080/tcp
+object-store  Up About a minute (healthy)  127.0.0.1:8333->8333/tcp
+postgres  Up About a minute (healthy)  127.0.0.1:15432->5432/tcp
+
+== Published ports (must all be 127.0.0.1)
+postgres: 5432/tcp -> 127.0.0.1:15432 
+object-store: 8333/tcp -> 127.0.0.1:8333 
+idp: 8080/tcp -> 127.0.0.1:18081 
+doc-worker-stub: 
+
+== PostgreSQL
+version: PostgreSQL 18.7 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+user_tables: 0
+rls_policies: 0
+tables_with_rls_enabled: 0
+non_system_roles: fineprint_dev
+
+== SeaweedFS S3 (dev-only substitute, ADR-0005)
+anonymous ListBuckets http: 403
+wrong-secret ListBuckets http: 403
+dev-key ListBuckets: <?xml version="1.0" encoding="UTF-8"?>
+<ListAllMyBucketsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Owner><ID>fineprint-dev</ID><DisplayName>fineprint-dev</DisplayName></Owner><Buckets></Buckets></ListAllMyBucketsResult> http=200
+internal port 9333 reachable from host: no
+internal port 8080 reachable from host: no
+internal port 8888 reachable from host: no
+internal port 18080 reachable from host: no
+internal port 19333 reachable from host: no
+
+== Keycloak dev IdP
+issuer: http://127.0.0.1:18081/realms/fineprint-dev
+password grant (direct access grants must be off): {"error":"unauthorized_client","error_description":"Client not allowed for direct access grants"}
+auth request with PKCE method 'plain' (client requires S256): 302 http://localhost:5173/cb?error=invalid_request&error_description=Invalid+parameter%3A+code+challenge+method+is+not+matching+the+configured+one&iss=http%3A%2F%2F127.0.0.1%3A18081%2Frealms%2Ffineprint-dev
+auth request without PKCE: 302 http://localhost:5173/cb?error=invalid_request&error_description=Missing+parameter%3A+code_challenge_method&iss=http%3A%2F%2F127.0.0.1%3A18081%2Frealms%2Ffineprint-dev
+management port 9000 reachable from host: no
+
+== Inert worker stub
+NetworkMode=none ReadonlyRootfs=true User=65534:65534 CapDrop=[ALL] CapAdd=[] SecurityOpt=[no-new-privileges:true] PidsLimit=16 MemoryBytes=33554432 Privileged=false
+interfaces: lo 
+egress to 1.1.1.1: wget: can't connect to remote host (1.1.1.1): Network unreachable
+blocked
+write to root fs: read-only
+identity: uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+effective capabilities: CapEff:	0000000000000000
+process list:  1 nobody sleep 2147483647; 193 nobody ps -o pid,user,args;
+log: doc-worker STUB (P0): no processing implemented; worker and broker are P1 and not authorised.
+
+== Compose network (non-worker services)
+name=fineprint-dev_default internal=false driver=bridge

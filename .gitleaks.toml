@@ -1,0 +1,15 @@
+# gitleaks configuration: default rules plus a narrow allow-list for the clearly labelled, development-only
+# example values used by the local Compose stack (ADR-0006). Anything else that looks like a secret fails CI.
+title = "THE FINE PRINT gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Development-only example credentials for the loopback-only synthetic stack"
+paths = [
+  '''^ops/compose/\.env\.example$''',
+  '''^ops/compose/seaweedfs/s3\.dev\.json$''',
+  '''^ops/compose/keycloak/fineprint-dev-realm\.json$''',
+  '''^gradle/verification-metadata\.xml$''',
+]

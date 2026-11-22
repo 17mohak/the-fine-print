@@ -1,0 +1,41 @@
+# OSV-Scanner v2.7.1 (ghcr.io/google/osv-scanner-action@sha256:3fa25659…) — scan source --recursive --config=osv-scanner.toml — commit a401007 — 2026-11-20T03:13:33Z
+Scanning dir /src
+Starting filesystem walk for root: /
+Scanned /src/api/gradle.lockfile file and found 32 packages
+Scanned /src/architecture-tests/gradle.lockfile file and found 67 packages
+Scanned /src/architecture-tests/src/test/java/fixtures/vendor/llm file and found 0 packages
+Scanned /src/build-logic/gradle.lockfile file and found 13 packages
+Scanned /src/buildscript-gradle.lockfile file and found 55 packages
+Scanned /src/core-api/gradle.lockfile file and found 13 packages
+Scanned /src/gradle/verification-metadata.xml file and found 336 packages
+Scanned /src/platform/app/gradle.lockfile file and found 88 packages
+Scanned /src/platform/audit/gradle.lockfile file and found 13 packages
+Scanned /src/platform/canonical/gradle.lockfile file and found 13 packages
+Scanned /src/platform/cases/gradle.lockfile file and found 13 packages
+Scanned /src/platform/commitments/gradle.lockfile file and found 13 packages
+Scanned /src/platform/crypto/gradle.lockfile file and found 13 packages
+Scanned /src/platform/documents/gradle.lockfile file and found 13 packages
+Scanned /src/platform/domains/generic-agreement/gradle.lockfile file and found 13 packages
+Scanned /src/platform/domains/insurance/gradle.lockfile file and found 13 packages
+Scanned /src/platform/domains/lending/gradle.lockfile file and found 13 packages
+Scanned /src/platform/domains/subscriptions/gradle.lockfile file and found 13 packages
+Scanned /src/platform/domains/tenancy/gradle.lockfile file and found 13 packages
+Scanned /src/platform/domains/warranties/gradle.lockfile file and found 13 packages
+Scanned /src/platform/identity-access/gradle.lockfile file and found 13 packages
+Scanned /src/platform/integrations/gradle.lockfile file and found 13 packages
+Scanned /src/platform/knowledge/gradle.lockfile file and found 13 packages
+Scanned /src/platform/modelgateway/gradle.lockfile file and found 13 packages
+Scanned /src/platform/provenance/gradle.lockfile file and found 13 packages
+Scanned /src/platform/understand/gradle.lockfile file and found 13 packages
+Scanned /src/platform/workerbroker/gradle.lockfile file and found 13 packages
+End status: 535 dirs visited, 1249 inodes visited, 27 Extract calls, 14.035450575s elapsed, 11.727271766s wall time
+Package Maven/org.apache.commons:commons-lang3/3.16.0 has been filtered out because: GHSA-j288-q9x7-2f5v (CVE-2025-48924). False positive for this repository: 3.16.0 appears only in
+gradle/verification-metadata.xml because Gradle downloads the metadata of versions it considers during conflict
+resolution. It is never selected: every lockfile resolves commons-lang3 3.20.0 (patched), test-only, in :api.
+Verified 2026-11-20 (docs/evidence/p0/security-scans.md). Not on any runtime classpath or in the SBOM.
+
+Filtered 1 ignored package/s from the scan.
+
+No issues found
+Exit code: 0
+exit=0
