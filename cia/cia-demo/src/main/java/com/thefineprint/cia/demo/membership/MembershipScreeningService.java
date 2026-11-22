@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
  * "Screen, then confirm" for synthetic fingerprints.
  *
  * <ol>
- *   <li>Build a Bloom filter sized from the requested capacity and false-positive target, and add every
- *       fingerprint (UTF-8 bytes).</li>
+ *   <li>Build a Bloom filter sized from the requested capacity (default: the number of <i>distinct</i>
+ *       fingerprints) and false-positive target, and add every submitted fingerprint (UTF-8 bytes).</li>
  *   <li>For each probe, ask the filter. "Definitely absent" needs no further work.</li>
  *   <li>Confirm each "possibly present" answer against {@link ExactFingerprintRegistry}. Only then is a
  *       probe shown as present; otherwise it is reported as a false positive.</li>
@@ -35,17 +35,21 @@ public class MembershipScreeningService {
     public MembershipResponse screen(MembershipRequest request) {
         validate(request);
         List<String> fingerprints = request.fingerprints();
+        ExactFingerprintRegistry registry = new ExactFingerprintRegistry(fingerprints);
+        int distinct = registry.size();
         long capacity = request.expectedInsertions() != null
                 ? request.expectedInsertions()
-                : Math.max(1, fingerprints.size());
+                : Math.max(1, distinct);
         BloomParameters parameters = BloomParameters.optimal(capacity, request.targetFalsePositiveRate());
         long seed = request.seed() != null ? request.seed() : DEFAULT_SEED;
 
         BloomFilter filter = new BloomFilter(parameters, seed);
+        // Every attempt goes to the filter, as it would in a stream of arrivals; a repeat sets no new bits. The
+        // filter's own insertionCount() therefore counts attempts, so it is not used for the reported quantities:
+        // those use the distinct count, which is the filter's effective membership.
         for (String fingerprint : fingerprints) {
             filter.add(bytes(fingerprint));
         }
-        ExactFingerprintRegistry registry = new ExactFingerprintRegistry(fingerprints);
 
         List<ProbeResult> results = new ArrayList<>();
         for (String probe : request.probes()) {
@@ -65,11 +69,12 @@ public class MembershipScreeningService {
                 new MembershipResponse.Parameters(parameters.expectedInsertions(),
                         parameters.targetFalsePositiveRate(), parameters.bitCount(), parameters.hashCount(),
                         parameters.bitsPerElement(), seed),
-                filter.insertionCount(),
-                registry.size(),
+                fingerprints.size(),
+                distinct,
+                fingerprints.size() - distinct,
                 filter.fillRatio(),
-                filter.expectedFalsePositiveRate(),
-                filter.insertionCount() > parameters.expectedInsertions(),
+                parameters.theoreticalFalsePositiveRate(distinct),
+                distinct > parameters.expectedInsertions(),
                 bitString(filter, parameters.bitCount()),
                 List.copyOf(results));
     }

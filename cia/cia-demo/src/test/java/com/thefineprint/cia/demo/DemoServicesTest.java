@@ -87,6 +87,36 @@ class DemoServicesTest {
     }
 
     @Test
+    void duplicateFingerprintsAreCountedAsAttemptsNotMembers() {
+        List<String> submitted = List.of("CLAUSE-A", "CLAUSE-A", "CLAUSE-A", "CLAUSE-B");
+        MembershipResponse r = membership.screen(new MembershipRequest(submitted, List.of("CLAUSE-A"), 0.01, null, null));
+        assertThat(r.insertionAttempts()).isEqualTo(4);
+        assertThat(r.distinctFingerprints()).isEqualTo(2);
+        assertThat(r.duplicateAttempts()).isEqualTo(2);
+        assertThat(r.parameters().expectedInsertions()).as("default capacity is the distinct count").isEqualTo(2);
+        assertThat(r.overCapacity()).isFalse();
+        com.thefineprint.cia.algorithms.membership.BloomParameters p =
+                com.thefineprint.cia.algorithms.membership.BloomParameters.optimal(2, 0.01);
+        assertThat(r.expectedFalsePositiveRate()).as("theory at 2 distinct members, not 4 attempts")
+                .isEqualTo(p.theoreticalFalsePositiveRate(2));
+        assertThat(r.expectedFalsePositiveRate()).isLessThan(p.theoreticalFalsePositiveRate(4));
+    }
+
+    @Test
+    void repeatsAloneNeverMakeTheFilterOverCapacity() {
+        List<String> submitted = java.util.Collections.nCopies(50, "SAME-CLAUSE");
+        MembershipResponse r = membership.screen(new MembershipRequest(submitted, List.of("SAME-CLAUSE"), 0.01, 1L, null));
+        assertThat(r.distinctFingerprints()).isEqualTo(1);
+        assertThat(r.insertionAttempts()).isEqualTo(50);
+        assertThat(r.overCapacity()).as("1 distinct member in a filter sized for 1").isFalse();
+        assertThat(r.expectedFalsePositiveRate()).isLessThan(0.02);
+
+        MembershipResponse over = membership.screen(new MembershipRequest(List.of("A", "B", "B"), List.of("A"), 0.01,
+                1L, null));
+        assertThat(over.overCapacity()).as("2 distinct members in a filter sized for 1").isTrue();
+    }
+
+    @Test
     void membershipRejectsInvalidInput() {
         assertThatThrownBy(() -> membership.screen(new MembershipRequest(List.of("a"), List.of(), 0.01, null, null)))
                 .hasMessageContaining("probes");
