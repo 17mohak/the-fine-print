@@ -143,3 +143,24 @@ D-21 was drafted in this log on 2026-11-20 and recorded the same day after the o
   - ADR-0002 becomes *Accepted* (D-30 for Spring Boot; D-32 for the rest).
   - ADR-0005 becomes *Accepted for development only* (D-32).
 - **Rationale (as stated by owner; none added):** owner direction on 2026-11-23 to keep the current pins and SeaweedFS for development, and to record the image findings as known development-only findings. **Reversibility:** high. **Dependencies:** D-31 for G0-2 (PR #2).
+
+### D-31 clarification · 2026-11-23 · stated approval versus written evidence (append-only; the D-31 text above is unchanged)
+- In D-31, the list headed "Resolved by the confirmation" (F1, F3, F6, F7) means resolved **as stated by the owner**. It does **not** mean that written faculty evidence exists.
+- Each of those items has two parts:
+  - **(a) The approval itself:** stated by the owner on 2026-11-20 (D-31).
+  - **(b) Written faculty evidence of it:** **OPEN.** None is held in the repository.
+- Still open: **F2** (disclosure form and wording), **F4** (CO definitions and unit-to-CO mapping), **F5** (dates), **F8** (syllabus), **F9** (framework and report format), and the written evidence for F1, F3, F6 and F7.
+- Until written confirmation is attached or linked, every reference to faculty approval in this repository should be read as "stated by the owner".
+
+### Authorisation ledger — revision 2026-11-23 (current; the 2026-11-20 ledger above is kept unchanged as history)
+| Scope | Status |
+|---|---|
+| Architecture v0.2.1 direction | **APPROVED** (D-21), subject to gates and unresolved decisions |
+| Track P, P0 | **AUTHORISED** (D-21 clause 2). G0 decisions recorded: D-30, D-32; G0-2 via D-31 |
+| Track P, P1–P7 | **NOT AUTHORISED.** Each needs its own recorded authorisation. **G0-SEC** (security-specialist review) is required before P1 implements encryption, RLS/tenant context or worker isolation |
+| Track C, C1–C2 | **AUTHORISED** (D-31), in the isolated `cia-*` modules only, on the basis of the owner's **stated** faculty approval. **No written faculty evidence held** |
+| Track C, C3 (report, viva) | Material may be prepared (D-31). Submission depends on the disclosure form (F2, open) |
+| Track C, C0 (faculty inputs) | **Partly open:** F2, F4, F5, F8, F9, and written evidence for F1, F3, F6, F7 |
+| AI-assisted assessed algorithm material | **Permitted for Track C** (D-31, superseding D-21 clause 8 for Track C only), on the owner's stated approval; disclosure per faculty policy (F2, open) |
+| Real/sensitive data | **PROHIBITED** |
+| Production storage, hosting, security acceptance | **Not decided.** SeaweedFS is development-only (D-32) |
