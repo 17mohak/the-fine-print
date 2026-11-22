@@ -1,6 +1,6 @@
 # ADR-0002: P0 toolchain and exact versions
 
-- **Status:** Proposed — **owner confirmation required at G0** (TECHNOLOGY_DECISIONS #2; D-21 clause 5)
+- **Status:** Accepted — owner decisions D-30 (Spring Boot 4.2.x line, 2026-11-20) and D-32 (all other pins retained as they stand, 2026-11-23). Originally Proposed for G0 (TECHNOLOGY_DECISIONS #2; D-21 clause 5)
 - **Date:** 2026-11-20
 - **Phase / authorisation:** Track P, P0 (D-21)
 - **Decision owner:** Engineering proposes; OWNER confirms
@@ -74,3 +74,10 @@ No, apart from the object-store product (ADR-0005).
 - **All other pins in this ADR remain Proposed**, awaiting owner confirmation. The exact inventory and findings are
   in `docs/g0/TOOLCHAIN_INVENTORY.md`. This ADR therefore stays *Proposed* until the remaining confirmations are
   recorded.
+
+## Addendum 2026-11-23 — owner decision D-32 (status: Accepted)
+- The owner keeps **all remaining pins as they stand, for now** (DECISION_LOG D-32). That includes the floating
+  Temurin `21` CI JDK and `busybox:1.37.0-musl`. No upgrade was made.
+- The PostgreSQL and Keycloak image findings (TOOLCHAIN_INVENTORY F-4, F-5) are recorded as **known, unresolved
+  development-only findings**, to be reassessed before any use outside local development.
+- The revisit triggers above still apply. D-30's 4.2.x patch evaluation is still required before P1.

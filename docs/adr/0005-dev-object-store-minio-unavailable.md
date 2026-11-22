@@ -1,6 +1,6 @@
 # ADR-0005: Development object store — MinIO is no longer distributed; propose SeaweedFS for dev only
 
-- **Status:** **Proposed — owner decision required at G0.** Configured provisionally in the local development stack only.
+- **Status:** **Accepted for development only** — owner decision D-32 (2026-11-23). Not a production storage decision. Originally Proposed for G0.
 - **Date:** 2026-11-20
 - **Phase / authorisation:** Track P, P0 (D-21: "Docker Compose dev stack with stubs … MinIO")
 - **Decision owner:** OWNER (the product name appears in the approved roadmap). The production object store stays OWNER + LEGAL (TECHNOLOGY_DECISIONS #9)
@@ -25,7 +25,7 @@ This does **not** choose a production object store.
 ## Options considered
 | Option | Pros | Cons |
 |---|---|---|
-| SeaweedFS (proposed) | Maintained, Apache-2.0, single container, S3 API | Different S3 edge-case behaviour from AWS/MinIO; untested here (Docker unavailable) |
+| SeaweedFS (proposed) | Maintained, Apache-2.0, single container, S3 API | Different S3 edge-case behaviour from AWS/MinIO; untested when first written (Docker unavailable); since verified, see the 2026-11-20 addendum |
 | Garage | Maintained, light | AGPL; needs a post-start layout/key bootstrap step |
 | Pin an old third-party MinIO image or a community fork | Matches the roadmap name | Unmaintained or unofficial supply chain; unpatched |
 | Build MinIO from archived source | Official code | No security fixes; build burden |
@@ -41,10 +41,15 @@ High. Revisit at G0, at the production hosting decision (TECHNOLOGY_DECISIONS #9
 maintenance changes.
 
 ## Deviation from the approved architecture?
-**Yes (product named in the roadmap).** Proposed only; awaiting owner approval in DECISION_LOG.
+**Yes (product named in the roadmap).** Approved by the owner for development only (DECISION_LOG D-32).
 
 ## Addendum 2026-11-20 — development behaviour verified (status unchanged: still Proposed)
 SeaweedFS 4.54 started healthy and passed the stack checks. S3 requests are refused without credentials (403) or
 with a wrong secret (403). The dev identity's ListBuckets returns 200 with zero buckets. Only the S3 port
 (127.0.0.1:8333) is published. **This verifies the development stub only. The owner decision on the substitution
 is still required at G0.**
+
+## Addendum 2026-11-23 — owner decision D-32 (status: Accepted for development only)
+The owner keeps SeaweedFS 4.54 as the development-only S3-compatible stand-in (DECISION_LOG D-32). **This is not a
+choice of production object storage**, which stays OWNER + LEGAL (TECHNOLOGY_DECISIONS #9, #12). The P1 conditions in
+`docs/g0/G0-3_OBJECT_STORE_ASSESSMENT.md` section 3 still apply: standard S3 API only, and no reliance on SeaweedFS-specific behaviour.

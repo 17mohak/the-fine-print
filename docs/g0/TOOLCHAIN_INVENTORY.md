@@ -73,3 +73,10 @@
 
 **Unsupported components:** none found. **Pinned Maven dependency with a known advisory:** none after the Guava
 fix (OSV clean; one documented false-positive override).
+
+
+## Status update 2026-11-23 (appended; the tables above are unchanged)
+The owner retained every pin in this inventory as it stands (**DECISION_LOG D-32**). That includes the floating
+Temurin `21` CI JDK (F-2) and BusyBox 1.37.0 (F-6). No upgrades were made. Findings F-4 and F-5 are recorded as
+known, unresolved development-only image findings, to be reassessed before any use outside local development.
+F-1, F-3 and F-7 remain open recommendations; none of them was decided here.

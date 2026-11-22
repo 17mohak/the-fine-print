@@ -146,3 +146,13 @@ until its findings are recorded and addressed or consciously accepted.
 | G0-2 | **Open.** Checklist and draft (unsent) faculty request: [G0-2_D20_FACULTY_POLICY.md](G0-2_D20_FACULTY_POLICY.md) |
 | G0-3 | **Open (Proposed).** Assessment: [G0-3_OBJECT_STORE_ASSESSMENT.md](G0-3_OBJECT_STORE_ASSESSMENT.md) |
 | G0-SEC | **Not started.** Reviewer package revised: [G0-SEC_HANDOVER.md](G0-SEC_HANDOVER.md) |
+
+## Status update 2026-11-23 (appended)
+
+| # | Status |
+|---|---|
+| G0-1 | **Decided.** D-30 (Spring Boot 4.2.x) and **D-32** (all other pins retained as they stand, including the floating Temurin `21` CI JDK and BusyBox 1.37.0; no upgrades) |
+| G0-2 | **Resolved by D-31**, which is carried on PR #2 (`cia/a1-a2-kmp-bloom`). It records the owner's statement of faculty approval; **no written faculty evidence is held**, and D-31's open items remain open. D-32 records the cross-reference on this branch |
+| G0-3 | **Decided (D-32):** SeaweedFS kept for development only. Not a production storage decision |
+| Image findings | PostgreSQL and Keycloak HIGH findings recorded as **known, unresolved development-only findings** (D-32) |
+| G0-SEC | **Not started.** Still required before P1 |
