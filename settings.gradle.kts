@@ -53,4 +53,6 @@ domainModules.forEach { include(":platform:domains:$it") }
 // Mechanical architecture checks (ArchUnit) over the platform classpath.
 include(":architecture-tests")
 
-// cia/ is deliberately NOT included: Track C is not authorised (D-21) and no cia-* module may exist yet.
+// Isolated academic track (Track C, authorised by D-31). The platform must never depend on these modules:
+// verifyBoundaries (build-logic) and ArchUnit enforce it.
+include(":cia:cia-algorithms", ":cia:cia-bench", ":cia:cia-demo")

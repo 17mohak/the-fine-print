@@ -2,13 +2,12 @@
 
 ## Scope and authorisation
 
-Only work authorised in [`DECISION_LOG.md`](DECISION_LOG.md) may be implemented. As of D-21 (2026-11-20), that is
-**Track P, P0 only**. P1–P7 and Track C (C0–C3) each need their own recorded authorisation.
+Only work authorised in [`DECISION_LOG.md`](DECISION_LOG.md) may be implemented. As of 2026-11-20 that is
+**Track P, P0** (D-21) and **Track C, C1–C2** (D-31). P1–P7 each need their own recorded authorisation.
 
 - Do not implement encryption, key management, RLS or tenant context, the worker or broker, canonicalisation or
-  provenance logic, search indexes, production SPI adapters, or any assessed algorithm, unless it has been
-  authorised.
-- Nothing goes into `cia/` except placeholder documentation ([`cia/README.md`](cia/README.md)).
+  provenance logic, search indexes, or production SPI adapters, unless they have been authorised.
+- Track C work (D-31) stays inside the isolated `cia/` modules; the platform never depends on them ([`cia/README.md`](cia/README.md)).
 - **No real personal documents or sensitive data, anywhere.** Synthetic data only.
 - Decisions follow [ADR-0001](docs/adr/0001-decision-record-conventions.md). OWNER, FACULTY, LEGAL and SEC
   decisions are proposed, never assumed.

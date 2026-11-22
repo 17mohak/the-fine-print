@@ -13,3 +13,4 @@ Owner decisions and authorisations live in [`DECISION_LOG.md`](../../DECISION_LO
 | [0006](0006-dev-stack-stubs.md) | P0 development stack and stubs | Accepted (engineering); verified 2026-11-20 |
 | [0007](0007-supply-chain-scanning-and-sbom.md) | Supply-chain controls, SBOM, scanning | Accepted (engineering), review at G0 |
 | [0008](0008-commit-attribution.md) | Commit-attribution rules and enforcement | Accepted (owner directive) |
+| [0009](0009-track-c-modules-and-benchmark-tooling.md) | Track C modules, benchmark tooling and demo stack | Accepted (engineering), under D-31 |

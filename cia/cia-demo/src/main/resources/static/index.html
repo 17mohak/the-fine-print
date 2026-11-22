@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Fine Print — Evidence Integrity Lab</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#quote-panel">Skip to quote verification</a>
+  <header class="masthead">
+    <p class="eyebrow">The Fine Print · Evidence Integrity Lab</p>
+    <h1>Does the document really say that?</h1>
+    <p class="lede">Two server-side algorithms behind the product's trust model. <strong>Exact matching</strong>
+      proves a quoted passage occurs in the source. <strong>Probabilistic screening</strong> narrows a search
+      quickly, but its answers are only ever confirmed by an exact check.</p>
+    <p class="notice" role="note">Synthetic data only. Every result here is computed by the Java backend
+      (<code>/algo/*</code>); nothing is precomputed in the browser.</p>
+  </header>
+
+  <main class="panels">
+    <!-- A1: KMP quote verification -->
+    <section id="quote-panel" class="panel" aria-labelledby="quote-title">
+      <div class="panel-head">
+        <p class="tag">A1 · Knuth–Morris–Pratt · O(n + m)</p>
+        <h2 id="quote-title">Verify a quotation</h2>
+      </div>
+      <form id="quote-form" class="stack" novalidate>
+        <div class="field">
+          <label for="source-text">Source text <span class="hint">(treated as canonical: no folding)</span></label>
+          <textarea id="source-text" rows="7" spellcheck="false" required></textarea>
+        </div>
+        <div class="field">
+          <label for="quote-text">Quoted passage</label>
+          <input id="quote-text" type="text" spellcheck="false" autocomplete="off" required>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Verify quotation</button>
+          <button type="button" class="ghost" id="quote-example">Load synthetic example</button>
+        </div>
+      </form>
+
+      <div id="quote-result" class="result" aria-live="polite" hidden>
+        <div class="verdict" id="quote-verdict"></div>
+        <figure class="document">
+          <figcaption>Source with every occurrence marked</figcaption>
+          <div id="quote-highlight" class="paper" lang="und"></div>
+        </figure>
+        <dl class="facts" id="quote-facts"></dl>
+        <details class="explain">
+          <summary>How KMP ran: the prefix function</summary>
+          <p>π[i] is the length of the longest proper prefix of the quote that is also a suffix of its first
+            i + 1 symbols. On a mismatch, KMP falls back to π instead of re-reading the text, so each text symbol
+            is compared a bounded number of times.</p>
+          <div class="table-scroll"><table id="prefix-table"><caption class="sr-only">Prefix function</caption>
+          </table></div>
+          <p id="prefix-note" class="hint"></p>
+        </details>
+      </div>
+      <p id="quote-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <!-- A2: Bloom filter screening -->
+    <section id="bloom-panel" class="panel" aria-labelledby="bloom-title">
+      <div class="panel-head">
+        <p class="tag">A2 · Bloom filter · CO5 probabilistic structure</p>
+        <h2 id="bloom-title">Screen fingerprints, then confirm</h2>
+      </div>
+      <form id="bloom-form" class="stack" novalidate>
+        <div class="two-col">
+          <div class="field">
+            <label for="fingerprints">Known fingerprints <span class="hint">(one per line)</span></label>
+            <textarea id="fingerprints" rows="6" spellcheck="false" required></textarea>
+          </div>
+          <div class="field">
+            <label for="probes">Probes to check <span class="hint">(one per line)</span></label>
+            <textarea id="probes" rows="6" spellcheck="false" required></textarea>
+          </div>
+        </div>
+        <div class="three-col">
+          <div class="field">
+            <label for="fpr">Target false-positive rate</label>
+            <select id="fpr">
+              <option value="0.3">30% (tiny filter: shows false positives)</option>
+              <option value="0.1">10%</option>
+              <option value="0.01" selected>1%</option>
+              <option value="0.001">0.1%</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="capacity">Design capacity n <span class="hint">(blank = number of fingerprints)</span></label>
+            <input id="capacity" type="number" min="1" max="1000000" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="seed">Hash seed</label>
+            <input id="seed" type="number" value="7" inputmode="numeric">
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Screen and confirm</button>
+          <button type="button" class="ghost" id="bloom-example">Load synthetic example</button>
+        </div>
+      </form>
+
+      <div id="bloom-result" class="result" aria-live="polite" hidden>
+        <dl class="facts" id="bloom-facts"></dl>
+        <div id="saturation" class="warning" hidden>More fingerprints than the design capacity: the filter is
+          saturating and false positives rise sharply.</div>
+        <div class="table-scroll">
+          <table class="verdicts">
+            <caption>Each probe: what the filter says, then what the exact check says</caption>
+            <thead><tr><th scope="col">Probe</th><th scope="col">Bloom filter</th>
+              <th scope="col">Exact confirmation</th><th scope="col">Bit positions</th></tr></thead>
+            <tbody id="verdict-rows"></tbody>
+          </table>
+        </div>
+        <figure class="bits-figure" id="bits-figure">
+          <figcaption id="bits-caption"></figcaption>
+          <canvas id="bits" width="640" height="96" role="img"></canvas>
+        </figure>
+      </div>
+      <p id="bloom-error" class="error" role="alert" hidden></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Assessed algorithms run in the isolated <code>cia-algorithms</code> module and are never production
+      dependencies of the platform. A Bloom-filter hit is never proof: only the exact confirmation column means
+      "present".</p>
+  </footer>
+</body>
+</html>

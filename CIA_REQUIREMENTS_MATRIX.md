@@ -138,3 +138,13 @@ Week numbers are the guide's; actual dates UNKNOWN. IMPLEMENTATION_ROADMAP **Tra
 
 ## 9. Risks
 Academic-integrity ambiguity (D-20); scope creep from the platform into the CIA slice; Bloom filter looking decorative (mitigated by explicit scale argument + exact confirm + honest report); benchmark showing JDK baseline wins (acceptable, report it); team size > 3.
+
+
+## Addendum 2026-11-20 — D-31 (appended; the sections above are unchanged)
+Per DECISION_LOG **D-31** (owner decision), the owner confirms that the professors approved individual
+portfolio-project treatment, AI assistance for the assessed Java algorithms, AI-assisted infrastructure, the
+`core-api` SPI contracts, and the CIA-3 scope. Track C (C1–C2) is authorised in the isolated `cia-*` modules. The
+section 0 rows that said "must not write … until faculty confirms" are superseded accordingly. **Still missing:**
+CO definitions and the unit-to-CO mapping, actual dates, the full syllabus, and the disclosure form (F2, F4, F5,
+F8, F9). Full CIA compliance therefore still cannot be claimed. The section 5 reference to `algo-bench` means
+`cia-bench`.

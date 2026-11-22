@@ -1,26 +1,28 @@
-# `cia/` — isolated academic track (Track C) — NOT AUTHORISED
+# `cia/` — isolated academic track (Track C)
 
-**This directory is an empty placeholder. Track C (C0–C3) is NOT authorised for implementation (D-21, clause 4).**
+**Status:** Track C (C1–C2) is **authorised** by DECISION_LOG **D-31** (2026-11-20, owner decision). It remains
+**isolated** from the production platform.
 
-It is reserved for the isolated CIA modules described in ARCHITECTURE_OVERVIEW section 2 and CIA_REQUIREMENTS_MATRIX:
-`cia-algorithms` (assessed, student-authored), `cia-bench` (benchmarks) and `cia-demo` (separately runnable demo).
-None of them exists yet, and none is part of the Gradle build (`settings.gradle.kts` does not include `cia/`).
+| Module | Purpose | May depend on |
+|---|---|---|
+| `cia-algorithms` | Assessed algorithm implementations: A1 KMP quote matching (Unit 4), A2 Bloom filter (Unit 6 / CO5) | `core-api` and the JDK only |
+| `cia-bench` | Reproducible JMH benchmarks and false-positive-rate/memory experiments | `cia-algorithms`, JMH |
+| `cia-demo` | Runnable Spring Boot demonstration with a browser UI; `/algo/*` endpoints exist only here | `cia-algorithms`, Spring Boot |
 
-## Rules that apply now
+## Boundaries (enforced, not just documented)
+- The platform must never depend on anything here. Every platform project runs `verifyBoundaries`, which fails
+  if a `cia` project or a `cia-*` / `com.thefineprint.cia` artefact appears on any of its classpaths. ArchUnit
+  checks the same rule at class level.
+- `cia-algorithms` contains no Spring, database or network code, and its assessed classes do not delegate to JDK
+  search, set, bit-set or regex utilities. Both rules are tested in `cia-algorithms`.
+- Production use of an assessed algorithm requires the seven-point promotion process and a separate architecture
+  review (ARCHITECTURE_OVERVIEW section 2). The default is no promotion.
 
-- **No assessed algorithm material may be written here by an AI assistant**: no KMP, suffix array or LCP, Bloom
-  filter or its hash function, heap, DSU or matching code, and none of their tests, baselines, benchmarks,
-  correctness/complexity analysis, report or viva material. This holds until the faculty's AI-assistance policy
-  is confirmed in writing **and** the owner records it in DECISION_LOG (D-20, D-21 clause 8).
-- The platform must never depend on anything here. That is enforced mechanically:
-  - Gradle: every platform project runs `verifyBoundaries`, which fails if any `cia` project or
-    `com.thefineprint.cia` / `cia-*` artefact appears on its compile, runtime or test classpath
-    (`build-logic/`, proven by TestKit tests).
-  - ArchUnit: no `com.thefineprint.platform..` or `..core..` class may depend on `com.thefineprint.cia..`
-    (`architecture-tests/`).
-- Assessed implementations may depend only on `core-api` SPI types.
+## Documentation
+- Algorithms: [docs/cia/A1_KMP.md](../docs/cia/A1_KMP.md), [docs/cia/A2_BLOOM_FILTER.md](../docs/cia/A2_BLOOM_FILTER.md)
+- Benchmarks: [docs/cia/BENCHMARKS.md](../docs/cia/BENCHMARKS.md)
+- Viva preparation: [docs/cia/VIVA.md](../docs/cia/VIVA.md)
 
-## Still missing (must not be invented)
-
-CO1–CO5 definitions and the unit-to-CO mapping; actual submission and review dates; the faculty AI-assistance
-policy; team composition and size; faculty approval of the slice's scope (CIA_REQUIREMENTS_MATRIX section 0).
+## Still missing (do not invent)
+CO1–CO5 definitions and the unit-to-CO mapping, actual dates, the full syllabus, and the required AI-assistance
+disclosure form (D-31, "Still open").

@@ -111,6 +111,25 @@ D-21 was drafted in this log on 2026-11-20 and recorded the same day after the o
 - **Trade-offs:** a `.0` release with no patch history yet, mitigated by the pre-P1 patch evaluation; a longer support window.
 - **Confidence:** n/a (owner's call). **Reversibility:** high (catalogue + locks + verification metadata). **Dependencies:** ADR-0002 (status remains *Proposed* for the other pins); G0-2, G0-3 and G0-SEC remain open.
 
+### D-31 · 2026-11-20 · Faculty approvals confirmed by the owner; Track C implementation authorised as an isolated assessment track · **owner decision**
+- **What the owner confirmed (owner's statement in the working session, 2026-11-20):** the professors have explicitly approved (1) treatment as an **individual portfolio project**; (2) **AI assistance for the assessed Java algorithms**; (3) AI-assisted infrastructure and implementation; (4) the `core-api` SPI contracts; (5) the wider product direction and the CIA-3 scope.
+- **Evidence held in this repository:** the owner's confirmation only. **No written faculty policy document, quotation or date of approval is held here.** D-20 asked for the policy "in writing"; this entry records the owner's decision to proceed on the basis of the confirmed approval. **The owner should attach or link the written confirmation (e-mail or notice) when available** (`docs/g0/G0-2_D20_FACULTY_POLICY.md`, item F1).
+- **Decision:** Track C implementation may proceed, covering C1 (assessed algorithms, their tests and benchmarks) and C2 (the `cia-demo` application). The work is confined to the isolated `cia/` modules (`cia-algorithms`, `cia-bench`, `cia-demo`).
+- **Boundaries kept:** the platform must never depend on `cia-*` (enforced by `verifyBoundaries` and ArchUnit); assessed implementations may depend only on `core-api`; any production use needs the seven-point promotion process and a separate architecture review (ARCHITECTURE_OVERVIEW section 2). **P1 remains NOT AUTHORISED**; G0-SEC remains mandatory before P1 security-critical work.
+- **Still open (not covered by the confirmation):**
+  - **F2:** the disclosure form and wording. AI assistance will be disclosed wherever faculty policy requires; the form is not yet specified.
+  - **F4:** CO1–CO5 definitions and the unit-to-CO mapping.
+  - **F5:** actual dates.
+  - **F8:** the full syllabus.
+  - **F9:** framework and report-format expectations.
+- **Resolved by the confirmation:**
+  - **F1:** AI assistance is permitted for the assessed algorithms (as stated by the owner).
+  - **F3:** AI-authored infrastructure and SPIs are acceptable.
+  - **F6:** individual project.
+  - **F7:** scope approved.
+- **Effect on earlier entries:** supersedes the D-20 prohibition, and D-21 clauses 4 and 8, **for Track C only**, as described above. D-20 and D-21 remain as historical records. The authorisation ledger now reads: Track C (C1–C2) **AUTHORISED (D-31)**; C3 (report and viva) material may be prepared alongside; P1–P7 **NOT AUTHORISED**.
+- **Rationale (as stated by the owner):** the faculty approvals above. **Reversibility:** high (isolated modules). **Dependencies:** the written confirmation (F1 evidence); F2 before any submission.
+
 ### D-32 · 2026-11-23 · G0 decisions: toolchain pins retained, SeaweedFS kept for development only, development-image findings recorded · **owner decision**
 - **G0-1, versions (completes D-30):** the owner keeps every remaining pin in ADR-0002 and `docs/g0/TOOLCHAIN_INVENTORY.md` **as it stands, for now**. That includes the floating Temurin `21` CI JDK (patch level resolved at CI run time) and `busybox:1.37.0-musl`. **No dependency is upgraded by this decision.** The revisit triggers in ADR-0002 still apply: any CVE affecting a pin, and before P1. D-30's evaluation of the latest 4.2.x patch before P1 is unchanged.
 - **G0-3, development object store (ADR-0005):** SeaweedFS 4.54 is kept as the **development-only** S3-compatible stand-in for the archived MinIO. **This is not a production storage decision.** Production object storage stays an OWNER + LEGAL decision (TECHNOLOGY_DECISIONS #9, #12).
@@ -124,3 +143,24 @@ D-21 was drafted in this log on 2026-11-20 and recorded the same day after the o
   - ADR-0002 becomes *Accepted* (D-30 for Spring Boot; D-32 for the rest).
   - ADR-0005 becomes *Accepted for development only* (D-32).
 - **Rationale (as stated by owner; none added):** owner direction on 2026-11-23 to keep the current pins and SeaweedFS for development, and to record the image findings as known development-only findings. **Reversibility:** high. **Dependencies:** D-31 for G0-2 (PR #2).
+
+### D-31 clarification · 2026-11-23 · stated approval versus written evidence (append-only; the D-31 text above is unchanged)
+- In D-31, the list headed "Resolved by the confirmation" (F1, F3, F6, F7) means resolved **as stated by the owner**. It does **not** mean that written faculty evidence exists.
+- Each of those items has two parts:
+  - **(a) The approval itself:** stated by the owner on 2026-11-20 (D-31).
+  - **(b) Written faculty evidence of it:** **OPEN.** None is held in the repository.
+- Still open: **F2** (disclosure form and wording), **F4** (CO definitions and unit-to-CO mapping), **F5** (dates), **F8** (syllabus), **F9** (framework and report format), and the written evidence for F1, F3, F6 and F7.
+- Until written confirmation is attached or linked, every reference to faculty approval in this repository should be read as "stated by the owner".
+
+### Authorisation ledger — revision 2026-11-23 (current; the 2026-11-20 ledger above is kept unchanged as history)
+| Scope | Status |
+|---|---|
+| Architecture v0.2.1 direction | **APPROVED** (D-21), subject to gates and unresolved decisions |
+| Track P, P0 | **AUTHORISED** (D-21 clause 2). G0 decisions recorded: D-30, D-32; G0-2 via D-31 |
+| Track P, P1–P7 | **NOT AUTHORISED.** Each needs its own recorded authorisation. **G0-SEC** (security-specialist review) is required before P1 implements encryption, RLS/tenant context or worker isolation |
+| Track C, C1–C2 | **AUTHORISED** (D-31), in the isolated `cia-*` modules only, on the basis of the owner's **stated** faculty approval. **No written faculty evidence held** |
+| Track C, C3 (report, viva) | Material may be prepared (D-31). Submission depends on the disclosure form (F2, open) |
+| Track C, C0 (faculty inputs) | **Partly open:** F2, F4, F5, F8, F9, and written evidence for F1, F3, F6, F7 |
+| AI-assisted assessed algorithm material | **Permitted for Track C** (D-31, superseding D-21 clause 8 for Track C only), on the owner's stated approval; disclosure per faculty policy (F2, open) |
+| Real/sensitive data | **PROHIBITED** |
+| Production storage, hosting, security acceptance | **Not decided.** SeaweedFS is development-only (D-32) |

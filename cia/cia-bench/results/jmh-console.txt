@@ -1,0 +1,2682 @@
+Starting a Gradle Daemon, 4 stopped Daemons could not be reused, use --status for details
+> Task :build-logic:compileJava UP-TO-DATE
+> Task :build-logic:pluginDescriptors UP-TO-DATE
+> Task :build-logic:processResources UP-TO-DATE
+> Task :build-logic:classes UP-TO-DATE
+> Task :build-logic:jar UP-TO-DATE
+> Task :core-api:compileJava UP-TO-DATE
+> Task :core-api:processResources NO-SOURCE
+> Task :core-api:classes UP-TO-DATE
+> Task :core-api:jar UP-TO-DATE
+> Task :cia:cia-algorithms:compileJava UP-TO-DATE
+> Task :cia:cia-algorithms:processResources NO-SOURCE
+> Task :cia:cia-algorithms:classes UP-TO-DATE
+> Task :cia:cia-algorithms:jar UP-TO-DATE
+
+> Task :cia:cia-bench:compileJava UP-TO-DATE
+Dependency verification failed for configuration ':cia:cia-bench:compileClasspath'
+9 artifacts failed verification:
+  - apache-16.pom (org.apache:apache:16) from repository MavenRepo
+  - commons-math3-3.6.1.jar (org.apache.commons:commons-math3:3.6.1) from repository MavenRepo
+  - commons-math3-3.6.1.pom (org.apache.commons:commons-math3:3.6.1) from repository MavenRepo
+  - commons-parent-39.pom (org.apache.commons:commons-parent:39) from repository MavenRepo
+  - jmh-core-1.37.jar (org.openjdk.jmh:jmh-core:1.37) from repository MavenRepo
+  - jmh-core-1.37.pom (org.openjdk.jmh:jmh-core:1.37) from repository MavenRepo
+  - jmh-parent-1.37.pom (org.openjdk.jmh:jmh-parent:1.37) from repository MavenRepo
+  - jopt-simple-5.0.4.jar (net.sf.jopt-simple:jopt-simple:5.0.4) from repository MavenRepo
+  - jopt-simple-5.0.4.pom (net.sf.jopt-simple:jopt-simple:5.0.4) from repository MavenRepo
+If the artifacts are trustworthy, you will need to update the gradle/verification-metadata.xml file. For more on how to do this, please refer to https://docs.gradle.org/9.9.2/userguide/dependency_verification.html#sec:troubleshooting-verification in the Gradle documentation.
+
+Open this report for more details: file:///C:/Users/MOHAK/The%20Fine%20Print/build/reports/dependency-verification/at-1795166990006/dependency-verification-report.html
+Dependency verification failed for configuration ':cia:cia-bench:annotationProcessor'
+11 artifacts failed verification:
+  - apache-16.pom (org.apache:apache:16) from repository MavenRepo
+  - commons-math3-3.6.1.jar (org.apache.commons:commons-math3:3.6.1) from repository MavenRepo
+  - commons-math3-3.6.1.pom (org.apache.commons:commons-math3:3.6.1) from repository MavenRepo
+  - commons-parent-39.pom (org.apache.commons:commons-parent:39) from repository MavenRepo
+  - jmh-core-1.37.jar (org.openjdk.jmh:jmh-core:1.37) from repository MavenRepo
+  - jmh-core-1.37.pom (org.openjdk.jmh:jmh-core:1.37) from repository MavenRepo
+  - jmh-parent-1.37.pom (org.openjdk.jmh:jmh-parent:1.37) from repository MavenRepo
+  - jopt-simple-5.0.4.jar (net.sf.jopt-simple:jopt-simple:5.0.4) from repository MavenRepo
+  - jopt-simple-5.0.4.pom (net.sf.jopt-simple:jopt-simple:5.0.4) from repository MavenRepo
+  - jmh-generator-annprocess-1.37.jar (org.openjdk.jmh:jmh-generator-annprocess:1.37) from repository MavenRepo
+  - jmh-generator-annprocess-1.37.pom (org.openjdk.jmh:jmh-generator-annprocess:1.37) from repository MavenRepo
+If the artifacts are trustworthy, you will need to update the gradle/verification-metadata.xml file. For more on how to do this, please refer to https://docs.gradle.org/9.9.2/userguide/dependency_verification.html#sec:troubleshooting-verification in the Gradle documentation.
+
+Open this report for more details: file:///C:/Users/MOHAK/The%20Fine%20Print/build/reports/dependency-verification/at-1795166990006/dependency-verification-report.html
+
+> Task :cia:cia-bench:processResources NO-SOURCE
+> Task :cia:cia-bench:classes UP-TO-DATE
+
+> Task :cia:cia-bench:jmh
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 6, elements = 10000)
+
+# Run progress: 0.00% complete, ETA 00:07:30
+# Fork: 1 of 1
+# Warmup Iteration   1: 19.020 ops/us
+# Warmup Iteration   2: 22.427 ops/us
+Iteration   1: 22.129 ops/us
+Iteration   2: 23.123 ops/us
+Iteration   3: 23.227 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  22.826 ±(99.9%) 11.064 ops/us [Average]
+  (min, avg, max) = (22.129, 22.826, 23.227), stdev = 0.606
+  CI (99.9%): [11.762, 33.890] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 6, elements = 100000)
+
+# Run progress: 1.11% complete, ETA 00:08:34
+# Fork: 1 of 1
+# Warmup Iteration   1: 21.988 ops/us
+# Warmup Iteration   2: 23.519 ops/us
+Iteration   1: 22.083 ops/us
+Iteration   2: 19.831 ops/us
+Iteration   3: 22.745 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  21.553 ±(99.9%) 27.869 ops/us [Average]
+  (min, avg, max) = (19.831, 21.553, 22.745), stdev = 1.528
+  CI (99.9%): [≈ 0, 49.422] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 6, elements = 1000000)
+
+# Run progress: 2.22% complete, ETA 00:08:27
+# Fork: 1 of 1
+# Warmup Iteration   1: 21.104 ops/us
+# Warmup Iteration   2: 21.016 ops/us
+Iteration   1: 23.787 ops/us
+Iteration   2: 23.284 ops/us
+Iteration   3: 22.762 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  23.278 ±(99.9%) 9.352 ops/us [Average]
+  (min, avg, max) = (22.762, 23.278, 23.787), stdev = 0.513
+  CI (99.9%): [13.926, 32.630] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 10, elements = 10000)
+
+# Run progress: 3.33% complete, ETA 00:08:39
+# Fork: 1 of 1
+# Warmup Iteration   1: 15.943 ops/us
+# Warmup Iteration   2: 16.354 ops/us
+Iteration   1: 15.650 ops/us
+Iteration   2: 16.594 ops/us
+Iteration   3: 17.393 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  16.546 ±(99.9%) 15.915 ops/us [Average]
+  (min, avg, max) = (15.650, 16.546, 17.393), stdev = 0.872
+  CI (99.9%): [0.631, 32.461] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 10, elements = 100000)
+
+# Run progress: 4.44% complete, ETA 00:08:29
+# Fork: 1 of 1
+# Warmup Iteration   1: 17.660 ops/us
+# Warmup Iteration   2: 17.971 ops/us
+Iteration   1: 12.228 ops/us
+Iteration   2: 10.350 ops/us
+Iteration   3: 11.002 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  11.193 ±(99.9%) 17.399 ops/us [Average]
+  (min, avg, max) = (10.350, 11.193, 12.228), stdev = 0.954
+  CI (99.9%): [≈ 0, 28.592] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 10, elements = 1000000)
+
+# Run progress: 5.56% complete, ETA 00:08:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 11.271 ops/us
+# Warmup Iteration   2: 11.365 ops/us
+Iteration   1: 11.792 ops/us
+Iteration   2: 11.847 ops/us
+Iteration   3: 12.350 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  11.996 ±(99.9%) 5.612 ops/us [Average]
+  (min, avg, max) = (11.792, 11.996, 12.350), stdev = 0.308
+  CI (99.9%): [6.384, 17.609] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 14, elements = 10000)
+
+# Run progress: 6.67% complete, ETA 00:08:22
+# Fork: 1 of 1
+# Warmup Iteration   1: 11.762 ops/us
+# Warmup Iteration   2: 11.210 ops/us
+Iteration   1: 9.796 ops/us
+Iteration   2: 10.168 ops/us
+Iteration   3: 11.914 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  10.626 ±(99.9%) 20.629 ops/us [Average]
+  (min, avg, max) = (9.796, 10.626, 11.914), stdev = 1.131
+  CI (99.9%): [≈ 0, 31.255] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 14, elements = 100000)
+
+# Run progress: 7.78% complete, ETA 00:08:15
+# Fork: 1 of 1
+# Warmup Iteration   1: 9.892 ops/us
+# Warmup Iteration   2: 12.276 ops/us
+Iteration   1: 11.336 ops/us
+Iteration   2: 12.344 ops/us
+Iteration   3: 12.445 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  12.042 ±(99.9%) 11.195 ops/us [Average]
+  (min, avg, max) = (11.336, 12.042, 12.445), stdev = 0.614
+  CI (99.9%): [0.847, 23.237] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomInsert
+# Parameters: (bitsPerElement = 14, elements = 1000000)
+
+# Run progress: 8.89% complete, ETA 00:08:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 12.540 ops/us
+# Warmup Iteration   2: 11.703 ops/us
+Iteration   1: 12.610 ops/us
+Iteration   2: 13.257 ops/us
+Iteration   3: 13.844 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomInsert":
+  13.237 ±(99.9%) 11.266 ops/us [Average]
+  (min, avg, max) = (12.610, 13.237, 13.844), stdev = 0.618
+  CI (99.9%): [1.972, 24.503] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 6, elements = 10000)
+
+# Run progress: 10.00% complete, ETA 00:08:05
+# Fork: 1 of 1
+# Warmup Iteration   1: 24.193 ops/us
+# Warmup Iteration   2: 26.072 ops/us
+Iteration   1: 28.409 ops/us
+Iteration   2: 28.072 ops/us
+Iteration   3: 27.432 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  27.971 ±(99.9%) 9.047 ops/us [Average]
+  (min, avg, max) = (27.432, 27.971, 28.409), stdev = 0.496
+  CI (99.9%): [18.924, 37.018] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 6, elements = 100000)
+
+# Run progress: 11.11% complete, ETA 00:07:57
+# Fork: 1 of 1
+# Warmup Iteration   1: 26.339 ops/us
+# Warmup Iteration   2: 27.506 ops/us
+Iteration   1: 29.557 ops/us
+Iteration   2: 28.572 ops/us
+Iteration   3: 28.628 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  28.919 ±(99.9%) 10.083 ops/us [Average]
+  (min, avg, max) = (28.572, 28.919, 29.557), stdev = 0.553
+  CI (99.9%): [18.836, 39.002] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 6, elements = 1000000)
+
+# Run progress: 12.22% complete, ETA 00:07:49
+# Fork: 1 of 1
+# Warmup Iteration   1: 27.007 ops/us
+# Warmup Iteration   2: 26.707 ops/us
+Iteration   1: 26.649 ops/us
+Iteration   2: 18.882 ops/us
+Iteration   3: 26.079 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  23.870 ±(99.9%) 78.977 ops/us [Average]
+  (min, avg, max) = (18.882, 23.870, 26.649), stdev = 4.329
+  CI (99.9%): [≈ 0, 102.846] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 10, elements = 10000)
+
+# Run progress: 13.33% complete, ETA 00:07:43
+# Fork: 1 of 1
+# Warmup Iteration   1: 21.835 ops/us
+# Warmup Iteration   2: 24.570 ops/us
+Iteration   1: 24.237 ops/us
+Iteration   2: 22.834 ops/us
+Iteration   3: 24.088 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  23.720 ±(99.9%) 14.057 ops/us [Average]
+  (min, avg, max) = (22.834, 23.720, 24.237), stdev = 0.770
+  CI (99.9%): [9.663, 37.776] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 10, elements = 100000)
+
+# Run progress: 14.44% complete, ETA 00:07:35
+# Fork: 1 of 1
+# Warmup Iteration   1: 20.606 ops/us
+# Warmup Iteration   2: 23.355 ops/us
+Iteration   1: 20.780 ops/us
+Iteration   2: 21.736 ops/us
+Iteration   3: 21.937 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  21.484 ±(99.9%) 11.274 ops/us [Average]
+  (min, avg, max) = (20.780, 21.484, 21.937), stdev = 0.618
+  CI (99.9%): [10.210, 32.759] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 10, elements = 1000000)
+
+# Run progress: 15.56% complete, ETA 00:07:28
+# Fork: 1 of 1
+# Warmup Iteration   1: 21.396 ops/us
+# Warmup Iteration   2: 21.957 ops/us
+Iteration   1: 21.869 ops/us
+Iteration   2: 21.979 ops/us
+Iteration   3: 20.701 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  21.517 ±(99.9%) 12.926 ops/us [Average]
+  (min, avg, max) = (20.701, 21.517, 21.979), stdev = 0.709
+  CI (99.9%): [8.591, 34.443] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 14, elements = 10000)
+
+# Run progress: 16.67% complete, ETA 00:07:22
+# Fork: 1 of 1
+# Warmup Iteration   1: 18.475 ops/us
+# Warmup Iteration   2: 19.587 ops/us
+Iteration   1: 20.050 ops/us
+Iteration   2: 20.913 ops/us
+Iteration   3: 20.786 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  20.583 ±(99.9%) 8.499 ops/us [Average]
+  (min, avg, max) = (20.050, 20.583, 20.913), stdev = 0.466
+  CI (99.9%): [12.084, 29.082] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 14, elements = 100000)
+
+# Run progress: 17.78% complete, ETA 00:07:15
+# Fork: 1 of 1
+# Warmup Iteration   1: 19.956 ops/us
+# Warmup Iteration   2: 19.456 ops/us
+Iteration   1: 20.037 ops/us
+Iteration   2: 20.393 ops/us
+Iteration   3: 18.943 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  19.791 ±(99.9%) 13.788 ops/us [Average]
+  (min, avg, max) = (18.943, 19.791, 20.393), stdev = 0.756
+  CI (99.9%): [6.003, 33.579] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.bloomQuery
+# Parameters: (bitsPerElement = 14, elements = 1000000)
+
+# Run progress: 18.89% complete, ETA 00:07:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 17.224 ops/us
+# Warmup Iteration   2: 18.078 ops/us
+Iteration   1: 17.673 ops/us
+Iteration   2: 17.499 ops/us
+Iteration   3: 17.509 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.bloomQuery":
+  17.560 ±(99.9%) 1.791 ops/us [Average]
+  (min, avg, max) = (17.499, 17.560, 17.673), stdev = 0.098
+  CI (99.9%): [15.769, 19.351] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 6, elements = 10000)
+
+# Run progress: 20.00% complete, ETA 00:07:02
+# Fork: 1 of 1
+# Warmup Iteration   1: 55.355 ops/us
+# Warmup Iteration   2: 63.489 ops/us
+Iteration   1: 67.783 ops/us
+Iteration   2: 56.978 ops/us
+Iteration   3: 60.414 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  61.725 ±(99.9%) 100.717 ops/us [Average]
+  (min, avg, max) = (56.978, 61.725, 67.783), stdev = 5.521
+  CI (99.9%): [≈ 0, 162.442] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 6, elements = 100000)
+
+# Run progress: 21.11% complete, ETA 00:06:56
+# Fork: 1 of 1
+# Warmup Iteration   1: 54.986 ops/us
+# Warmup Iteration   2: 69.621 ops/us
+Iteration   1: 67.215 ops/us
+Iteration   2: 62.718 ops/us
+Iteration   3: 64.843 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  64.925 ±(99.9%) 41.037 ops/us [Average]
+  (min, avg, max) = (62.718, 64.925, 67.215), stdev = 2.249
+  CI (99.9%): [23.889, 105.962] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 6, elements = 1000000)
+
+# Run progress: 22.22% complete, ETA 00:06:50
+# Fork: 1 of 1
+# Warmup Iteration   1: 65.744 ops/us
+# Warmup Iteration   2: 60.830 ops/us
+Iteration   1: 56.245 ops/us
+Iteration   2: 67.025 ops/us
+Iteration   3: 69.181 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  64.151 ±(99.9%) 126.439 ops/us [Average]
+  (min, avg, max) = (56.245, 64.151, 69.181), stdev = 6.931
+  CI (99.9%): [≈ 0, 190.589] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 10, elements = 10000)
+
+# Run progress: 23.33% complete, ETA 00:06:44
+# Fork: 1 of 1
+# Warmup Iteration   1: 56.989 ops/us
+# Warmup Iteration   2: 66.219 ops/us
+Iteration   1: 69.591 ops/us
+Iteration   2: 69.418 ops/us
+Iteration   3: 71.975 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  70.328 ±(99.9%) 26.067 ops/us [Average]
+  (min, avg, max) = (69.418, 70.328, 71.975), stdev = 1.429
+  CI (99.9%): [44.261, 96.395] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 10, elements = 100000)
+
+# Run progress: 24.44% complete, ETA 00:06:37
+# Fork: 1 of 1
+# Warmup Iteration   1: 59.688 ops/us
+# Warmup Iteration   2: 70.346 ops/us
+Iteration   1: 68.233 ops/us
+Iteration   2: 70.607 ops/us
+Iteration   3: 69.404 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  69.415 ±(99.9%) 21.655 ops/us [Average]
+  (min, avg, max) = (68.233, 69.415, 70.607), stdev = 1.187
+  CI (99.9%): [47.759, 91.070] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 10, elements = 1000000)
+
+# Run progress: 25.56% complete, ETA 00:06:31
+# Fork: 1 of 1
+# Warmup Iteration   1: 56.458 ops/us
+# Warmup Iteration   2: 67.949 ops/us
+Iteration   1: 71.822 ops/us
+Iteration   2: 53.461 ops/us
+Iteration   3: 55.643 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  60.309 ±(99.9%) 182.989 ops/us [Average]
+  (min, avg, max) = (53.461, 60.309, 71.822), stdev = 10.030
+  CI (99.9%): [≈ 0, 243.297] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 14, elements = 10000)
+
+# Run progress: 26.67% complete, ETA 00:06:25
+# Fork: 1 of 1
+# Warmup Iteration   1: 57.933 ops/us
+# Warmup Iteration   2: 68.094 ops/us
+Iteration   1: 56.158 ops/us
+Iteration   2: 59.864 ops/us
+Iteration   3: 62.031 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  59.351 ±(99.9%) 54.186 ops/us [Average]
+  (min, avg, max) = (56.158, 59.351, 62.031), stdev = 2.970
+  CI (99.9%): [5.165, 113.537] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 14, elements = 100000)
+
+# Run progress: 27.78% complete, ETA 00:06:19
+# Fork: 1 of 1
+# Warmup Iteration   1: 62.414 ops/us
+# Warmup Iteration   2: 62.551 ops/us
+Iteration   1: 66.747 ops/us
+Iteration   2: 60.414 ops/us
+Iteration   3: 70.413 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  65.858 ±(99.9%) 92.284 ops/us [Average]
+  (min, avg, max) = (60.414, 65.858, 70.413), stdev = 5.058
+  CI (99.9%): [≈ 0, 158.142] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert
+# Parameters: (bitsPerElement = 14, elements = 1000000)
+
+# Run progress: 28.89% complete, ETA 00:06:13
+# Fork: 1 of 1
+# Warmup Iteration   1: 61.598 ops/us
+# Warmup Iteration   2: 70.034 ops/us
+Iteration   1: 69.442 ops/us
+Iteration   2: 66.344 ops/us
+Iteration   3: 63.333 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetInsert":
+  66.373 ±(99.9%) 55.730 ops/us [Average]
+  (min, avg, max) = (63.333, 66.373, 69.442), stdev = 3.055
+  CI (99.9%): [10.643, 122.103] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 6, elements = 10000)
+
+# Run progress: 30.00% complete, ETA 00:06:07
+# Fork: 1 of 1
+# Warmup Iteration   1: 193.811 ops/us
+# Warmup Iteration   2: 173.727 ops/us
+Iteration   1: 250.212 ops/us
+Iteration   2: 242.622 ops/us
+Iteration   3: 244.659 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  245.831 ±(99.9%) 71.671 ops/us [Average]
+  (min, avg, max) = (242.622, 245.831, 250.212), stdev = 3.929
+  CI (99.9%): [174.160, 317.502] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 6, elements = 100000)
+
+# Run progress: 31.11% complete, ETA 00:06:01
+# Fork: 1 of 1
+# Warmup Iteration   1: 206.853 ops/us
+# Warmup Iteration   2: 191.438 ops/us
+Iteration   1: 254.984 ops/us
+Iteration   2: 255.434 ops/us
+Iteration   3: 254.448 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  254.956 ±(99.9%) 9.005 ops/us [Average]
+  (min, avg, max) = (254.448, 254.956, 255.434), stdev = 0.494
+  CI (99.9%): [245.951, 263.960] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 6, elements = 1000000)
+
+# Run progress: 32.22% complete, ETA 00:05:55
+# Fork: 1 of 1
+# Warmup Iteration   1: 176.977 ops/us
+# Warmup Iteration   2: 162.642 ops/us
+Iteration   1: 213.014 ops/us
+Iteration   2: 212.676 ops/us
+Iteration   3: 215.232 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  213.641 ±(99.9%) 25.335 ops/us [Average]
+  (min, avg, max) = (212.676, 213.641, 215.232), stdev = 1.389
+  CI (99.9%): [188.306, 238.976] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 10, elements = 10000)
+
+# Run progress: 33.33% complete, ETA 00:05:49
+# Fork: 1 of 1
+# Warmup Iteration   1: 196.055 ops/us
+# Warmup Iteration   2: 210.906 ops/us
+Iteration   1: 250.245 ops/us
+Iteration   2: 248.885 ops/us
+Iteration   3: 203.283 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  234.138 ±(99.9%) 487.654 ops/us [Average]
+  (min, avg, max) = (203.283, 234.138, 250.245), stdev = 26.730
+  CI (99.9%): [≈ 0, 721.792] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 10, elements = 100000)
+
+# Run progress: 34.44% complete, ETA 00:05:43
+# Fork: 1 of 1
+# Warmup Iteration   1: 208.667 ops/us
+# Warmup Iteration   2: 205.611 ops/us
+Iteration   1: 247.346 ops/us
+Iteration   2: 249.222 ops/us
+Iteration   3: 257.161 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  251.243 ±(99.9%) 95.059 ops/us [Average]
+  (min, avg, max) = (247.346, 251.243, 257.161), stdev = 5.211
+  CI (99.9%): [156.184, 346.302] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 10, elements = 1000000)
+
+# Run progress: 35.56% complete, ETA 00:05:37
+# Fork: 1 of 1
+# Warmup Iteration   1: 187.553 ops/us
+# Warmup Iteration   2: 192.294 ops/us
+Iteration   1: 205.775 ops/us
+Iteration   2: 212.273 ops/us
+Iteration   3: 211.496 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  209.848 ±(99.9%) 64.742 ops/us [Average]
+  (min, avg, max) = (205.775, 209.848, 212.273), stdev = 3.549
+  CI (99.9%): [145.106, 274.590] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 14, elements = 10000)
+
+# Run progress: 36.67% complete, ETA 00:05:31
+# Fork: 1 of 1
+# Warmup Iteration   1: 206.597 ops/us
+# Warmup Iteration   2: 206.342 ops/us
+Iteration   1: 258.208 ops/us
+Iteration   2: 245.161 ops/us
+Iteration   3: 249.837 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  251.069 ±(99.9%) 120.587 ops/us [Average]
+  (min, avg, max) = (245.161, 251.069, 258.208), stdev = 6.610
+  CI (99.9%): [130.481, 371.656] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 14, elements = 100000)
+
+# Run progress: 37.78% complete, ETA 00:05:25
+# Fork: 1 of 1
+# Warmup Iteration   1: 217.224 ops/us
+# Warmup Iteration   2: 197.346 ops/us
+Iteration   1: 254.389 ops/us
+Iteration   2: 252.807 ops/us
+Iteration   3: 259.558 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  255.585 ±(99.9%) 64.418 ops/us [Average]
+  (min, avg, max) = (252.807, 255.585, 259.558), stdev = 3.531
+  CI (99.9%): [191.167, 320.003] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery
+# Parameters: (bitsPerElement = 14, elements = 1000000)
+
+# Run progress: 38.89% complete, ETA 00:05:19
+# Fork: 1 of 1
+# Warmup Iteration   1: 190.181 ops/us
+# Warmup Iteration   2: 194.185 ops/us
+Iteration   1: 234.044 ops/us
+Iteration   2: 235.448 ops/us
+Iteration   3: 227.630 ops/us
+
+
+Result "com.thefineprint.cia.bench.BloomBenchmark.hashSetQuery":
+  232.374 ±(99.9%) 76.039 ops/us [Average]
+  (min, avg, max) = (227.630, 232.374, 235.448), stdev = 4.168
+  CI (99.9%): [156.335, 308.413] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 10000)
+
+# Run progress: 40.00% complete, ETA 00:05:14
+# Fork: 1 of 1
+# Warmup Iteration   1: 2.220 us/op
+# Warmup Iteration   2: 1.940 us/op
+Iteration   1: 1.762 us/op
+Iteration   2: 2.260 us/op
+Iteration   3: 2.066 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  2.029 ±(99.9%) 4.583 us/op [Average]
+  (min, avg, max) = (1.762, 2.029, 2.260), stdev = 0.251
+  CI (99.9%): [≈ 0, 6.612] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 100000)
+
+# Run progress: 41.11% complete, ETA 00:05:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 16.056 us/op
+# Warmup Iteration   2: 15.500 us/op
+Iteration   1: 14.736 us/op
+Iteration   2: 15.327 us/op
+Iteration   3: 15.756 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  15.273 ±(99.9%) 9.345 us/op [Average]
+  (min, avg, max) = (14.736, 15.273, 15.756), stdev = 0.512
+  CI (99.9%): [5.928, 24.618] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 1000000)
+
+# Run progress: 42.22% complete, ETA 00:05:02
+# Fork: 1 of 1
+# Warmup Iteration   1: 204.100 us/op
+# Warmup Iteration   2: 174.240 us/op
+Iteration   1: 189.467 us/op
+Iteration   2: 182.514 us/op
+Iteration   3: 179.050 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  183.677 ±(99.9%) 96.779 us/op [Average]
+  (min, avg, max) = (179.050, 183.677, 189.467), stdev = 5.305
+  CI (99.9%): [86.898, 280.456] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 10000)
+
+# Run progress: 43.33% complete, ETA 00:04:56
+# Fork: 1 of 1
+# Warmup Iteration   1: 1.674 us/op
+# Warmup Iteration   2: 1.574 us/op
+Iteration   1: 1.709 us/op
+Iteration   2: 1.559 us/op
+Iteration   3: 1.540 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  1.603 ±(99.9%) 1.690 us/op [Average]
+  (min, avg, max) = (1.540, 1.603, 1.709), stdev = 0.093
+  CI (99.9%): [≈ 0, 3.293] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 100000)
+
+# Run progress: 44.44% complete, ETA 00:04:50
+# Fork: 1 of 1
+# Warmup Iteration   1: 22.873 us/op
+# Warmup Iteration   2: 15.829 us/op
+Iteration   1: 15.754 us/op
+Iteration   2: 15.131 us/op
+Iteration   3: 15.471 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  15.452 ±(99.9%) 5.690 us/op [Average]
+  (min, avg, max) = (15.131, 15.452, 15.754), stdev = 0.312
+  CI (99.9%): [9.762, 21.142] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 1000000)
+
+# Run progress: 45.56% complete, ETA 00:04:44
+# Fork: 1 of 1
+# Warmup Iteration   1: 2749.666 us/op
+# Warmup Iteration   2: 2925.231 us/op
+Iteration   1: 2737.473 us/op
+Iteration   2: 2686.735 us/op
+Iteration   3: 2723.038 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  2715.749 ±(99.9%) 476.939 us/op [Average]
+  (min, avg, max) = (2686.735, 2715.749, 2737.473), stdev = 26.143
+  CI (99.9%): [2238.810, 3192.688] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 10000)
+
+# Run progress: 46.67% complete, ETA 00:04:38
+# Fork: 1 of 1
+# Warmup Iteration   1: 1.708 us/op
+# Warmup Iteration   2: 1.588 us/op
+Iteration   1: 1.672 us/op
+Iteration   2: 1.702 us/op
+Iteration   3: 1.627 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  1.667 ±(99.9%) 0.696 us/op [Average]
+  (min, avg, max) = (1.627, 1.667, 1.702), stdev = 0.038
+  CI (99.9%): [0.971, 2.363] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 100000)
+
+# Run progress: 47.78% complete, ETA 00:04:32
+# Fork: 1 of 1
+# Warmup Iteration   1: 40.771 us/op
+# Warmup Iteration   2: 15.317 us/op
+Iteration   1: 15.785 us/op
+Iteration   2: 16.092 us/op
+Iteration   3: 15.109 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  15.662 ±(99.9%) 9.176 us/op [Average]
+  (min, avg, max) = (15.109, 15.662, 16.092), stdev = 0.503
+  CI (99.9%): [6.486, 24.838] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 1000000)
+
+# Run progress: 48.89% complete, ETA 00:04:26
+# Fork: 1 of 1
+# Warmup Iteration   1: 3161.394 us/op
+# Warmup Iteration   2: 3118.447 us/op
+Iteration   1: 3136.228 us/op
+Iteration   2: 3319.102 us/op
+Iteration   3: 3402.770 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  3286.033 ±(99.9%) 2486.858 us/op [Average]
+  (min, avg, max) = (3136.228, 3286.033, 3402.770), stdev = 136.313
+  CI (99.9%): [799.175, 5772.891] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 10000)
+
+# Run progress: 50.00% complete, ETA 00:04:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 21.066 us/op
+# Warmup Iteration   2: 7.336 us/op
+Iteration   1: 7.430 us/op
+Iteration   2: 7.416 us/op
+Iteration   3: 7.426 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  7.424 ±(99.9%) 0.131 us/op [Average]
+  (min, avg, max) = (7.416, 7.424, 7.430), stdev = 0.007
+  CI (99.9%): [7.293, 7.555] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 100000)
+
+# Run progress: 51.11% complete, ETA 00:04:14
+# Fork: 1 of 1
+# Warmup Iteration   1: 1265.983 us/op
+# Warmup Iteration   2: 1257.440 us/op
+Iteration   1: 1265.839 us/op
+Iteration   2: 1400.612 us/op
+Iteration   3: 1291.109 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  1319.187 ±(99.9%) 1306.971 us/op [Average]
+  (min, avg, max) = (1265.839, 1319.187, 1400.612), stdev = 71.639
+  CI (99.9%): [12.216, 2626.157] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 1000000)
+
+# Run progress: 52.22% complete, ETA 00:04:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 13095.977 us/op
+# Warmup Iteration   2: 12868.208 us/op
+Iteration   1: 12721.249 us/op
+Iteration   2: 12786.401 us/op
+Iteration   3: 12632.523 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  12713.391 ±(99.9%) 1409.140 us/op [Average]
+  (min, avg, max) = (12632.523, 12713.391, 12786.401), stdev = 77.240
+  CI (99.9%): [11304.250, 14122.531] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 10000)
+
+# Run progress: 53.33% complete, ETA 00:04:02
+# Fork: 1 of 1
+# Warmup Iteration   1: 420.405 us/op
+# Warmup Iteration   2: 416.076 us/op
+Iteration   1: 121.900 us/op
+Iteration   2: 100.809 us/op
+Iteration   3: 100.156 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  107.622 ±(99.9%) 225.675 us/op [Average]
+  (min, avg, max) = (100.156, 107.622, 121.900), stdev = 12.370
+  CI (99.9%): [≈ 0, 333.297] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 100000)
+
+# Run progress: 54.44% complete, ETA 00:03:56
+# Fork: 1 of 1
+# Warmup Iteration   1: 4422.034 us/op
+# Warmup Iteration   2: 4189.926 us/op
+Iteration   1: 4278.593 us/op
+Iteration   2: 4223.179 us/op
+Iteration   3: 4136.713 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  4212.828 ±(99.9%) 1304.505 us/op [Average]
+  (min, avg, max) = (4136.713, 4212.828, 4278.593), stdev = 71.504
+  CI (99.9%): [2908.323, 5517.333] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 1000000)
+
+# Run progress: 55.56% complete, ETA 00:03:50
+# Fork: 1 of 1
+# Warmup Iteration   1: 46237.065 us/op
+# Warmup Iteration   2: 45316.752 us/op
+Iteration   1: 42152.446 us/op
+Iteration   2: 43210.613 us/op
+Iteration   3: 44254.548 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  43205.869 ±(99.9%) 19175.229 us/op [Average]
+  (min, avg, max) = (42152.446, 43205.869, 44254.548), stdev = 1051.059
+  CI (99.9%): [24030.639, 62381.098] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 10000)
+
+# Run progress: 56.67% complete, ETA 00:03:44
+# Fork: 1 of 1
+# Warmup Iteration   1: 2967.965 us/op
+# Warmup Iteration   2: 2868.543 us/op
+Iteration   1: 2875.325 us/op
+Iteration   2: 2876.519 us/op
+Iteration   3: 2973.152 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  2908.332 ±(99.9%) 1024.177 us/op [Average]
+  (min, avg, max) = (2875.325, 2908.332, 2973.152), stdev = 56.139
+  CI (99.9%): [1884.155, 3932.509] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 100000)
+
+# Run progress: 57.78% complete, ETA 00:03:38
+# Fork: 1 of 1
+# Warmup Iteration   1: 33069.181 us/op
+# Warmup Iteration   2: 29784.688 us/op
+Iteration   1: 33247.061 us/op
+Iteration   2: 31313.233 us/op
+Iteration   3: 32894.265 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  32484.853 ±(99.9%) 18788.696 us/op [Average]
+  (min, avg, max) = (31313.233, 32484.853, 33247.061), stdev = 1029.872
+  CI (99.9%): [13696.157, 51273.549] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 1000000)
+
+# Run progress: 58.89% complete, ETA 00:03:33
+# Fork: 1 of 1
+# Warmup Iteration   1: 414050.133 us/op
+# Warmup Iteration   2: 314944.000 us/op
+Iteration   1: 340103.975 us/op
+Iteration   2: 350566.067 us/op
+Iteration   3: 353000.300 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.jdkIndexOf":
+  347890.114 ±(99.9%) 125005.240 us/op [Average]
+  (min, avg, max) = (340103.975, 347890.114, 353000.300), stdev = 6851.959
+  CI (99.9%): [222884.874, 472895.354] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 10000)
+
+# Run progress: 60.00% complete, ETA 00:03:28
+# Fork: 1 of 1
+# Warmup Iteration   1: 19.613 us/op
+# Warmup Iteration   2: 20.887 us/op
+Iteration   1: 18.898 us/op
+Iteration   2: 17.741 us/op
+Iteration   3: 17.120 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  17.920 ±(99.9%) 16.458 us/op [Average]
+  (min, avg, max) = (17.120, 17.920, 18.898), stdev = 0.902
+  CI (99.9%): [1.462, 34.377] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 100000)
+
+# Run progress: 61.11% complete, ETA 00:03:22
+# Fork: 1 of 1
+# Warmup Iteration   1: 355.777 us/op
+# Warmup Iteration   2: 351.914 us/op
+Iteration   1: 335.897 us/op
+Iteration   2: 322.731 us/op
+Iteration   3: 343.327 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  333.985 ±(99.9%) 190.289 us/op [Average]
+  (min, avg, max) = (322.731, 333.985, 343.327), stdev = 10.430
+  CI (99.9%): [143.696, 524.274] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 1000000)
+
+# Run progress: 62.22% complete, ETA 00:03:16
+# Fork: 1 of 1
+# Warmup Iteration   1: 4017.553 us/op
+# Warmup Iteration   2: 3396.166 us/op
+Iteration   1: 3409.777 us/op
+Iteration   2: 3522.346 us/op
+Iteration   3: 3289.638 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  3407.254 ±(99.9%) 2123.109 us/op [Average]
+  (min, avg, max) = (3289.638, 3407.254, 3522.346), stdev = 116.375
+  CI (99.9%): [1284.145, 5530.362] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 10000)
+
+# Run progress: 63.33% complete, ETA 00:03:10
+# Fork: 1 of 1
+# Warmup Iteration   1: 19.828 us/op
+# Warmup Iteration   2: 15.793 us/op
+Iteration   1: 16.031 us/op
+Iteration   2: 15.900 us/op
+Iteration   3: 16.325 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  16.085 ±(99.9%) 3.970 us/op [Average]
+  (min, avg, max) = (15.900, 16.085, 16.325), stdev = 0.218
+  CI (99.9%): [12.115, 20.056] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 100000)
+
+# Run progress: 64.44% complete, ETA 00:03:04
+# Fork: 1 of 1
+# Warmup Iteration   1: 196.072 us/op
+# Warmup Iteration   2: 179.585 us/op
+Iteration   1: 179.418 us/op
+Iteration   2: 179.308 us/op
+Iteration   3: 212.055 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  190.260 ±(99.9%) 344.348 us/op [Average]
+  (min, avg, max) = (179.308, 190.260, 212.055), stdev = 18.875
+  CI (99.9%): [≈ 0, 534.608] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 1000000)
+
+# Run progress: 65.56% complete, ETA 00:02:58
+# Fork: 1 of 1
+# Warmup Iteration   1: 3148.455 us/op
+# Warmup Iteration   2: 2918.355 us/op
+Iteration   1: 2883.180 us/op
+Iteration   2: 2926.895 us/op
+Iteration   3: 2945.214 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  2918.430 ±(99.9%) 581.457 us/op [Average]
+  (min, avg, max) = (2883.180, 2918.430, 2945.214), stdev = 31.872
+  CI (99.9%): [2336.973, 3499.886] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 10000)
+
+# Run progress: 66.67% complete, ETA 00:02:52
+# Fork: 1 of 1
+# Warmup Iteration   1: 20.049 us/op
+# Warmup Iteration   2: 20.906 us/op
+Iteration   1: 23.078 us/op
+Iteration   2: 29.438 us/op
+Iteration   3: 28.011 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  26.842 ±(99.9%) 60.884 us/op [Average]
+  (min, avg, max) = (23.078, 26.842, 29.438), stdev = 3.337
+  CI (99.9%): [≈ 0, 87.726] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 100000)
+
+# Run progress: 67.78% complete, ETA 00:02:47
+# Fork: 1 of 1
+# Warmup Iteration   1: 242.273 us/op
+# Warmup Iteration   2: 242.884 us/op
+Iteration   1: 271.738 us/op
+Iteration   2: 260.642 us/op
+Iteration   3: 252.059 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  261.479 ±(99.9%) 179.997 us/op [Average]
+  (min, avg, max) = (252.059, 261.479, 271.738), stdev = 9.866
+  CI (99.9%): [81.482, 441.477] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 1000000)
+
+# Run progress: 68.89% complete, ETA 00:02:41
+# Fork: 1 of 1
+# Warmup Iteration   1: 3379.435 us/op
+# Warmup Iteration   2: 3335.933 us/op
+Iteration   1: 4121.081 us/op
+Iteration   2: 3810.233 us/op
+Iteration   3: 4040.689 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  3990.668 ±(99.9%) 2943.591 us/op [Average]
+  (min, avg, max) = (3810.233, 3990.668, 4121.081), stdev = 161.348
+  CI (99.9%): [1047.077, 6934.259] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 10000)
+
+# Run progress: 70.00% complete, ETA 00:02:35
+# Fork: 1 of 1
+# Warmup Iteration   1: 33.421 us/op
+# Warmup Iteration   2: 32.585 us/op
+Iteration   1: 36.994 us/op
+Iteration   2: 37.843 us/op
+Iteration   3: 39.691 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  38.176 ±(99.9%) 25.163 us/op [Average]
+  (min, avg, max) = (36.994, 38.176, 39.691), stdev = 1.379
+  CI (99.9%): [13.013, 63.339] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 100000)
+
+# Run progress: 71.11% complete, ETA 00:02:29
+# Fork: 1 of 1
+# Warmup Iteration   1: 401.437 us/op
+# Warmup Iteration   2: 337.779 us/op
+Iteration   1: 379.294 us/op
+Iteration   2: 380.021 us/op
+Iteration   3: 398.407 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  385.907 ±(99.9%) 197.599 us/op [Average]
+  (min, avg, max) = (379.294, 385.907, 398.407), stdev = 10.831
+  CI (99.9%): [188.308, 583.507] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 1000000)
+
+# Run progress: 72.22% complete, ETA 00:02:23
+# Fork: 1 of 1
+# Warmup Iteration   1: 3468.120 us/op
+# Warmup Iteration   2: 3458.167 us/op
+Iteration   1: 4098.129 us/op
+Iteration   2: 4105.588 us/op
+Iteration   3: 3474.411 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  3892.709 ±(99.9%) 6609.264 us/op [Average]
+  (min, avg, max) = (3474.411, 3892.709, 4105.588), stdev = 362.276
+  CI (99.9%): [≈ 0, 10501.973] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 10000)
+
+# Run progress: 73.33% complete, ETA 00:02:18
+# Fork: 1 of 1
+# Warmup Iteration   1: 35.818 us/op
+# Warmup Iteration   2: 33.748 us/op
+Iteration   1: 34.201 us/op
+Iteration   2: 33.751 us/op
+Iteration   3: 36.895 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  34.949 ±(99.9%) 31.018 us/op [Average]
+  (min, avg, max) = (33.751, 34.949, 36.895), stdev = 1.700
+  CI (99.9%): [3.931, 65.967] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 100000)
+
+# Run progress: 74.44% complete, ETA 00:02:12
+# Fork: 1 of 1
+# Warmup Iteration   1: 397.802 us/op
+# Warmup Iteration   2: 344.972 us/op
+Iteration   1: 334.114 us/op
+Iteration   2: 382.171 us/op
+Iteration   3: 342.332 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  352.873 ±(99.9%) 468.939 us/op [Average]
+  (min, avg, max) = (334.114, 352.873, 382.171), stdev = 25.704
+  CI (99.9%): [≈ 0, 821.811] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 1000000)
+
+# Run progress: 75.56% complete, ETA 00:02:06
+# Fork: 1 of 1
+# Warmup Iteration   1: 3725.291 us/op
+# Warmup Iteration   2: 3617.958 us/op
+Iteration   1: 3655.467 us/op
+Iteration   2: 3546.228 us/op
+Iteration   3: 3731.355 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  3644.350 ±(99.9%) 1697.811 us/op [Average]
+  (min, avg, max) = (3546.228, 3644.350, 3731.355), stdev = 93.063
+  CI (99.9%): [1946.539, 5342.161] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 10000)
+
+# Run progress: 76.67% complete, ETA 00:02:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 37.802 us/op
+# Warmup Iteration   2: 37.767 us/op
+Iteration   1: 41.702 us/op
+Iteration   2: 36.408 us/op
+Iteration   3: 39.115 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  39.075 ±(99.9%) 48.296 us/op [Average]
+  (min, avg, max) = (36.408, 39.075, 41.702), stdev = 2.647
+  CI (99.9%): [≈ 0, 87.372] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 100000)
+
+# Run progress: 77.78% complete, ETA 00:01:54
+# Fork: 1 of 1
+# Warmup Iteration   1: 359.510 us/op
+# Warmup Iteration   2: 347.538 us/op
+Iteration   1: 366.813 us/op
+Iteration   2: 360.195 us/op
+Iteration   3: 354.602 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  360.537 ±(99.9%) 111.518 us/op [Average]
+  (min, avg, max) = (354.602, 360.537, 366.813), stdev = 6.113
+  CI (99.9%): [249.019, 472.055] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.kmp
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 1000000)
+
+# Run progress: 78.89% complete, ETA 00:01:49
+# Fork: 1 of 1
+# Warmup Iteration   1: 3637.119 us/op
+# Warmup Iteration   2: 3917.642 us/op
+Iteration   1: 3421.843 us/op
+Iteration   2: 3372.585 us/op
+Iteration   3: 3373.887 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.kmp":
+  3389.438 ±(99.9%) 512.116 us/op [Average]
+  (min, avg, max) = (3372.585, 3389.438, 3421.843), stdev = 28.071
+  CI (99.9%): [2877.323, 3901.554] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 10000)
+
+# Run progress: 80.00% complete, ETA 00:01:43
+# Fork: 1 of 1
+# Warmup Iteration   1: 42.904 us/op
+# Warmup Iteration   2: 48.248 us/op
+Iteration   1: 50.469 us/op
+Iteration   2: 25.649 us/op
+Iteration   3: 27.860 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  34.660 ±(99.9%) 250.601 us/op [Average]
+  (min, avg, max) = (25.649, 34.660, 50.469), stdev = 13.736
+  CI (99.9%): [≈ 0, 285.261] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 100000)
+
+# Run progress: 81.11% complete, ETA 00:01:37
+# Fork: 1 of 1
+# Warmup Iteration   1: 631.631 us/op
+# Warmup Iteration   2: 569.605 us/op
+Iteration   1: 512.279 us/op
+Iteration   2: 492.750 us/op
+Iteration   3: 498.657 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  501.229 ±(99.9%) 182.720 us/op [Average]
+  (min, avg, max) = (492.750, 501.229, 512.279), stdev = 10.016
+  CI (99.9%): [318.508, 683.949] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 8, textLength = 1000000)
+
+# Run progress: 82.22% complete, ETA 00:01:31
+# Fork: 1 of 1
+# Warmup Iteration   1: 5106.053 us/op
+# Warmup Iteration   2: 5106.310 us/op
+Iteration   1: 5100.369 us/op
+Iteration   2: 4909.121 us/op
+Iteration   3: 5806.427 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  5271.972 ±(99.9%) 8622.464 us/op [Average]
+  (min, avg, max) = (4909.121, 5271.972, 5806.427), stdev = 472.626
+  CI (99.9%): [≈ 0, 13894.436] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 10000)
+
+# Run progress: 83.33% complete, ETA 00:01:26
+# Fork: 1 of 1
+# Warmup Iteration   1: 34.835 us/op
+# Warmup Iteration   2: 35.703 us/op
+Iteration   1: 33.998 us/op
+Iteration   2: 32.314 us/op
+Iteration   3: 26.695 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  31.002 ±(99.9%) 69.767 us/op [Average]
+  (min, avg, max) = (26.695, 31.002, 33.998), stdev = 3.824
+  CI (99.9%): [≈ 0, 100.770] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 100000)
+
+# Run progress: 84.44% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 272.291 us/op
+# Warmup Iteration   2: 330.520 us/op
+Iteration   1: 398.164 us/op
+Iteration   2: 386.751 us/op
+Iteration   3: 374.352 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  386.422 ±(99.9%) 217.280 us/op [Average]
+  (min, avg, max) = (374.352, 386.422, 398.164), stdev = 11.910
+  CI (99.9%): [169.143, 603.702] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 64, textLength = 1000000)
+
+# Run progress: 85.56% complete, ETA 00:01:14
+# Fork: 1 of 1
+# Warmup Iteration   1: 3556.417 us/op
+# Warmup Iteration   2: 3555.022 us/op
+Iteration   1: 3435.593 us/op
+Iteration   2: 3639.171 us/op
+Iteration   3: 3563.771 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  3546.178 ±(99.9%) 1877.695 us/op [Average]
+  (min, avg, max) = (3435.593, 3546.178, 3639.171), stdev = 102.923
+  CI (99.9%): [1668.483, 5423.873] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 10000)
+
+# Run progress: 86.67% complete, ETA 00:01:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 34.921 us/op
+# Warmup Iteration   2: 38.831 us/op
+Iteration   1: 34.600 us/op
+Iteration   2: 34.039 us/op
+Iteration   3: 28.428 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  32.355 ±(99.9%) 62.266 us/op [Average]
+  (min, avg, max) = (28.428, 32.355, 34.600), stdev = 3.413
+  CI (99.9%): [≈ 0, 94.622] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 100000)
+
+# Run progress: 87.78% complete, ETA 00:01:03
+# Fork: 1 of 1
+# Warmup Iteration   1: 348.114 us/op
+# Warmup Iteration   2: 348.682 us/op
+Iteration   1: 524.033 us/op
+Iteration   2: 489.293 us/op
+Iteration   3: 505.613 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  506.313 ±(99.9%) 317.079 us/op [Average]
+  (min, avg, max) = (489.293, 506.313, 524.033), stdev = 17.380
+  CI (99.9%): [189.234, 823.392] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ORDINARY, patternLength = 512, textLength = 1000000)
+
+# Run progress: 88.89% complete, ETA 00:00:57
+# Fork: 1 of 1
+# Warmup Iteration   1: 5201.778 us/op
+# Warmup Iteration   2: 4703.257 us/op
+Iteration   1: 4556.087 us/op
+Iteration   2: 4119.472 us/op
+Iteration   3: 3906.397 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  4193.986 ±(99.9%) 6042.184 us/op [Average]
+  (min, avg, max) = (3906.397, 4193.986, 4556.087), stdev = 331.192
+  CI (99.9%): [≈ 0, 10236.170] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 10000)
+
+# Run progress: 90.00% complete, ETA 00:00:51
+# Fork: 1 of 1
+# Warmup Iteration   1: 91.898 us/op
+# Warmup Iteration   2: 85.388 us/op
+Iteration   1: 77.127 us/op
+Iteration   2: 74.241 us/op
+Iteration   3: 83.240 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  78.203 ±(99.9%) 83.831 us/op [Average]
+  (min, avg, max) = (74.241, 78.203, 83.240), stdev = 4.595
+  CI (99.9%): [≈ 0, 162.034] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 100000)
+
+# Run progress: 91.11% complete, ETA 00:00:45
+# Fork: 1 of 1
+# Warmup Iteration   1: 826.447 us/op
+# Warmup Iteration   2: 861.089 us/op
+Iteration   1: 624.003 us/op
+Iteration   2: 841.850 us/op
+Iteration   3: 744.865 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  736.906 ±(99.9%) 1991.148 us/op [Average]
+  (min, avg, max) = (624.003, 736.906, 841.850), stdev = 109.142
+  CI (99.9%): [≈ 0, 2728.054] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 8, textLength = 1000000)
+
+# Run progress: 92.22% complete, ETA 00:00:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 10416.362 us/op
+# Warmup Iteration   2: 10090.823 us/op
+Iteration   1: 8796.092 us/op
+Iteration   2: 9743.997 us/op
+Iteration   3: 8947.491 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  9162.527 ±(99.9%) 9290.179 us/op [Average]
+  (min, avg, max) = (8796.092, 9162.527, 9743.997), stdev = 509.226
+  CI (99.9%): [≈ 0, 18452.706] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 10000)
+
+# Run progress: 93.33% complete, ETA 00:00:34
+# Fork: 1 of 1
+# Warmup Iteration   1: 274.183 us/op
+# Warmup Iteration   2: 275.362 us/op
+Iteration   1: 299.098 us/op
+Iteration   2: 288.652 us/op
+Iteration   3: 307.090 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  298.280 ±(99.9%) 168.683 us/op [Average]
+  (min, avg, max) = (288.652, 298.280, 307.090), stdev = 9.246
+  CI (99.9%): [129.597, 466.963] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 100000)
+
+# Run progress: 94.44% complete, ETA 00:00:28
+# Fork: 1 of 1
+# Warmup Iteration   1: 2839.585 us/op
+# Warmup Iteration   2: 2909.236 us/op
+Iteration   1: 3232.713 us/op
+Iteration   2: 2702.860 us/op
+Iteration   3: 2661.661 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  2865.745 ±(99.9%) 5810.091 us/op [Average]
+  (min, avg, max) = (2661.661, 2865.745, 3232.713), stdev = 318.471
+  CI (99.9%): [≈ 0, 8675.836] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 64, textLength = 1000000)
+
+# Run progress: 95.56% complete, ETA 00:00:22
+# Fork: 1 of 1
+# Warmup Iteration   1: 27549.122 us/op
+# Warmup Iteration   2: 26936.724 us/op
+Iteration   1: 26468.231 us/op
+Iteration   2: 27048.645 us/op
+Iteration   3: 29798.726 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  27771.867 ±(99.9%) 32458.134 us/op [Average]
+  (min, avg, max) = (26468.231, 27771.867, 29798.726), stdev = 1779.140
+  CI (99.9%): [≈ 0, 60230.001] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 10000)
+
+# Run progress: 96.67% complete, ETA 00:00:17
+# Fork: 1 of 1
+# Warmup Iteration   1: 2097.494 us/op
+# Warmup Iteration   2: 1865.481 us/op
+Iteration   1: 1792.204 us/op
+Iteration   2: 1811.513 us/op
+Iteration   3: 1895.670 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  1833.129 ±(99.9%) 1003.693 us/op [Average]
+  (min, avg, max) = (1792.204, 1833.129, 1895.670), stdev = 55.016
+  CI (99.9%): [829.437, 2836.822] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 100000)
+
+# Run progress: 97.78% complete, ETA 00:00:11
+# Fork: 1 of 1
+# Warmup Iteration   1: 19604.267 us/op
+# Warmup Iteration   2: 19656.527 us/op
+Iteration   1: 20009.065 us/op
+Iteration   2: 19230.092 us/op
+Iteration   3: 18633.016 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  19290.725 ±(99.9%) 12588.624 us/op [Average]
+  (min, avg, max) = (18633.016, 19290.725, 20009.065), stdev = 690.025
+  CI (99.9%): [6702.101, 31879.348] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 21.0.4, Java HotSpot(TM) 64-Bit Server VM, 21.0.4+8-LTS-274
+# VM invoker: C:\Program Files\Java\jdk-21\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 2 iterations, 1 s each
+# Measurement: 3 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.thefineprint.cia.bench.KmpBenchmark.naive
+# Parameters: (input = ADVERSARIAL, patternLength = 512, textLength = 1000000)
+
+# Run progress: 98.89% complete, ETA 00:00:05
+# Fork: 1 of 1
+# Warmup Iteration   1: 275351.075 us/op
+# Warmup Iteration   2: 289771.750 us/op
+Iteration   1: 183248.583 us/op
+Iteration   2: 191136.050 us/op
+Iteration   3: 182147.417 us/op
+
+
+Result "com.thefineprint.cia.bench.KmpBenchmark.naive":
+  185510.683 ±(99.9%) 89443.941 us/op [Average]
+  (min, avg, max) = (182147.417, 185510.683, 191136.050), stdev = 4902.724
+  CI (99.9%): [96066.743, 274954.624] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:08:36
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                     (bitsPerElement)  (elements)      (input)  (patternLength)  (textLength)   Mode  Cnt       Score        Error   Units
+BloomBenchmark.bloomInsert                   6       10000          N/A              N/A           N/A  thrpt    3      22.826 ±     11.064  ops/us
+BloomBenchmark.bloomInsert                   6      100000          N/A              N/A           N/A  thrpt    3      21.553 ±     27.869  ops/us
+BloomBenchmark.bloomInsert                   6     1000000          N/A              N/A           N/A  thrpt    3      23.278 ±      9.352  ops/us
+BloomBenchmark.bloomInsert                  10       10000          N/A              N/A           N/A  thrpt    3      16.546 ±     15.915  ops/us
+BloomBenchmark.bloomInsert                  10      100000          N/A              N/A           N/A  thrpt    3      11.193 ±     17.399  ops/us
+BloomBenchmark.bloomInsert                  10     1000000          N/A              N/A           N/A  thrpt    3      11.996 ±      5.612  ops/us
+BloomBenchmark.bloomInsert                  14       10000          N/A              N/A           N/A  thrpt    3      10.626 ±     20.629  ops/us
+BloomBenchmark.bloomInsert                  14      100000          N/A              N/A           N/A  thrpt    3      12.042 ±     11.195  ops/us
+BloomBenchmark.bloomInsert                  14     1000000          N/A              N/A           N/A  thrpt    3      13.237 ±     11.266  ops/us
+BloomBenchmark.bloomQuery                    6       10000          N/A              N/A           N/A  thrpt    3      27.971 ±      9.047  ops/us
+BloomBenchmark.bloomQuery                    6      100000          N/A              N/A           N/A  thrpt    3      28.919 ±     10.083  ops/us
+BloomBenchmark.bloomQuery                    6     1000000          N/A              N/A           N/A  thrpt    3      23.870 ±     78.977  ops/us
+BloomBenchmark.bloomQuery                   10       10000          N/A              N/A           N/A  thrpt    3      23.720 ±     14.057  ops/us
+BloomBenchmark.bloomQuery                   10      100000          N/A              N/A           N/A  thrpt    3      21.484 ±     11.274  ops/us
+BloomBenchmark.bloomQuery                   10     1000000          N/A              N/A           N/A  thrpt    3      21.517 ±     12.926  ops/us
+BloomBenchmark.bloomQuery                   14       10000          N/A              N/A           N/A  thrpt    3      20.583 ±      8.499  ops/us
+BloomBenchmark.bloomQuery                   14      100000          N/A              N/A           N/A  thrpt    3      19.791 ±     13.788  ops/us
+BloomBenchmark.bloomQuery                   14     1000000          N/A              N/A           N/A  thrpt    3      17.560 ±      1.791  ops/us
+BloomBenchmark.hashSetInsert                 6       10000          N/A              N/A           N/A  thrpt    3      61.725 ±    100.717  ops/us
+BloomBenchmark.hashSetInsert                 6      100000          N/A              N/A           N/A  thrpt    3      64.925 ±     41.037  ops/us
+BloomBenchmark.hashSetInsert                 6     1000000          N/A              N/A           N/A  thrpt    3      64.151 ±    126.439  ops/us
+BloomBenchmark.hashSetInsert                10       10000          N/A              N/A           N/A  thrpt    3      70.328 ±     26.067  ops/us
+BloomBenchmark.hashSetInsert                10      100000          N/A              N/A           N/A  thrpt    3      69.415 ±     21.655  ops/us
+BloomBenchmark.hashSetInsert                10     1000000          N/A              N/A           N/A  thrpt    3      60.309 ±    182.989  ops/us
+BloomBenchmark.hashSetInsert                14       10000          N/A              N/A           N/A  thrpt    3      59.351 ±     54.186  ops/us
+BloomBenchmark.hashSetInsert                14      100000          N/A              N/A           N/A  thrpt    3      65.858 ±     92.284  ops/us
+BloomBenchmark.hashSetInsert                14     1000000          N/A              N/A           N/A  thrpt    3      66.373 ±     55.730  ops/us
+BloomBenchmark.hashSetQuery                  6       10000          N/A              N/A           N/A  thrpt    3     245.831 ±     71.671  ops/us
+BloomBenchmark.hashSetQuery                  6      100000          N/A              N/A           N/A  thrpt    3     254.956 ±      9.005  ops/us
+BloomBenchmark.hashSetQuery                  6     1000000          N/A              N/A           N/A  thrpt    3     213.641 ±     25.335  ops/us
+BloomBenchmark.hashSetQuery                 10       10000          N/A              N/A           N/A  thrpt    3     234.138 ±    487.654  ops/us
+BloomBenchmark.hashSetQuery                 10      100000          N/A              N/A           N/A  thrpt    3     251.243 ±     95.059  ops/us
+BloomBenchmark.hashSetQuery                 10     1000000          N/A              N/A           N/A  thrpt    3     209.848 ±     64.742  ops/us
+BloomBenchmark.hashSetQuery                 14       10000          N/A              N/A           N/A  thrpt    3     251.069 ±    120.587  ops/us
+BloomBenchmark.hashSetQuery                 14      100000          N/A              N/A           N/A  thrpt    3     255.585 ±     64.418  ops/us
+BloomBenchmark.hashSetQuery                 14     1000000          N/A              N/A           N/A  thrpt    3     232.374 ±     76.039  ops/us
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY                8         10000   avgt    3       2.029 ±      4.583   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY                8        100000   avgt    3      15.273 ±      9.345   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY                8       1000000   avgt    3     183.677 ±     96.779   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY               64         10000   avgt    3       1.603 ±      1.690   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY               64        100000   avgt    3      15.452 ±      5.690   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY               64       1000000   avgt    3    2715.749 ±    476.939   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY              512         10000   avgt    3       1.667 ±      0.696   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY              512        100000   avgt    3      15.662 ±      9.176   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A     ORDINARY              512       1000000   avgt    3    3286.033 ±   2486.858   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL                8         10000   avgt    3       7.424 ±      0.131   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL                8        100000   avgt    3    1319.187 ±   1306.971   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL                8       1000000   avgt    3   12713.391 ±   1409.140   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL               64         10000   avgt    3     107.622 ±    225.675   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL               64        100000   avgt    3    4212.828 ±   1304.505   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL               64       1000000   avgt    3   43205.869 ±  19175.229   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL              512         10000   avgt    3    2908.332 ±   1024.177   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL              512        100000   avgt    3   32484.853 ±  18788.696   us/op
+KmpBenchmark.jdkIndexOf                    N/A         N/A  ADVERSARIAL              512       1000000   avgt    3  347890.114 ± 125005.240   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY                8         10000   avgt    3      17.920 ±     16.458   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY                8        100000   avgt    3     333.985 ±    190.289   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY                8       1000000   avgt    3    3407.254 ±   2123.109   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY               64         10000   avgt    3      16.085 ±      3.970   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY               64        100000   avgt    3     190.260 ±    344.348   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY               64       1000000   avgt    3    2918.430 ±    581.457   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY              512         10000   avgt    3      26.842 ±     60.884   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY              512        100000   avgt    3     261.479 ±    179.997   us/op
+KmpBenchmark.kmp                           N/A         N/A     ORDINARY              512       1000000   avgt    3    3990.668 ±   2943.591   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL                8         10000   avgt    3      38.176 ±     25.163   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL                8        100000   avgt    3     385.907 ±    197.599   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL                8       1000000   avgt    3    3892.709 ±   6609.264   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL               64         10000   avgt    3      34.949 ±     31.018   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL               64        100000   avgt    3     352.873 ±    468.939   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL               64       1000000   avgt    3    3644.350 ±   1697.811   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL              512         10000   avgt    3      39.075 ±     48.296   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL              512        100000   avgt    3     360.537 ±    111.518   us/op
+KmpBenchmark.kmp                           N/A         N/A  ADVERSARIAL              512       1000000   avgt    3    3389.438 ±    512.116   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY                8         10000   avgt    3      34.660 ±    250.601   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY                8        100000   avgt    3     501.229 ±    182.720   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY                8       1000000   avgt    3    5271.972 ±   8622.464   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY               64         10000   avgt    3      31.002 ±     69.767   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY               64        100000   avgt    3     386.422 ±    217.280   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY               64       1000000   avgt    3    3546.178 ±   1877.695   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY              512         10000   avgt    3      32.355 ±     62.266   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY              512        100000   avgt    3     506.313 ±    317.079   us/op
+KmpBenchmark.naive                         N/A         N/A     ORDINARY              512       1000000   avgt    3    4193.986 ±   6042.184   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL                8         10000   avgt    3      78.203 ±     83.831   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL                8        100000   avgt    3     736.906 ±   1991.148   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL                8       1000000   avgt    3    9162.527 ±   9290.179   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL               64         10000   avgt    3     298.280 ±    168.683   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL               64        100000   avgt    3    2865.745 ±   5810.091   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL               64       1000000   avgt    3   27771.867 ±  32458.134   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL              512         10000   avgt    3    1833.129 ±   1003.693   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL              512        100000   avgt    3   19290.725 ±  12588.624   us/op
+KmpBenchmark.naive                         N/A         N/A  ADVERSARIAL              512       1000000   avgt    3  185510.683 ±  89443.941   us/op
+
+Benchmark result is saved to C:\Users\MOHAK\The Fine Print\cia\cia-bench\results\jmh-results.json
+
+BUILD SUCCESSFUL in 8m 54s
+10 actionable tasks: 1 executed, 9 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.2/userguide/configuration_cache_enabling.html

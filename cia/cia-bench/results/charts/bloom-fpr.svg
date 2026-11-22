@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,sans-serif" font-size="12"><rect width="640" height="360" fill="#fffdf8"/>
+<text x="70" y="22" font-size="14" font-weight="600" fill="#1d1f23">False-positive rate at n = 1,000,000 (1M negative probes x 5 seeds)</text>
+<line x1="70" y1="310" x2="480" y2="310" stroke="#999"/>
+<line x1="70" y1="40" x2="70" y2="310" stroke="#999"/>
+<line x1="70" y1="310.0" x2="480" y2="310.0" stroke="#eee"/><text x="64" y="314.0" text-anchor="end" fill="#4a4d55">1e-3</text>
+<line x1="70" y1="175.0" x2="480" y2="175.0" stroke="#eee"/><text x="64" y="179.0" text-anchor="end" fill="#4a4d55">1e-2</text>
+<line x1="70" y1="40.0" x2="480" y2="40.0" stroke="#eee"/><text x="64" y="44.0" text-anchor="end" fill="#4a4d55">1e-1</text>
+<text x="70.0" y="326" text-anchor="middle" fill="#4a4d55">6</text>
+<text x="275.0" y="326" text-anchor="middle" fill="#4a4d55">10</text>
+<text x="480.0" y="326" text-anchor="middle" fill="#4a4d55">14</text>
+<text x="275.0" y="348" text-anchor="middle" fill="#1d1f23">bits per element</text>
+<text transform="translate(16,175.0) rotate(-90)" text-anchor="middle" fill="#1d1f23">false-positive rate (log)</text>
+<path d="M70.0,74.1 L275.0,186.3 L480.0,299.1" fill="none" stroke="#9c3f1d" stroke-width="2"/>
+<circle cx="70.0" cy="74.1" r="3" fill="#9c3f1d"/>
+<circle cx="275.0" cy="186.3" r="3" fill="#9c3f1d"/>
+<circle cx="480.0" cy="299.1" r="3" fill="#9c3f1d"/>
+<line x1="492" y1="50" x2="512" y2="50" stroke="#9c3f1d" stroke-width="2"/><text x="518" y="54" fill="#1d1f23">bloom measured (mean)</text>
+<path d="M70.0,73.9 L275.0,186.7 L480.0,299.3" fill="none" stroke="#7a4b00" stroke-width="2" stroke-dasharray="5 4"/>
+<circle cx="70.0" cy="73.9" r="3" fill="#7a4b00"/>
+<circle cx="275.0" cy="186.7" r="3" fill="#7a4b00"/>
+<circle cx="480.0" cy="299.3" r="3" fill="#7a4b00"/>
+<line x1="492" y1="70" x2="512" y2="70" stroke="#7a4b00" stroke-width="2" stroke-dasharray="5 4"/><text x="518" y="74" fill="#1d1f23">theory</text>
+</svg>
