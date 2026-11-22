@@ -154,4 +154,59 @@ class BloomFilterTest {
         BloomFilter filter = new BloomFilter(new BloomParameters(1_000, 0.01, 640, 4), SEED);
         assertThat(filter.memoryBytes()).isEqualTo(80); // 640 bits = 10 longs
     }
+
+    @Test
+    void mightContainIsTrueExactlyWhenEveryPositionOfTheKeyIsSet() {
+        // add/mightContain walk the probe sequence inline; positionsOf builds it separately. They must agree.
+        for (BloomParameters params : new BloomParameters[] {
+                BloomParameters.optimal(500, 0.05),          // m = 3,118 (composite, not a power of two)
+                new BloomParameters(500, 0.05, 997, 5),      // prime m
+                new BloomParameters(500, 0.05, 1_024, 5),    // power-of-two m
+                new BloomParameters(50, 0.05, 2_310, 9)}) {  // many small prime factors
+            BloomFilter filter = new BloomFilter(params, SEED);
+            for (long i = 0; i < params.expectedInsertions(); i++) {
+                filter.add(key(i));
+            }
+            int agreedPositive = 0;
+            for (long i = 0; i < 20_000; i++) {
+                byte[] probe = key(i); // includes every inserted key and many never-inserted ones
+                boolean allSet = true;
+                for (long pos : filter.positionsOf(probe)) {
+                    allSet &= filter.isBitSet(pos);
+                }
+                assertThat(filter.mightContain(probe)).as("m=%d key=%d", params.bitCount(), i).isEqualTo(allSet);
+                if (allSet) {
+                    agreedPositive++;
+                }
+            }
+            assertThat(agreedPositive).as("inserted keys are among the positives")
+                    .isGreaterThanOrEqualTo((int) params.expectedInsertions());
+        }
+    }
+
+    @Test
+    void lowerClampKeepsVeryLargeBitsPerElementValid() {
+        // At about 8,000,000 bits per element the theoretical rate underflows to 0.0 in double arithmetic;
+        // without the clamp the BloomParameters constructor would reject p = 0.
+        BloomParameters p = BloomParameters.withBitsPerElement(1, 8_000_000);
+        assertThat(p.theoreticalFalsePositiveRate(1)).as("raw theoretical rate underflows").isZero();
+        assertThat(p.targetFalsePositiveRate()).isEqualTo(Double.MIN_VALUE);
+        assertThat(p.bitCount()).isEqualTo(8_000_000);
+        assertThat(p.hashCount()).isEqualTo(64);
+        BloomFilter filter = new BloomFilter(p, SEED);
+        filter.add(key(1));
+        assertThat(filter.mightContain(key(1))).isTrue();
+        assertThat(filter.mightContain(key(2))).isFalse();
+    }
+
+    @Test
+    void ordinaryBitsPerElementValuesAreNotClamped() {
+        for (int b = 1; b <= 64; b++) {
+            BloomParameters p = BloomParameters.withBitsPerElement(1_000, b);
+            assertThat(p.targetFalsePositiveRate()).as("b=%d", b).isEqualTo(p.theoreticalFalsePositiveRate(1_000));
+        }
+        // The largest theoretical rate occurs at 1 bit per element (k = 1): 1 - e^-1 = 0.632, so the upper bound
+        // of the clamp (0.999999) is defensive only.
+        assertThat(BloomParameters.withBitsPerElement(1_000, 1).targetFalsePositiveRate()).isBetween(0.632, 0.633);
+    }
 }

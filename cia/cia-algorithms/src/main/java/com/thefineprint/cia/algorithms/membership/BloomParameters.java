@@ -65,6 +65,10 @@ public record BloomParameters(long expectedInsertions, double targetFalsePositiv
         long m = Math.multiplyExact(expectedInsertions, (long) bitsPerElement);
         int k = (int) Math.max(1, Math.min(64, Math.round(bitsPerElement * LN2)));
         double p = theoreticalRate(m, k, expectedInsertions);
+        // The lower bound is reachable: from about 8,000,000 bits per element the theoretical rate underflows to
+        // 0.0 in double arithmetic, which the constructor would reject, so the smallest positive double is stored
+        // instead. The upper bound is defensive only: the largest theoretical rate here is 1 - e^-1 (about 0.632,
+        // at 1 bit per element). Both are tested in BloomFilterTest.
         return new BloomParameters(expectedInsertions, Math.min(Math.max(p, Double.MIN_VALUE), 0.999999), m, k);
     }
 

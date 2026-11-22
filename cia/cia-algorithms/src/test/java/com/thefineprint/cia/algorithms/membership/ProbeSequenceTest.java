@@ -103,11 +103,47 @@ class ProbeSequenceTest {
                 BigInteger mod = BigInteger.valueOf(m);
                 BigInteger a = new BigInteger(Long.toUnsignedString(h1)).mod(mod);
                 BigInteger b = BigInteger.valueOf(ProbeSequence.step(h2, m));
+                if (m > 1) {
+                    // Direct coprimality check with an independent gcd, for every modulus including the largest.
+                    assertThat(b.gcd(mod)).as("m=%d step=%s", m, b).isEqualTo(BigInteger.ONE);
+                }
                 for (int i = 0; i < p.length; i++) {
                     long expected = a.add(b.multiply(BigInteger.valueOf(i))).mod(mod).longValueExact();
                     assertThat(p[i]).as("m=%d i=%d", m, i).isEqualTo(expected);
                 }
                 assertThat(distinctCount(p)).isEqualTo(Math.min(64, m));
+            }
+        }
+    }
+
+    @Test
+    void everyRawStepOfSmallCompositeModuliIsMadeCoprime() {
+        // Exhaustive over every raw step value 1 .. m-1 (h2 = 0 .. m-2), so no case is left to sampling.
+        long[] composites = {4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28, 30, 35, 36, 42,
+                45, 49, 60, 64, 90, 100, 105, 120, 210, 330, 1_001, 2_310};
+        for (long m : composites) {
+            for (long h2 = 0; h2 <= m - 2; h2++) {
+                long step = ProbeSequence.step(h2, m);
+                assertThat(step).as("m=%d h2=%d", m, h2).isBetween(1L, m - 1);
+                assertThat(BigInteger.valueOf(step).gcd(BigInteger.valueOf(m)))
+                        .as("m=%d h2=%d step=%d", m, h2, step).isEqualTo(BigInteger.ONE);
+                assertThat(distinctCount(positions(h2 * 31 + 7, h2, m, (int) m))).as("m=%d h2=%d", m, h2)
+                        .isEqualTo(m);
+            }
+        }
+    }
+
+    @Test
+    void moduliWithManySmallPrimeFactorsGiveDistinctPositions() {
+        // Primorials maximise the number of steps that must be skipped to reach a coprime value.
+        Random random = new Random(20261123L);
+        for (long m : new long[] {30_030L, 510_510L, 9_699_690L, 223_092_870L}) {
+            for (int trial = 0; trial < 2_000; trial++) {
+                long h2 = random.nextLong();
+                long step = ProbeSequence.step(h2, m);
+                assertThat(BigInteger.valueOf(step).gcd(BigInteger.valueOf(m))).as("m=%d", m)
+                        .isEqualTo(BigInteger.ONE);
+                assertThat(distinctCount(positions(random.nextLong(), h2, m, 64))).isEqualTo(64);
             }
         }
     }
