@@ -21,8 +21,9 @@ class DemoHttpTest {
     void servesTheBrowserInterface() throws Exception {
         HttpResponse<String> page = get("/");
         assertThat(page.statusCode()).isEqualTo(200);
-        assertThat(page.body()).contains("Evidence Integrity Lab", "app.js");
-        assertThat(get("/app.js").body()).contains("/algo/quote-match", "/algo/membership");
+        assertThat(page.body()).contains("Evidence Integrity Lab", "app.js", "Evidence check", "Not established",
+                "How it works");
+        assertThat(get("/app.js").body()).contains("/algo/evidence-check", "/algo/quote-match", "/algo/membership");
     }
 
     @Test
