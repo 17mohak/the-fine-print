@@ -88,6 +88,28 @@ PowerShell: `$env:SERVER_PORT = 8095; .\gradlew.bat :cia:cia-demo:bootRun`
 4. Edit the source or the quotation and re-run. Scroll to **How it works** for the KMP prefix function and the
    Bloom bit array in isolation.
 
+### Screenshots
+
+Full evidence check (KMP verdict, Bloom screening with a rejected false positive, three-part statement):
+
+![Evidence check: verified quotation](docs/cia/evidence/screenshots/01-evidence-check-verified.png)
+
+A Hindi quotation that would split a character is rejected; the Bloom panel resolves every "possibly present"; the
+disjoint-set panel groups documents into families:
+
+![Hindi boundary rejection](docs/cia/evidence/screenshots/02-hindi-boundary-rejected.png)
+![Bloom panel](docs/cia/evidence/screenshots/04-bloom-panel.png)
+![Document families](docs/cia/evidence/screenshots/06-document-families-panel.png)
+
+Also: [KMP panel](docs/cia/evidence/screenshots/05-kmp-panel.png),
+[input validation message](docs/cia/evidence/screenshots/03-input-validation-message.png).
+
+### Representative test dataset
+
+[`data/samples/requests`](data/samples/requests) (27 synthetic requests: typical, edge and error cases) is the
+representative dataset; the 477-entry reference clause library is generated in code (see
+[docs/cia/DATA.md](docs/cia/DATA.md)).
+
 ## 6. API
 
 All endpoints are `POST`, take and return JSON (UTF-8), and run the algorithms on the server.
