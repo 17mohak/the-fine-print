@@ -203,8 +203,3 @@ Exact matching only (a paraphrase is "not found" by design); the boundary check 
 Unicode grapheme segmentation; a verified quotation proves presence, not meaning or validity; the reference library is
 synthetic and small (an exact set would suffice at this size: the Bloom filter is demonstrated for the memory case);
 benchmarks are from one laptop with short JMH runs. Details: the submitted technical report and [docs/cia](docs/cia).
-
-## 13. Contributing and attribution
-
-Commits carry the human author's identity only; AI tools are not git co-authors ([CONTRIBUTING.md](CONTRIBUTING.md)).
-AI assistance **is disclosed** in [docs/cia/CONTRIBUTIONS.md](docs/cia/CONTRIBUTIONS.md) and in the technical report.
