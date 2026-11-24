@@ -12,12 +12,12 @@
 
 | Requirement | Evidence |
 |---|---|
-| ≥ 2 distinct syllabus techniques, ≥ 1 from Units 4–6 | KMP (Unit 4) and Bloom filter (Unit 6) |
+| ≥ 3 syllabus techniques (the project asked for at least three), ≥ 1 from Units 4–6 | KMP (Unit 4), Bloom filter (Unit 6) and disjoint-set forest (Unit 2) |
 | CO5: randomised / probabilistic structure | Bloom filter ([A2](A2_BLOOM_FILTER.md)), measured false-positive rate vs theory, exact confirmation |
 | Java for all core algorithms and business logic, run server-side | `cia-algorithms`, `cia-demo`; the UI only calls `/algo/*` (`app.js`, `DemoHttpTest`) |
 | Original implementations, no library doing the algorithm | ArchUnit `AssessedCodeIsolationTest` (no JDK search, set or bit-set classes), with a violating fixture proving the rule fires |
-| ≥ 5 correctness tests per algorithm incl. a boundary test | KMP 17 (`KmpMatcherTest`, `KmpQuoteVerifierTest`); Bloom 31 (`BloomFilterTest`, `ProbeSequenceTest`, `BitArrayAndHashTest`); see the [test report](evidence/test-report.md) |
-| Benchmarks at ≥ 3 sizes with ≥ 1 baseline, reproducible | 10⁴ / 10⁵ / 10⁶; naive and `String.indexOf`; `HashSet<Long>`; commands in README section 9 |
+| ≥ 5 correctness tests per algorithm incl. a boundary test | KMP 17 (`KmpMatcherTest`, `KmpQuoteVerifierTest`); Bloom 31 (`BloomFilterTest`, `ProbeSequenceTest`, `BitArrayAndHashTest`); disjoint set 10 (`DisjointSetTest`); see the [test report](evidence/test-report.md) |
+| Benchmarks at ≥ 3 sizes with ≥ 1 baseline, reproducible | 10⁴ / 10⁵ / 10⁶; naive and `String.indexOf`; `HashSet<Long>`; BFS for the disjoint set; commands in README section 9 |
 | Documented synthetic data, assumptions, failure cases | [DATA.md](DATA.md), `data/samples` |
 | Validation: empty, invalid, duplicates, infeasible, edge cases; no silent wrong results | [evidence section 3](evidence/README.md), 400 problem responses, `MISALIGNED` / `AMBIGUOUS`, duplicate accounting |
 | Honesty about probabilistic output | UI and report: "possibly present" is always confirmed exactly |
@@ -26,7 +26,7 @@
 | Rubric item (marks) | Evidence |
 |---|---|
 | Problem formulation (10) | Proposal sections 2–3, report section 1 |
-| Algorithm selection + original implementation (20) | Proposal section 4, report section 3, [A1](A1_KMP.md), [A2](A2_BLOOM_FILTER.md), source |
+| Algorithm selection + original implementation (20) | Proposal section 4, report section 3, [A1](A1_KMP.md), [A2](A2_BLOOM_FILTER.md), [A3](A3_DISJOINT_SET.md), source |
 | Correctness + tests (20) | Report section 4, test report |
 | Complexity + empirical performance (15) | Report sections 5–6, [BENCHMARKS.md](BENCHMARKS.md) |
 | Java backend / API quality (10) | `cia-demo`, report section 2, README section 6 |

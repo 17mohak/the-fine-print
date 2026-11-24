@@ -13,11 +13,12 @@ Everything here was produced by running the application from this repository (JD
 | [03-input-validation-message.png](screenshots/03-input-validation-message.png) | Browser-side message for an empty quotation (the server independently rejects it with HTTP 400, see section 3) |
 | [04-bloom-panel.png](screenshots/04-bloom-panel.png) | Bloom panel at target p = 30 %: possibly-present probes resolved to *Confirmed present* or *False positive*; repeat submission reported; bit array |
 | [05-kmp-panel.png](screenshots/05-kmp-panel.png) | KMP panel with the prefix function and the comparison count against the 2n bound |
+| [06-document-families-panel.png](screenshots/06-document-families-panel.png) | A3 panel: eight documents grouped into four families, the shared identifier behind every link, union/merge statistics |
 
 ## 2. Example inputs and outputs
 [`data/samples/requests`](../../../data/samples/requests) (input, description, expected status) and
 [`data/samples/responses`](../../../data/samples/responses) (recorded server output). Reproduce and verify with
-`python ops/scripts/replay_samples.py --check` (demo running): **21 of 21 match**.
+`python ops/scripts/replay_samples.py --check` (demo running): **27 of 27 match**.
 
 | Sample | Input | Output (abridged) |
 |---|---|---|
@@ -29,24 +30,25 @@ Everything here was produced by running the application from this repository (JD
 | 06 / 07 Hindi | `दावे की सूचना 30 दिनों के भीतर` / `दाव` | `VERIFIED` [56, 86) / `BOUNDARY_NOT_ESTABLISHED` (`MISALIGNED`) |
 | 08 empty source | empty string | `NOT_FOUND` (valid input, not an error) |
 | 10 / 11 / 12 KMP | `aa` in `aaaa`; a²⁰b in a²⁰⁰; `fee` | matches at 0, 1, 2 (4 comparisons, bound 8); no match, **380 comparisons, bound 2n = 400**; matches at 0, 10, 15 |
+| 13 / 14 / 15 families | eight documents; four documents sharing one insurer identifier; case-different identifiers | 4 families (claim letter joins the policy through the renewal notice; 4 unions, 4 merges); one **broad** identifier flagged; no links (no case folding) |
 | 20 / 21 / 22 Bloom | 10 submissions (1 repeat), 12 probes | p = 30 %: m = 23, k = 2, fill 47.8 %; p = 1 %: m = 87, k = 7, fill 55.2 %; capacity 2: m = 20, fill 100 %, `overCapacity: true`, expected FPR 73.6 % |
 
 ## 3. Error handling
-Samples 90–96 each return **HTTP 400** with `application/problem+json`; the submitted text is never echoed back
+Samples 90–99 each return **HTTP 400** with `application/problem+json`; the submitted text is never echoed back
 (asserted by `DemoHttpTest`). Examples: empty quotation → `claimedQuotation must not be empty`; malformed JSON →
 `The request body is not valid JSON for this endpoint.`; p = 0.9 → `targetFalsePositiveRate must be between 0.0001 and 0.5`;
-501 probes → `between 1 and 500 probes`; a quotation of 2,001 code points; a missing field; an empty pattern for KMP.
+501 probes → `between 1 and 500 probes`; a quotation of 2,001 code points; a missing field; an empty pattern for KMP; no documents, duplicate document ids, more than 20 identifiers.
 Unit-level failure handling (null, empty pattern, invalid Bloom parameters, out-of-range bits, oversized filters) is
 in the [test report](test-report.md). Cases that must **not** be silently wrong are surfaced explicitly: sub-character
 matches (`MISALIGNED`), repeated quotes (`AMBIGUOUS`), Bloom hits (always confirmed exactly), saturation
 (`overCapacity`), duplicate members (counted separately).
 
 ## 4. Tests
-[test-report.md](test-report.md): **101 tests, 0 failures** (regenerate with `ops/scripts/summarise_tests.py`).
+[test-report.md](test-report.md): **122 tests, 0 failures** (regenerate with `ops/scripts/summarise_tests.py`).
 
 ## 5. Performance
 - Algorithm benchmarks (JMH, three input sizes, baselines, five seeds for the false-positive rate):
-  [BENCHMARKS.md](../BENCHMARKS.md); raw data and charts in [`cia/cia-bench/results`](../../../cia/cia-bench/results);
+  [BENCHMARKS.md](../BENCHMARKS.md) (disjoint set 2–3× faster than BFS for a batch count and 9–14× for interleaved queries); raw data and charts in [`cia/cia-bench/results`](../../../cia/cia-bench/results);
   report figures in [`docs/cia/submission/figures`](../submission/figures).
 - End-to-end HTTP latency, from `ops/scripts/measure_api_latency.py` (200 runs after 30 warm-ups, a new connection per
   request, loopback, Windows 11 laptop): [api-latency.csv](api-latency.csv).

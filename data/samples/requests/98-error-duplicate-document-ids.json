@@ -1,0 +1,22 @@
+{
+  "name": "98-error-duplicate-document-ids",
+  "endpoint": "/algo/document-links",
+  "expectedStatus": 400,
+  "description": "Two documents with the same id: 400.",
+  "request": {
+    "documents": [
+      {
+        "id": "a",
+        "identifiers": [
+          "x"
+        ]
+      },
+      {
+        "id": "a",
+        "identifiers": [
+          "y"
+        ]
+      }
+    ]
+  }
+}

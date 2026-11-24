@@ -5,7 +5,7 @@
 
 | Module | Purpose | May depend on |
 |---|---|---|
-| `cia-algorithms` | Assessed algorithm implementations: A1 KMP quote matching (Unit 4), A2 Bloom filter (Unit 6 / CO5) | `core-api` and the JDK only |
+| `cia-algorithms` | Assessed algorithm implementations: A1 KMP quote matching (Unit 4), A2 Bloom filter (Unit 6 / CO5), A3 disjoint-set forest for document families (Unit 2) | `core-api` and the JDK only |
 | `cia-bench` | Reproducible JMH benchmarks and false-positive-rate/memory experiments | `cia-algorithms`, JMH |
 | `cia-demo` | Runnable Spring Boot demonstration with a browser UI; `/algo/*` endpoints exist only here | `cia-algorithms`, Spring Boot |
 
@@ -19,7 +19,7 @@
   review (ARCHITECTURE_OVERVIEW section 2). The default is no promotion.
 
 ## Documentation
-- Algorithms: [docs/cia/A1_KMP.md](../docs/cia/A1_KMP.md), [docs/cia/A2_BLOOM_FILTER.md](../docs/cia/A2_BLOOM_FILTER.md)
+- Algorithms: [docs/cia/A1_KMP.md](../docs/cia/A1_KMP.md), [docs/cia/A2_BLOOM_FILTER.md](../docs/cia/A2_BLOOM_FILTER.md), [docs/cia/A3_DISJOINT_SET.md](../docs/cia/A3_DISJOINT_SET.md)
 - Benchmarks: [docs/cia/BENCHMARKS.md](../docs/cia/BENCHMARKS.md)
 - Viva preparation: [docs/cia/VIVA.md](../docs/cia/VIVA.md)
 

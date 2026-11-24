@@ -2,7 +2,7 @@
 """Regenerate the figures used in the technical report from the committed benchmark results.
 
 Usage: python docs/cia/submission/make_figures.py        (needs matplotlib)
-Reads  cia/cia-bench/results/{jmh-results.json,jmh-bloom-results.json,bloom-experiment.csv}, docs/cia/evidence/api-latency.csv
+Reads  cia/cia-bench/results/{jmh-results.json,jmh-bloom-results.json,jmh-linking-results.json,bloom-experiment.csv}, docs/cia/evidence/api-latency.csv
 Writes docs/cia/submission/figures/*.png
 """
 import csv, json, statistics
@@ -78,39 +78,61 @@ def bloom_figure():
 
 
 def architecture_figure():
-    fig, ax = plt.subplots(figsize=(7.0, 3.1))
-    ax.set_xlim(0, 100); ax.set_ylim(0, 44); ax.axis("off")
+    fig, ax = plt.subplots(figsize=(7.0, 3.5))
+    ax.set_xlim(0, 100); ax.set_ylim(0, 50); ax.axis("off")
 
-    def box(x, y, w, h, text, fc="#fffdf8", ec="#3f4a5a", bold=False, fs=7.2):
+    def box(x, y, w, h, text, fc="#fffdf8", ec="#3f4a5a", fs=6.8):
         ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.25,rounding_size=0.8", fc=fc, ec=ec, lw=1))
-        ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs, fontweight="bold" if bold else "normal")
+        ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs)
 
     def arrow(x0, y0, x1, y1, text=None, dy=1.6):
         ax.annotate("", xy=(x1, y1), xytext=(x0, y0), arrowprops=dict(arrowstyle="->", lw=1, color="#3f4a5a"))
         if text:
             ax.text((x0 + x1) / 2, (y0 + y1) / 2 + dy, text, ha="center", fontsize=6.3, color="#4a4d55")
 
-    box(1, 17, 16, 11, "Browser UI\n(HTML/CSS/JS)\nstatic/app.js", fc="#eef2f7")
-    ax.add_patch(FancyBboxPatch((25, 3), 74, 39, boxstyle="round,pad=0.3,rounding_size=1", fc="#fbf6ec", ec="#9c3f1d", lw=1.2, ls="--"))
-    ax.text(26.5, 39.3, "cia-demo  (Spring Boot 4.2, Java 21, 127.0.0.1:8090)", fontsize=7.4, fontweight="bold", color="#9c3f1d")
-    arrow(17, 22.5, 28, 22.5, "JSON / HTTP", 1.8)
-    box(28, 28, 20, 8, "EvidenceCheckController\nPOST /algo/evidence-check")
-    box(28, 16.5, 20, 8, "QuoteMatchController\nPOST /algo/quote-match")
-    box(28, 5, 20, 8, "MembershipController\nPOST /algo/membership")
-    box(54, 28, 20, 8, "EvidenceCheckService\n+ BoundaryCheck\n+ ClauseSegmenter", fs=6.4)
-    box(54, 5, 20, 8, "MembershipScreening-\nService + Exact-\nFingerprintRegistry", fs=6.4)
-    box(54, 16.5, 20, 8, "QuoteMatchService")
-    for y in (32, 20.5, 9):
-        arrow(48, y, 54, y)
-    box(79, 24, 18.5, 12, "core-api SPI\nQuoteVerifier\nApproximateMembership", fc="#eef2f7", fs=6.8)
-    box(79, 5, 18.5, 14.5, "cia-algorithms\n(assessed, own Java)\nA1 KmpMatcher\nA2 BloomFilter\n(BitArray, SeededHash64)", fc="#f3e3d6", ec="#9c3f1d", fs=6.6)
-    arrow(74, 32, 79, 31)
-    arrow(74, 20.5, 79, 17)
-    ax.text(64, 14.3, "(KMP panel)", fontsize=6, ha="center", color="#4a4d55")
-    arrow(74, 9, 79, 10)
-    arrow(88, 24, 88, 19.5)
-    ax.text(50, 0.4, "Algorithms run only on the server. No database, no outbound calls, synthetic data only.", ha="center", fontsize=6.6, style="italic", color="#4a4d55")
+    box(1, 20, 16, 11, "Browser UI\n(HTML/CSS/JS)\nstatic/app.js", fc="#eef2f7", fs=7.2)
+    ax.add_patch(FancyBboxPatch((25, 2), 74, 46, boxstyle="round,pad=0.3,rounding_size=1", fc="#fbf6ec", ec="#9c3f1d", lw=1.2, ls="--"))
+    ax.text(26.5, 45.3, "cia-demo  (Spring Boot 4.2, Java 21, 127.0.0.1:8090)", fontsize=7.4, fontweight="bold", color="#9c3f1d")
+    arrow(17, 25.5, 28, 25.5, "JSON / HTTP", 1.8)
+    rows = [(34, "EvidenceCheckController\nPOST /algo/evidence-check", "EvidenceCheckService\n+ BoundaryCheck\n+ ClauseSegmenter"),
+            (24, "QuoteMatchController\nPOST /algo/quote-match", "QuoteMatchService"),
+            (14, "MembershipController\nPOST /algo/membership", "MembershipScreening-\nService + Exact-\nFingerprintRegistry"),
+            (4, "DocumentLinkController\nPOST /algo/document-links", "DocumentLinkService\n(identifier -> doc number)")]
+    for y, ctl, svc in rows:
+        box(28, y, 20, 7.5, ctl)
+        box(54, y, 20, 7.5, svc, fs=6.4)
+        arrow(48, y + 3.75, 54, y + 3.75)
+    box(79, 34, 18.5, 7.5, "core-api SPI\nQuoteVerifier\nApproximateMembership", fc="#eef2f7", fs=6.4)
+    box(79, 4, 18.5, 26, "cia-algorithms\n(assessed, own Java)\n\nA1 KmpMatcher\n\nA2 BloomFilter\n(BitArray, SeededHash64,\nProbeSequence)\n\nA3 DisjointSet\n(union by size,\npath halving)", fc="#f3e3d6", ec="#9c3f1d", fs=6.4)
+    arrow(74, 37.75, 79, 37.75)
+    arrow(88, 34, 88, 30)
+    arrow(74, 27.75, 79, 22)
+    arrow(74, 17.75, 79, 16)
+    arrow(74, 7.75, 79, 8)
+    ax.text(62, 0.2, "Algorithms run only on the server. No database, no outbound calls, synthetic data only.", ha="center", fontsize=6.4, style="italic", color="#4a4d55")
     fig.tight_layout(); fig.savefig(OUT / "fig_architecture.png", dpi=220); plt.close(fig)
+
+
+def linking_figure():
+    p = RES / "jmh-linking-results.json"
+    if not p.exists():
+        return
+    data = json.loads(p.read_text())
+    rows = defaultdict(dict)
+    for b in data:
+        name = b["benchmark"].rsplit(".", 1)[1]
+        rows[name][int(b["params"]["nodes"])] = b["primaryMetric"]["score"] / 1000.0  # us -> ms
+    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.6))
+    for ax, (dsu, bfs, title) in zip(axes, (("batchDsu", "batchBfs", "Batch: count components of n nodes, n edges"),
+                                            ("incrementalDsu", "incrementalBfs", "Incremental: 20 batches, 'connected?' after each"))):
+        for key, label, col in ((dsu, "disjoint set (ours)", "#9c3f1d"), (bfs, "BFS (rebuilds each time)" if "incremental" in bfs else "BFS", "#3f4a5a")):
+            pts = sorted(rows[key].items())
+            ax.plot([x for x, _ in pts], [y for _, y in pts], "o-", ms=3.5, lw=1.4, color=col, label=label)
+        ax.set_xscale("log"); ax.set_yscale("log")
+        ax.set_xlabel("nodes n"); ax.set_title(title, fontsize=8)
+        ax.grid(alpha=0.25, which="both", lw=0.4); ax.legend(frameon=False, fontsize=7)
+    axes[0].set_ylabel("time (ms, log)")
+    fig.tight_layout(); fig.savefig(OUT / "fig_linking.png", dpi=220); plt.close(fig)
 
 
 def latency_figure():
@@ -128,5 +150,5 @@ def latency_figure():
 
 
 if __name__ == "__main__":
-    kmp_figure(); bloom_figure(); architecture_figure(); latency_figure()
+    kmp_figure(); bloom_figure(); architecture_figure(); linking_figure(); latency_figure()
     print("wrote", ", ".join(sorted(p.name for p in OUT.glob("*.png"))))

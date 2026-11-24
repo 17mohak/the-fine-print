@@ -1,0 +1,11 @@
+{
+  "name": "98-error-duplicate-document-ids",
+  "endpoint": "/algo/document-links",
+  "status": 400,
+  "contentType": "application/problem+json",
+  "response": {
+    "detail": "document ids must be unique",
+    "status": 400,
+    "title": "Invalid input"
+  }
+}

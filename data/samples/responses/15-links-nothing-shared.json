@@ -1,0 +1,44 @@
+{
+  "name": "15-links-nothing-shared",
+  "endpoint": "/algo/document-links",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "algorithm": "Disjoint-set forest (union by size, path halving)",
+    "stats": {
+      "documents": 3,
+      "identifiers": 2,
+      "unionCalls": 0,
+      "merges": 0,
+      "families": 3,
+      "parentHops": 0
+    },
+    "groups": [
+      {
+        "number": 1,
+        "documentIds": [
+          "a"
+        ]
+      },
+      {
+        "number": 2,
+        "documentIds": [
+          "b"
+        ]
+      },
+      {
+        "number": 3,
+        "documentIds": [
+          "c"
+        ]
+      }
+    ],
+    "links": [],
+    "caveats": [
+      "A shared identifier is a hint, not proof: transitive linking can merge unrelated documents if an identifier is common (an insurer name, a shared phone number). Identifiers shared by 4 or more documents are flagged as broad.",
+      "Identifiers are compared exactly as entered (no case, whitespace or Unicode folding), so a differently written identifier does not link.",
+      "This groups documents only. It does not establish that they belong to one agreement or what they mean, and nothing is merged or stored."
+    ],
+    "serverMicros": 96
+  }
+}

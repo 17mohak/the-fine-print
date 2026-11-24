@@ -1,0 +1,63 @@
+{
+  "name": "14-links-broad-identifier",
+  "endpoint": "/algo/document-links",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "algorithm": "Disjoint-set forest (union by size, path halving)",
+    "stats": {
+      "documents": 6,
+      "identifiers": 7,
+      "unionCalls": 4,
+      "merges": 4,
+      "families": 2,
+      "parentHops": 5
+    },
+    "groups": [
+      {
+        "number": 1,
+        "documentIds": [
+          "a",
+          "b",
+          "c",
+          "d",
+          "e"
+        ]
+      },
+      {
+        "number": 2,
+        "documentIds": [
+          "f"
+        ]
+      }
+    ],
+    "links": [
+      {
+        "identifier": "INSURER-ACME",
+        "documentIds": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "group": 1,
+        "broad": true
+      },
+      {
+        "identifier": "POL-1",
+        "documentIds": [
+          "d",
+          "e"
+        ],
+        "group": 1,
+        "broad": false
+      }
+    ],
+    "caveats": [
+      "A shared identifier is a hint, not proof: transitive linking can merge unrelated documents if an identifier is common (an insurer name, a shared phone number). Identifiers shared by 4 or more documents are flagged as broad.",
+      "Identifiers are compared exactly as entered (no case, whitespace or Unicode folding), so a differently written identifier does not link.",
+      "This groups documents only. It does not establish that they belong to one agreement or what they mean, and nothing is merged or stored."
+    ],
+    "serverMicros": 91
+  }
+}

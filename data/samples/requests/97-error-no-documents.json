@@ -1,0 +1,9 @@
+{
+  "name": "97-error-no-documents",
+  "endpoint": "/algo/document-links",
+  "expectedStatus": 400,
+  "description": "An empty document list: 400.",
+  "request": {
+    "documents": []
+  }
+}

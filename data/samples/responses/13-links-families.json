@@ -1,0 +1,83 @@
+{
+  "name": "13-links-families",
+  "endpoint": "/algo/document-links",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "algorithm": "Disjoint-set forest (union by size, path halving)",
+    "stats": {
+      "documents": 8,
+      "identifiers": 10,
+      "unionCalls": 4,
+      "merges": 4,
+      "families": 4,
+      "parentHops": 5
+    },
+    "groups": [
+      {
+        "number": 1,
+        "documentIds": [
+          "policy-2026",
+          "endorsement-1",
+          "renewal-notice",
+          "claim-letter"
+        ]
+      },
+      {
+        "number": 2,
+        "documentIds": [
+          "loan-sanction",
+          "emi-schedule"
+        ]
+      },
+      {
+        "number": 3,
+        "documentIds": [
+          "rent-agreement"
+        ]
+      },
+      {
+        "number": 4,
+        "documentIds": [
+          "gym-invoice"
+        ]
+      }
+    ],
+    "links": [
+      {
+        "identifier": "POL-8841",
+        "documentIds": [
+          "policy-2026",
+          "endorsement-1",
+          "renewal-notice"
+        ],
+        "group": 1,
+        "broad": false
+      },
+      {
+        "identifier": "RENEWAL-2027-17",
+        "documentIds": [
+          "renewal-notice",
+          "claim-letter"
+        ],
+        "group": 1,
+        "broad": false
+      },
+      {
+        "identifier": "LN-5520",
+        "documentIds": [
+          "loan-sanction",
+          "emi-schedule"
+        ],
+        "group": 2,
+        "broad": false
+      }
+    ],
+    "caveats": [
+      "A shared identifier is a hint, not proof: transitive linking can merge unrelated documents if an identifier is common (an insurer name, a shared phone number). Identifiers shared by 4 or more documents are flagged as broad.",
+      "Identifiers are compared exactly as entered (no case, whitespace or Unicode folding), so a differently written identifier does not link.",
+      "This groups documents only. It does not establish that they belong to one agreement or what they mean, and nothing is merged or stored."
+    ],
+    "serverMicros": 4753
+  }
+}

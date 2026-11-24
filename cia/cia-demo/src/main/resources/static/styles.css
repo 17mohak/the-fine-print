@@ -197,3 +197,7 @@ table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
   .result:not([hidden]) { animation: rise .18s ease-out; }
   @keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 }
+
+/* A3 panel spans both columns of the algorithm grid */
+.panel.wide { grid-column: 1 / -1; }
+#link-docs { font-family: var(--mono); }

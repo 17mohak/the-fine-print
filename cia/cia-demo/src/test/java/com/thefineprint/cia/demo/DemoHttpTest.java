@@ -82,6 +82,20 @@ class DemoHttpTest {
         assertThat(malformed.statusCode()).isEqualTo(400);
     }
 
+    @Test
+    void documentLinksEndpointGroupsDocumentsOnTheServer() throws Exception {
+        String json = "{\"documents\":[{\"id\":\"A\",\"identifiers\":[\"P-1\"]},"
+                + "{\"id\":\"B\",\"identifiers\":[\"P-1\",\"L-9\"]},{\"id\":\"C\",\"identifiers\":[\"L-9\"]},"
+                + "{\"id\":\"D\",\"identifiers\":[]}]}";
+        HttpResponse<String> r = post("/algo/document-links", json);
+        assertThat(r.statusCode()).isEqualTo(200);
+        assertThat(r.body()).contains("\"families\":2", "\"documentIds\":[\"A\",\"B\",\"C\"]", "Disjoint-set forest");
+
+        HttpResponse<String> bad = post("/algo/document-links", "{\"documents\":[]}");
+        assertThat(bad.statusCode()).isEqualTo(400);
+        assertThat(bad.headers().firstValue("Content-Type")).hasValueSatisfying(v -> assertThat(v).contains("problem+json"));
+    }
+
     private HttpResponse<String> get(String path) throws Exception {
         try (HttpClient client = HttpClient.newHttpClient()) {
             return client.send(HttpRequest.newBuilder(uri(path)).GET().build(), HttpResponse.BodyHandlers.ofString());
