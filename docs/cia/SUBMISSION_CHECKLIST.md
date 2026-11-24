@@ -35,7 +35,6 @@
 | Demo + viva (15) | [DEMO_SCRIPT.md](DEMO_SCRIPT.md), [VIVA.md](VIVA.md) |
 
 ## Still to do by the student before submitting
-1. Fill in the register number (`<REGISTER-NO>` in the README and both documents) and the course and faculty names.
-2. Read and, if necessary, edit [CONTRIBUTIONS.md](CONTRIBUTIONS.md) so it states exactly what you did; use the faculty's disclosure wording if one exists.
-3. Attach the written faculty confirmation of the AI-assistance policy if you have it (DECISION_LOG D-31 notes that none is held in the repository).
-4. Check that the repository's default branch shows this work (merge the pull request) and that the link opens when you are logged out.
+1. Read and, if necessary, edit [CONTRIBUTIONS.md](CONTRIBUTIONS.md) so it states exactly what you did; use the faculty's disclosure wording if one exists.
+2. Attach the written faculty confirmation of the AI-assistance policy if you have it (DECISION_LOG D-31 notes that none is held in the repository).
+3. Check that the repository's default branch shows this work (merge the pull request) and that the link opens when you are logged out.

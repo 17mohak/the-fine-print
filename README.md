@@ -1,7 +1,7 @@
 # The Fine Print — Evidence Integrity Lab
 
 **CIA-3 Advanced Algorithm Project** · ATLAS–uGDX, School of Technology, B.Tech CS (AI & ML), Semester V
-**Student:** Mohak Mandwani · **Register / ID:** `<REGISTER-NO>` · individual project (see
+**Student:** Mohak Mandwani · individual project (see
 [docs/cia/CONTRIBUTIONS.md](docs/cia/CONTRIBUTIONS.md))
 
 > *Does the document really say that?* Contracts, insurance policies and loan sheets are long, and language
