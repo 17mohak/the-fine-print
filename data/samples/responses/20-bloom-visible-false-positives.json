@@ -1,0 +1,133 @@
+{
+  "name": "20-bloom-visible-false-positives",
+  "endpoint": "/algo/membership",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "parameters": {
+      "expectedInsertions": 9,
+      "targetFalsePositiveRate": 0.3,
+      "bitCount": 23,
+      "hashCount": 2,
+      "bitsPerElement": 2.5555555555555554,
+      "seed": 7
+    },
+    "insertionAttempts": 10,
+    "distinctFingerprints": 9,
+    "duplicateAttempts": 1,
+    "fillRatio": 0.4782608695652174,
+    "expectedFalsePositiveRate": 0.29461910824815213,
+    "overCapacity": false,
+    "bits": "01001100111110011001000",
+    "results": [
+      {
+        "probe": "A grace period of 15 days is allowed.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          4,
+          11
+        ]
+      },
+      {
+        "probe": "Notice of claim within 30 days of discharge.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          9,
+          10
+        ]
+      },
+      {
+        "probe": "Warranty of 12 months from purchase.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          15,
+          11
+        ]
+      },
+      {
+        "probe": "A grace period of 17 days is allowed.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          0,
+          20
+        ]
+      },
+      {
+        "probe": "Notice of claim within 45 days of discharge.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          0,
+          9
+        ]
+      },
+      {
+        "probe": "Free look period of 30 days.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          21,
+          11
+        ]
+      },
+      {
+        "probe": "Cooling-off period of 5 days.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          9,
+          20
+        ]
+      },
+      {
+        "probe": "Deposit refunded within 60 days of vacating.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          8,
+          10
+        ]
+      },
+      {
+        "probe": "Renews unless cancelled 3 days before renewal.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          11,
+          7
+        ]
+      },
+      {
+        "probe": "Warranty of 24 months from purchase.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          11,
+          7
+        ]
+      },
+      {
+        "probe": "Prepayment charge of 3 per cent.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          15,
+          9
+        ]
+      },
+      {
+        "probe": "Late payment charge of 2 per cent.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          10,
+          20
+        ]
+      }
+    ]
+  }
+}

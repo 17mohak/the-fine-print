@@ -1,0 +1,11 @@
+{
+  "name": "93-error-malformed-json",
+  "endpoint": "/algo/membership",
+  "status": 400,
+  "contentType": "application/problem+json",
+  "response": {
+    "detail": "The request body is not valid JSON for this endpoint.",
+    "status": 400,
+    "title": "Malformed request"
+  }
+}

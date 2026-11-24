@@ -1,0 +1,39 @@
+{
+  "name": "12-kmp-fee-example",
+  "endpoint": "/algo/quote-match",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "algorithm": "Knuth-Morris-Pratt",
+    "textLength": 18,
+    "quoteLength": 3,
+    "matches": [
+      {
+        "start": 0,
+        "end": 3
+      },
+      {
+        "start": 10,
+        "end": 13
+      },
+      {
+        "start": 15,
+        "end": 18
+      }
+    ],
+    "characterComparisons": 18,
+    "comparisonBound": 36,
+    "quoteSymbols": [
+      "f",
+      "e",
+      "e"
+    ],
+    "prefixFunction": [
+      0,
+      0,
+      0
+    ],
+    "prefixFunctionTruncated": false,
+    "serverMicros": 7
+  }
+}

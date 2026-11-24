@@ -1,0 +1,10 @@
+{
+  "name": "08-evidence-empty-source",
+  "endpoint": "/algo/evidence-check",
+  "description": "Empty source is valid input, not an error: the quotation is simply NOT_FOUND and no clause is screened.",
+  "expectedStatus": 200,
+  "request": {
+    "sourceText": "",
+    "claimedQuotation": "abc"
+  }
+}

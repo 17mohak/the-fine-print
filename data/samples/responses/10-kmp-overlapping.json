@@ -1,0 +1,37 @@
+{
+  "name": "10-kmp-overlapping",
+  "endpoint": "/algo/quote-match",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "algorithm": "Knuth-Morris-Pratt",
+    "textLength": 4,
+    "quoteLength": 2,
+    "matches": [
+      {
+        "start": 0,
+        "end": 2
+      },
+      {
+        "start": 1,
+        "end": 3
+      },
+      {
+        "start": 2,
+        "end": 4
+      }
+    ],
+    "characterComparisons": 4,
+    "comparisonBound": 8,
+    "quoteSymbols": [
+      "a",
+      "a"
+    ],
+    "prefixFunction": [
+      0,
+      1
+    ],
+    "prefixFunctionTruncated": false,
+    "serverMicros": 6
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "name": "21-bloom-low-rate",
+  "endpoint": "/algo/membership",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "parameters": {
+      "expectedInsertions": 9,
+      "targetFalsePositiveRate": 0.01,
+      "bitCount": 87,
+      "hashCount": 7,
+      "bitsPerElement": 9.666666666666666,
+      "seed": 7
+    },
+    "insertionAttempts": 10,
+    "distinctFingerprints": 9,
+    "duplicateAttempts": 1,
+    "fillRatio": 0.5517241379310345,
+    "expectedFalsePositiveRate": 0.009642099531313031,
+    "overCapacity": false,
+    "bits": "010110001100100101111111010010100010001011111110101101110111011110110001111000001100100",
+    "results": [
+      {
+        "probe": "A grace period of 15 days is allowed.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          40,
+          12,
+          71,
+          43,
+          15,
+          74,
+          46
+        ]
+      },
+      {
+        "probe": "Notice of claim within 30 days of discharge.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          48,
+          64,
+          80,
+          9,
+          25,
+          41,
+          57
+        ]
+      },
+      {
+        "probe": "Warranty of 12 months from purchase.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          51,
+          62,
+          73,
+          84,
+          8,
+          19,
+          30
+        ]
+      },
+      {
+        "probe": "A grace period of 17 days is allowed.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          78,
+          25,
+          59,
+          6,
+          40,
+          74,
+          21
+        ]
+      },
+      {
+        "probe": "Notice of claim within 45 days of discharge.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          30,
+          16,
+          2,
+          75,
+          61,
+          47,
+          33
+        ]
+      },
+      {
+        "probe": "Free look period of 30 days.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          47,
+          1,
+          42,
+          83,
+          37,
+          78,
+          32
+        ]
+      },
+      {
+        "probe": "Cooling-off period of 5 days.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          86,
+          46,
+          6,
+          53,
+          13,
+          60,
+          20
+        ]
+      },
+      {
+        "probe": "Deposit refunded within 60 days of vacating.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          57,
+          52,
+          47,
+          42,
+          37,
+          32,
+          27
+        ]
+      },
+      {
+        "probe": "Renews unless cancelled 3 days before renewal.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          70,
+          32,
+          81,
+          43,
+          5,
+          54,
+          16
+        ]
+      },
+      {
+        "probe": "Warranty of 24 months from purchase.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          3,
+          14,
+          25,
+          36,
+          47,
+          58,
+          69
+        ]
+      },
+      {
+        "probe": "Prepayment charge of 3 per cent.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          15,
+          86,
+          70,
+          54,
+          38,
+          22,
+          6
+        ]
+      },
+      {
+        "probe": "Late payment charge of 2 per cent.",
+        "bloomVerdict": "DEFINITELY_ABSENT",
+        "exactVerdict": "NOT_NEEDED",
+        "positions": [
+          38,
+          19,
+          0,
+          68,
+          49,
+          30,
+          11
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "94-error-invalid-rate",
+  "endpoint": "/algo/membership",
+  "description": "Target false-positive rate outside [0.0001, 0.5]: 400.",
+  "expectedStatus": 400,
+  "request": {
+    "fingerprints": [
+      "a"
+    ],
+    "probes": [
+      "a"
+    ],
+    "targetFalsePositiveRate": 0.9
+  }
+}

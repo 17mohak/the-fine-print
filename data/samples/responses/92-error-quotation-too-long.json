@@ -1,0 +1,11 @@
+{
+  "name": "92-error-quotation-too-long",
+  "endpoint": "/algo/evidence-check",
+  "status": 400,
+  "contentType": "application/problem+json",
+  "response": {
+    "detail": "claimedQuotation is limited to 2000 characters",
+    "status": 400,
+    "title": "Invalid input"
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "name": "05-evidence-case-near-miss",
+  "endpoint": "/algo/evidence-check",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "verification": {
+      "verdict": "NOT_FOUND",
+      "matchClass": null,
+      "algorithm": "Knuth-Morris-Pratt (QuoteVerifier SPI)",
+      "sourceLength": 527,
+      "quotationLength": 55,
+      "occurrences": [],
+      "nearMisses": [
+        "The quotation would match if letter case were ignored. Exact matching is case-sensitive, so it is not a match."
+      ]
+    },
+    "screening": {
+      "library": {
+        "referenceClauses": 477,
+        "bitCount": 4573,
+        "hashCount": 7,
+        "targetFalsePositiveRate": 0.01,
+        "expectedFalsePositiveRate": 0.010029548038290271,
+        "fillRatio": 0.514760551060573,
+        "bloomBytes": 576,
+        "seed": 7
+      },
+      "clauses": [
+        {
+          "clauseId": "line 1",
+          "containsQuotation": false,
+          "bloomVerdict": "DEFINITELY_ABSENT",
+          "exactVerdict": "NOT_NEEDED",
+          "referenceId": null,
+          "referenceDomain": null,
+          "referenceTitle": null
+        },
+        {
+          "clauseId": "4.1",
+          "containsQuotation": false,
+          "bloomVerdict": "POSSIBLY_PRESENT",
+          "exactVerdict": "FALSE_POSITIVE",
+          "referenceId": null,
+          "referenceDomain": null,
+          "referenceTitle": null
+        },
+        {
+          "clauseId": "4.2",
+          "containsQuotation": false,
+          "bloomVerdict": "POSSIBLY_PRESENT",
+          "exactVerdict": "IDENTICAL_WORDING",
+          "referenceId": "INS-CLAIM-NOTICE-025",
+          "referenceDomain": "Insurance",
+          "referenceTitle": "Notice of claim"
+        },
+        {
+          "clauseId": "4.3",
+          "containsQuotation": false,
+          "bloomVerdict": "POSSIBLY_PRESENT",
+          "exactVerdict": "IDENTICAL_WORDING",
+          "referenceId": "INS-RENEWAL-000",
+          "referenceDomain": "Insurance",
+          "referenceTitle": "Renewal"
+        },
+        {
+          "clauseId": "4.4",
+          "containsQuotation": false,
+          "bloomVerdict": "DEFINITELY_ABSENT",
+          "exactVerdict": "NOT_NEEDED",
+          "referenceId": null,
+          "referenceDomain": null,
+          "referenceTitle": null
+        },
+        {
+          "clauseId": "4.5",
+          "containsQuotation": false,
+          "bloomVerdict": "DEFINITELY_ABSENT",
+          "exactVerdict": "NOT_NEEDED",
+          "referenceId": null,
+          "referenceDomain": null,
+          "referenceTitle": null
+        }
+      ],
+      "definitelyAbsent": 3,
+      "exactLookups": 3,
+      "confirmedMatches": 2,
+      "falsePositivesRejected": 1
+    },
+    "evidence": {
+      "verified": {
+        "status": "Not found",
+        "statements": [
+          "The source does not contain this exact quotation.",
+          "The quotation would match if letter case were ignored. Exact matching is case-sensitive, so it is not a match."
+        ]
+      },
+      "screened": {
+        "status": "Not applicable",
+        "statements": [
+          "No clause is attributed to the quotation, so no clause wording was screened on its behalf. Every clause is still screened in stage 2."
+        ]
+      },
+      "notEstablished": [
+        "What the quoted text means, or how it should be interpreted.",
+        "Whether it applies to any particular person, claim or situation.",
+        "Whether the clause is legally valid or enforceable.",
+        "Whether the source document is authentic and unaltered, or who issued it.",
+        "Whether the source is the current version in force.",
+        "That identical reference wording has the same meaning or effect in this document: identical wording is not semantic or legal equivalence, and the reference library is synthetic, not an approved standard."
+      ]
+    },
+    "clauses": [
+      {
+        "id": "line 1",
+        "start": 0,
+        "end": 40,
+        "wording": "SCHEDULE OF BENEFITS (synthetic example)"
+      },
+      {
+        "id": "4.1",
+        "start": 41,
+        "end": 131,
+        "wording": "Grace period. A grace period of 17 days is allowed for payment of the renewal premium."
+      },
+      {
+        "id": "4.2",
+        "start": 132,
+        "end": 237,
+        "wording": "Notice of claim. The Policyholder shall give written notice of any claim within 30 days of discharge."
+      },
+      {
+        "id": "4.3",
+        "start": 238,
+        "end": 326,
+        "wording": "Renewal. The Insurer may decline renewal only on grounds of fraud or non-disclosure."
+      },
+      {
+        "id": "4.4",
+        "start": 327,
+        "end": 422,
+        "wording": "Waiting period. Pre-existing conditions are covered after 36 months of continuous coverage."
+      },
+      {
+        "id": "4.5",
+        "start": 423,
+        "end": 527,
+        "wording": "Cashless facility. Cashless treatment is available only at network hospitals listed in the Annexure."
+      }
+    ],
+    "method": [
+      "Stage 1 calls the QuoteVerifier contract, implemented here by the assessed KMP matcher (KmpQuoteVerifier). Text is matched exactly as entered: no Unicode normalisation, case folding or whitespace folding.",
+      "Each occurrence's start and end are checked conservatively for combining marks, viramas (conjuncts), joiners and CR LF, in Latin, Greek, Cyrillic and nine Indic scripts. This is not full Unicode grapheme segmentation. An occurrence whose boundaries cannot be established is not accepted.",
+      "Clauses are the non-blank lines of the source; a leading number such as 4.2 becomes the clause id (a simple heuristic).",
+      "Stage 2 fingerprints each clause's exact wording (SHA-256), screens the fingerprint with the assessed Bloom filter, and confirms every possible hit by comparing the wording itself.",
+      "The reference library is synthetic and generated from invented templates (docs/cia/DATA.md)."
+    ]
+  }
+}

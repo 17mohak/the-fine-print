@@ -1,0 +1,10 @@
+{
+  "name": "07-evidence-hindi-misaligned",
+  "endpoint": "/algo/evidence-check",
+  "description": "\"दाव\" occurs only inside \"दावे\"; accepting it would split a character: MISALIGNED.",
+  "expectedStatus": 200,
+  "request": {
+    "sourceText": "नियम और शर्तें (synthetic example)\n5.1 बीमित व्यक्ति को दावे की सूचना 30 दिनों के भीतर देनी होगी।\n5.2 पॉलिसी का नवीनीकरण केवल धोखाधड़ी के आधार पर अस्वीकार किया जा सकता है।",
+    "claimedQuotation": "दाव"
+  }
+}

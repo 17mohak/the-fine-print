@@ -1,0 +1,7 @@
+{
+  "name": "93-error-malformed-json",
+  "endpoint": "/algo/membership",
+  "description": "Malformed JSON body: 400.",
+  "expectedStatus": 400,
+  "rawBody": "{not json"
+}

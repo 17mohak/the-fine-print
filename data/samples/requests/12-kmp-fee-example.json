@@ -1,0 +1,10 @@
+{
+  "name": "12-kmp-fee-example",
+  "endpoint": "/algo/quote-match",
+  "description": "Three occurrences of \"fee\".",
+  "expectedStatus": 200,
+  "request": {
+    "text": "fee, late fee, fee",
+    "quote": "fee"
+  }
+}
