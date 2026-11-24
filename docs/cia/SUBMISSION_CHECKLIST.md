@@ -2,9 +2,9 @@
 
 | Deliverable | Requirement | Status | Where |
 |---|---|---|---|
-| A. Proposal (1–2 pages) | title; team and IDs; problem; target user; features; two core techniques and why; data source; measurable success criteria | Done | `docs/cia/submission/A_Project_Proposal.docx` / `.pdf` |
+| A. Proposal (1–2 pages) | title; team and IDs; problem; target user; features; two core techniques and why; data source; measurable success criteria | Done | submitted separately (document) |
 | B. Repository | Java backend, frontend, tests, sample data, build files, dependency manifest, readable history, attribution | Done | [README](../../README.md) section 2, [DEPENDENCIES.md](DEPENDENCIES.md), [CONTRIBUTIONS.md](CONTRIBUTIONS.md) |
-| C. Technical report (5–8 pages) | problem and constraints; design/API diagram; pseudocode; correctness; complexity; benchmark method and results; limitations; individual contributions | Done | `docs/cia/submission/C_Technical_Report.docx` / `.pdf` |
+| C. Technical report (5–8 pages) | problem and constraints; design/API diagram; pseudocode; correctness; complexity; benchmark method and results; limitations; individual contributions | Done | submitted separately (document) |
 | D. Demonstration evidence | working app; example inputs/outputs; error handling; performance charts/tables | Done | [evidence/README.md](evidence/README.md) |
 | E. README and reproducibility | prerequisites; build/run commands; env vars without secrets; API | Done | [README](../../README.md) sections 3–7 and 11 |
 
