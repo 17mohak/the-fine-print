@@ -1,0 +1,10 @@
+{
+  "name": "05-evidence-case-near-miss",
+  "endpoint": "/algo/evidence-check",
+  "description": "Exact matching does not fold case: NOT_FOUND with a near-miss hint.",
+  "expectedStatus": 200,
+  "request": {
+    "sourceText": "SCHEDULE OF BENEFITS (synthetic example)\n4.1 Grace period. A grace period of 17 days is allowed for payment of the renewal premium.\n4.2 Notice of claim. The Policyholder shall give written notice of any claim within 30 days of discharge.\n4.3 Renewal. The Insurer may decline renewal only on grounds of fraud or non-disclosure.\n4.4 Waiting period. Pre-existing conditions are covered after 36 months of continuous coverage.\n4.5 Cashless facility. Cashless treatment is available only at network hospitals listed in the Annexure.",
+    "claimedQuotation": "the policyholder shall give written notice of any claim"
+  }
+}

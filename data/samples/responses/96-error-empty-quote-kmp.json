@@ -1,0 +1,11 @@
+{
+  "name": "96-error-empty-quote-kmp",
+  "endpoint": "/algo/quote-match",
+  "status": 400,
+  "contentType": "application/problem+json",
+  "response": {
+    "detail": "quote must not be empty",
+    "status": 400,
+    "title": "Invalid input"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "96-error-empty-quote-kmp",
+  "endpoint": "/algo/quote-match",
+  "description": "Empty pattern is rejected (SPI contract): 400.",
+  "expectedStatus": 400,
+  "request": {
+    "text": "abc",
+    "quote": ""
+  }
+}

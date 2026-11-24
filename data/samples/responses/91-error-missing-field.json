@@ -1,0 +1,11 @@
+{
+  "name": "91-error-missing-field",
+  "endpoint": "/algo/evidence-check",
+  "status": 400,
+  "contentType": "application/problem+json",
+  "response": {
+    "detail": "sourceText and claimedQuotation are required",
+    "status": 400,
+    "title": "Invalid input"
+  }
+}

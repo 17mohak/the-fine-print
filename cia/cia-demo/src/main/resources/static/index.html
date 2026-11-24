@@ -8,126 +8,226 @@
   <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip" href="#quote-panel">Skip to quote verification</a>
+  <a class="skip" href="#evidence">Skip to the evidence check</a>
   <header class="masthead">
     <p class="eyebrow">The Fine Print · Evidence Integrity Lab</p>
     <h1>Does the document really say that?</h1>
-    <p class="lede">Two server-side algorithms behind the product's trust model. <strong>Exact matching</strong>
-      proves a quoted passage occurs in the source. <strong>Probabilistic screening</strong> narrows a search
-      quickly, but its answers are only ever confirmed by an exact check.</p>
-    <p class="notice" role="note">Synthetic data only. Every result here is computed by the Java backend
+    <p class="lede">Check a claimed quotation against its source in one pass. First, <strong>exact matching</strong>
+      establishes whether and where the quotation occurs. Then the clause it sits in is <strong>screened</strong>
+      against a library of reference clause wordings, and every possible hit is compared exactly. The result says
+      plainly what is verified, what is screened, and what this check cannot tell you.</p>
+    <p class="notice" role="note">Synthetic data only. Every result is computed by the Java backend
       (<code>/algo/*</code>); nothing is precomputed in the browser.</p>
   </header>
 
-  <main class="panels">
-    <!-- A1: KMP quote verification -->
-    <section id="quote-panel" class="panel" aria-labelledby="quote-title">
-      <div class="panel-head">
-        <p class="tag">A1 · Knuth–Morris–Pratt · O(n + m)</p>
-        <h2 id="quote-title">Verify a quotation</h2>
+  <main>
+    <section id="evidence" class="workflow" aria-labelledby="evidence-title">
+      <div class="workflow-head">
+        <h2 id="evidence-title">Evidence check</h2>
+        <ol class="stages" aria-label="Stages of the check">
+          <li><span class="stage-no" aria-hidden="true">1</span>Verify the quotation</li>
+          <li><span class="stage-no" aria-hidden="true">2</span>Screen the clause wording</li>
+          <li><span class="stage-no" aria-hidden="true">3</span>State the evidence</li>
+        </ol>
       </div>
-      <form id="quote-form" class="stack" novalidate>
+
+      <form id="evidence-form" class="stack" novalidate>
         <div class="field">
-          <label for="source-text">Source text <span class="hint">(treated as canonical: no folding)</span></label>
-          <textarea id="source-text" rows="7" spellcheck="false" required></textarea>
+          <label for="evidence-source">Source document <span class="hint">(one clause per line; matched exactly
+            as entered)</span></label>
+          <textarea id="evidence-source" rows="8" spellcheck="false" required></textarea>
         </div>
         <div class="field">
-          <label for="quote-text">Quoted passage</label>
-          <input id="quote-text" type="text" spellcheck="false" autocomplete="off" required>
+          <label for="evidence-quote">Claimed quotation <span class="hint">(what someone says the document
+            states)</span></label>
+          <textarea id="evidence-quote" rows="2" spellcheck="false" required></textarea>
         </div>
+        <fieldset class="examples">
+          <legend>Load a synthetic example</legend>
+          <div class="actions">
+            <button type="button" class="ghost small" data-example="verified">Verified quotation</button>
+            <button type="button" class="ghost small" data-example="variant">Looks standard, but is not</button>
+            <button type="button" class="ghost small" data-example="twice">Appears twice</button>
+            <button type="button" class="ghost small" data-example="hindi"><span lang="hi">हिन्दी</span>: verified</button>
+            <button type="button" class="ghost small" data-example="syllable"><span lang="hi">हिन्दी</span>: part of a syllable</button>
+          </div>
+        </fieldset>
         <div class="actions">
-          <button type="submit" class="primary">Verify quotation</button>
-          <button type="button" class="ghost" id="quote-example">Load synthetic example</button>
+          <button type="submit" class="primary">Check the evidence</button>
         </div>
       </form>
+      <p id="evidence-error" class="error" role="alert" hidden></p>
 
-      <div id="quote-result" class="result" aria-live="polite" hidden>
-        <div class="verdict" id="quote-verdict"></div>
-        <figure class="document">
-          <figcaption>Source with every occurrence marked</figcaption>
-          <div id="quote-highlight" class="paper" lang="und"></div>
-        </figure>
-        <dl class="facts" id="quote-facts"></dl>
-        <details class="explain">
-          <summary>How KMP ran: the prefix function</summary>
-          <p>π[i] is the length of the longest proper prefix of the quote that is also a suffix of its first
-            i + 1 symbols. On a mismatch, KMP falls back to π instead of re-reading the text, so each text symbol
-            is compared a bounded number of times.</p>
-          <div class="table-scroll"><table id="prefix-table"><caption class="sr-only">Prefix function</caption>
-          </table></div>
-          <p id="prefix-note" class="hint"></p>
-        </details>
+      <div id="evidence-result" class="result" aria-live="polite" hidden>
+        <section class="stage-card" aria-labelledby="stage1-title">
+          <h3 id="stage1-title"><span class="stage-no" aria-hidden="true">1</span>Verify the quotation
+            <span class="stage-algo">Knuth–Morris–Pratt, through the <code>QuoteVerifier</code> contract</span></h3>
+          <div id="verify-verdict" class="verdict"></div>
+          <figure class="document">
+            <figcaption>The source. Solid marks are accepted occurrences; a dashed mark is an occurrence rejected
+              because it starts or ends inside a character (drawn widened to whole characters, so the text stays
+              readable). The clause holding the quotation is outlined.</figcaption>
+            <div id="evidence-paper" class="paper" lang="und"></div>
+          </figure>
+          <dl class="facts" id="verify-facts"></dl>
+          <ul id="occurrence-list" class="occurrences"></ul>
+        </section>
+
+        <section class="stage-card" aria-labelledby="stage2-title">
+          <h3 id="stage2-title"><span class="stage-no" aria-hidden="true">2</span>Screen the clause wording
+            <span class="stage-algo">Bloom filter, then exact comparison</span></h3>
+          <p id="screen-summary" class="summary"></p>
+          <div class="table-scroll">
+            <table class="verdicts">
+              <caption>Every clause of the source. The Bloom filter answers only "definitely absent" or "possibly
+                present"; every "possibly" is compared exactly before anything is called a match.</caption>
+              <thead><tr><th scope="col">Clause</th><th scope="col">Quotation</th><th scope="col">Bloom filter</th>
+                <th scope="col">Exact comparison</th><th scope="col">Reference entry</th></tr></thead>
+              <tbody id="screen-rows"></tbody>
+            </table>
+          </div>
+          <dl class="facts compact" id="library-facts"></dl>
+        </section>
+
+        <section class="stage-card" aria-labelledby="stage3-title">
+          <h3 id="stage3-title"><span class="stage-no" aria-hidden="true">3</span>Evidence statement</h3>
+          <div class="statement-grid">
+            <div class="statement-part" id="part-verified"></div>
+            <div class="statement-part" id="part-screened"></div>
+            <div class="statement-part not-established">
+              <h4>Not established</h4>
+              <p class="part-status">This check cannot tell you:</p>
+              <ul id="part-not-established"></ul>
+            </div>
+          </div>
+          <details class="explain">
+            <summary>How this result was produced, and its limits</summary>
+            <ul id="method-list"></ul>
+          </details>
+        </section>
       </div>
-      <p id="quote-error" class="error" role="alert" hidden></p>
     </section>
 
-    <!-- A2: Bloom filter screening -->
-    <section id="bloom-panel" class="panel" aria-labelledby="bloom-title">
-      <div class="panel-head">
-        <p class="tag">A2 · Bloom filter · CO5 probabilistic structure</p>
-        <h2 id="bloom-title">Screen fingerprints, then confirm</h2>
-      </div>
-      <form id="bloom-form" class="stack" novalidate>
-        <div class="two-col">
-          <div class="field">
-            <label for="fingerprints">Known fingerprints <span class="hint">(one per line)</span></label>
-            <textarea id="fingerprints" rows="6" spellcheck="false" required></textarea>
+    <section class="under-the-hood" aria-labelledby="hood-title">
+      <h2 id="hood-title">How it works: each algorithm on its own</h2>
+      <p class="lede">Each stage above runs one assessed algorithm. These panels run them in isolation, with their
+        internal state exposed, so they can be explained and tried with any input.</p>
+      <div class="panels">
+        <!-- A1: KMP quote verification -->
+        <section id="quote-panel" class="panel" aria-labelledby="quote-title">
+          <div class="panel-head">
+            <p class="tag">A1 · Knuth–Morris–Pratt · O(n + m)</p>
+            <h3 id="quote-title">Exact matching, step by step</h3>
           </div>
-          <div class="field">
-            <label for="probes">Probes to check <span class="hint">(one per line)</span></label>
-            <textarea id="probes" rows="6" spellcheck="false" required></textarea>
-          </div>
-        </div>
-        <div class="three-col">
-          <div class="field">
-            <label for="fpr">Target false-positive rate</label>
-            <select id="fpr">
-              <option value="0.3">30% (tiny filter: shows false positives)</option>
-              <option value="0.1">10%</option>
-              <option value="0.01" selected>1%</option>
-              <option value="0.001">0.1%</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="capacity">Design capacity n <span class="hint">(blank = number of fingerprints)</span></label>
-            <input id="capacity" type="number" min="1" max="1000000" inputmode="numeric">
-          </div>
-          <div class="field">
-            <label for="seed">Hash seed</label>
-            <input id="seed" type="number" value="7" inputmode="numeric">
-          </div>
-        </div>
-        <div class="actions">
-          <button type="submit" class="primary">Screen and confirm</button>
-          <button type="button" class="ghost" id="bloom-example">Load synthetic example</button>
-        </div>
-      </form>
+          <form id="quote-form" class="stack" novalidate>
+            <div class="field">
+              <label for="source-text">Source text <span class="hint">(treated as canonical: no folding)</span></label>
+              <textarea id="source-text" rows="7" spellcheck="false" required></textarea>
+            </div>
+            <div class="field">
+              <label for="quote-text">Quoted passage</label>
+              <input id="quote-text" type="text" spellcheck="false" autocomplete="off" required>
+            </div>
+            <div class="actions">
+              <button type="submit" class="primary">Find every occurrence</button>
+              <button type="button" class="ghost" id="quote-example">Load synthetic example</button>
+            </div>
+          </form>
+          <p class="hint">This panel shows the raw matcher: it reports every code-point occurrence and does not apply
+            the boundary check that the evidence check uses.</p>
 
-      <div id="bloom-result" class="result" aria-live="polite" hidden>
-        <dl class="facts" id="bloom-facts"></dl>
-        <div id="saturation" class="warning" hidden>More fingerprints than the design capacity: the filter is
-          saturating and false positives rise sharply.</div>
-        <div class="table-scroll">
-          <table class="verdicts">
-            <caption>Each probe: what the filter says, then what the exact check says</caption>
-            <thead><tr><th scope="col">Probe</th><th scope="col">Bloom filter</th>
-              <th scope="col">Exact confirmation</th><th scope="col">Bit positions</th></tr></thead>
-            <tbody id="verdict-rows"></tbody>
-          </table>
-        </div>
-        <figure class="bits-figure" id="bits-figure">
-          <figcaption id="bits-caption"></figcaption>
-          <canvas id="bits" width="640" height="96" role="img"></canvas>
-        </figure>
+          <div id="quote-result" class="result" aria-live="polite" hidden>
+            <div class="verdict" id="quote-verdict"></div>
+            <figure class="document">
+              <figcaption>Source with every occurrence marked</figcaption>
+              <div id="quote-highlight" class="paper" lang="und"></div>
+            </figure>
+            <dl class="facts" id="quote-facts"></dl>
+            <details class="explain">
+              <summary>How KMP ran: the prefix function</summary>
+              <p>π[i] is the length of the longest proper prefix of the quote that is also a suffix of its first
+                i + 1 symbols. On a mismatch, KMP falls back to π instead of re-reading the text, so each text symbol
+                is compared a bounded number of times.</p>
+              <div class="table-scroll"><table id="prefix-table"><caption class="sr-only">Prefix function</caption>
+              </table></div>
+              <p id="prefix-note" class="hint"></p>
+            </details>
+          </div>
+          <p id="quote-error" class="error" role="alert" hidden></p>
+        </section>
+
+        <!-- A2: Bloom filter screening -->
+        <section id="bloom-panel" class="panel" aria-labelledby="bloom-title">
+          <div class="panel-head">
+            <p class="tag">A2 · Bloom filter · CO5 probabilistic structure</p>
+            <h3 id="bloom-title">Bloom-filter screening, bit by bit</h3>
+          </div>
+          <form id="bloom-form" class="stack" novalidate>
+            <div class="two-col">
+              <div class="field">
+                <label for="fingerprints">Members to insert <span class="hint">(one per line; repeats are
+                  counted separately)</span></label>
+                <textarea id="fingerprints" rows="6" spellcheck="false" required></textarea>
+              </div>
+              <div class="field">
+                <label for="probes">Probes to check <span class="hint">(one per line)</span></label>
+                <textarea id="probes" rows="6" spellcheck="false" required></textarea>
+              </div>
+            </div>
+            <div class="three-col">
+              <div class="field">
+                <label for="fpr">Target false-positive rate</label>
+                <select id="fpr">
+                  <option value="0.3">30% (tiny filter: shows false positives)</option>
+                  <option value="0.1">10%</option>
+                  <option value="0.01" selected>1%</option>
+                  <option value="0.001">0.1%</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="capacity">Design capacity n <span class="hint">(blank = number of distinct
+                  members)</span></label>
+                <input id="capacity" type="number" min="1" max="1000000" inputmode="numeric">
+              </div>
+              <div class="field">
+                <label for="seed">Hash seed</label>
+                <input id="seed" type="number" value="7" inputmode="numeric">
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="primary">Screen and confirm</button>
+              <button type="button" class="ghost" id="bloom-example">Load synthetic example</button>
+            </div>
+          </form>
+
+          <div id="bloom-result" class="result" aria-live="polite" hidden>
+            <dl class="facts" id="bloom-facts"></dl>
+            <div id="saturation" class="warning" hidden>More distinct members than the design capacity: the
+              filter is saturating and false positives rise sharply.</div>
+            <p id="duplicates-note" class="hint" hidden></p>
+            <div class="table-scroll">
+              <table class="verdicts">
+                <caption>Each probe: what the filter says, then what the exact check says</caption>
+                <thead><tr><th scope="col">Probe</th><th scope="col">Bloom filter</th>
+                  <th scope="col">Exact confirmation</th><th scope="col">Bit positions</th></tr></thead>
+                <tbody id="verdict-rows"></tbody>
+              </table>
+            </div>
+            <figure class="bits-figure" id="bits-figure">
+              <figcaption id="bits-caption"></figcaption>
+              <canvas id="bits" width="640" height="96" role="img"></canvas>
+            </figure>
+          </div>
+          <p id="bloom-error" class="error" role="alert" hidden></p>
+        </section>
       </div>
-      <p id="bloom-error" class="error" role="alert" hidden></p>
     </section>
   </main>
 
   <footer class="footer">
     <p>Assessed algorithms run in the isolated <code>cia-algorithms</code> module and are never production
-      dependencies of the platform. A Bloom-filter hit is never proof: only the exact confirmation column means
-      "present".</p>
+      dependencies of the platform. A Bloom-filter hit is never proof: only an exact comparison establishes a match,
+      and identical wording proves identical wording only, not meaning, applicability or validity.</p>
   </footer>
 </body>
 </html>

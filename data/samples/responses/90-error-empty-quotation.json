@@ -1,0 +1,11 @@
+{
+  "name": "90-error-empty-quotation",
+  "endpoint": "/algo/evidence-check",
+  "status": 400,
+  "contentType": "application/problem+json",
+  "response": {
+    "detail": "claimedQuotation must not be empty",
+    "status": 400,
+    "title": "Invalid input"
+  }
+}

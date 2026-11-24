@@ -1,0 +1,10 @@
+{
+  "name": "10-kmp-overlapping",
+  "endpoint": "/algo/quote-match",
+  "description": "KMP reports overlapping occurrences: \"aa\" in \"aaaa\" at 0, 1, 2.",
+  "expectedStatus": 200,
+  "request": {
+    "text": "aaaa",
+    "quote": "aa"
+  }
+}

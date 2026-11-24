@@ -1,0 +1,193 @@
+{
+  "name": "22-bloom-saturated",
+  "endpoint": "/algo/membership",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "parameters": {
+      "expectedInsertions": 2,
+      "targetFalsePositiveRate": 0.01,
+      "bitCount": 20,
+      "hashCount": 7,
+      "bitsPerElement": 10.0,
+      "seed": 7
+    },
+    "insertionAttempts": 10,
+    "distinctFingerprints": 9,
+    "duplicateAttempts": 1,
+    "fillRatio": 1.0,
+    "expectedFalsePositiveRate": 0.7359584066174822,
+    "overCapacity": true,
+    "bits": "11111111111111111111",
+    "results": [
+      {
+        "probe": "A grace period of 15 days is allowed.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          6,
+          3,
+          0,
+          17,
+          14,
+          11,
+          8
+        ]
+      },
+      {
+        "probe": "Notice of claim within 30 days of discharge.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          2,
+          9,
+          16,
+          3,
+          10,
+          17,
+          4
+        ]
+      },
+      {
+        "probe": "Warranty of 12 months from purchase.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "CONFIRMED_PRESENT",
+        "positions": [
+          18,
+          5,
+          12,
+          19,
+          6,
+          13,
+          0
+        ]
+      },
+      {
+        "probe": "A grace period of 17 days is allowed.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          12,
+          3,
+          14,
+          5,
+          16,
+          7,
+          18
+        ]
+      },
+      {
+        "probe": "Notice of claim within 45 days of discharge.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          18,
+          7,
+          16,
+          5,
+          14,
+          3,
+          12
+        ]
+      },
+      {
+        "probe": "Free look period of 30 days.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          1,
+          8,
+          15,
+          2,
+          9,
+          16,
+          3
+        ]
+      },
+      {
+        "probe": "Cooling-off period of 5 days.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          18,
+          15,
+          12,
+          9,
+          6,
+          3,
+          0
+        ]
+      },
+      {
+        "probe": "Deposit refunded within 60 days of vacating.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          10,
+          17,
+          4,
+          11,
+          18,
+          5,
+          12
+        ]
+      },
+      {
+        "probe": "Renews unless cancelled 3 days before renewal.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          10,
+          13,
+          16,
+          19,
+          2,
+          5,
+          8
+        ]
+      },
+      {
+        "probe": "Warranty of 24 months from purchase.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          12,
+          5,
+          18,
+          11,
+          4,
+          17,
+          10
+        ]
+      },
+      {
+        "probe": "Prepayment charge of 3 per cent.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          17,
+          8,
+          19,
+          10,
+          1,
+          12,
+          3
+        ]
+      },
+      {
+        "probe": "Late payment charge of 2 per cent.",
+        "bloomVerdict": "POSSIBLY_PRESENT",
+        "exactVerdict": "FALSE_POSITIVE",
+        "positions": [
+          0,
+          7,
+          14,
+          1,
+          8,
+          15,
+          2
+        ]
+      }
+    ]
+  }
+}

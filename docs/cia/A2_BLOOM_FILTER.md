@@ -1,7 +1,7 @@
 # A2 — Probabilistic membership screening with a Bloom filter (Unit 6 / CO5)
 
 **Code:** `cia/cia-algorithms/src/main/java/com/thefineprint/cia/algorithms/membership/`
-(`BloomFilter`, `BloomParameters`, `BitArray`, `SeededHash64`). **Tests:** `BloomFilterTest` (12),
+(`BloomFilter`, `BloomParameters`, `BitArray`, `SeededHash64`, `ProbeSequence`). **Tests:** `BloomFilterTest` (15), `ProbeSequenceTest` (10),
 `BitArrayAndHashTest` (6). **Demo confirmation step:** `cia-demo/.../membership/ExactFingerprintRegistry`.
 **Status:** assessed implementation (Track C, D-31). Never a production dependency.
 

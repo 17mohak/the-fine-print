@@ -1,0 +1,10 @@
+{
+  "name": "11-kmp-adversarial",
+  "endpoint": "/algo/quote-match",
+  "description": "Adversarial pattern: comparisons stay within the 2n bound.",
+  "expectedStatus": 200,
+  "request": {
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "quote": "aaaaaaaaaaaaaaaaaaaab"
+  }
+}

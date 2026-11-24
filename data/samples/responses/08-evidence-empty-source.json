@@ -1,0 +1,63 @@
+{
+  "name": "08-evidence-empty-source",
+  "endpoint": "/algo/evidence-check",
+  "status": 200,
+  "contentType": "application/json",
+  "response": {
+    "verification": {
+      "verdict": "NOT_FOUND",
+      "matchClass": null,
+      "algorithm": "Knuth-Morris-Pratt (QuoteVerifier SPI)",
+      "sourceLength": 0,
+      "quotationLength": 3,
+      "occurrences": [],
+      "nearMisses": []
+    },
+    "screening": {
+      "library": {
+        "referenceClauses": 477,
+        "bitCount": 4573,
+        "hashCount": 7,
+        "targetFalsePositiveRate": 0.01,
+        "expectedFalsePositiveRate": 0.010029548038290271,
+        "fillRatio": 0.514760551060573,
+        "bloomBytes": 576,
+        "seed": 7
+      },
+      "clauses": [],
+      "definitelyAbsent": 0,
+      "exactLookups": 0,
+      "confirmedMatches": 0,
+      "falsePositivesRejected": 0
+    },
+    "evidence": {
+      "verified": {
+        "status": "Not found",
+        "statements": [
+          "The source does not contain this exact quotation."
+        ]
+      },
+      "screened": {
+        "status": "Not applicable",
+        "statements": [
+          "No clause is attributed to the quotation, so no clause wording was screened on its behalf. Every clause is still screened in stage 2."
+        ]
+      },
+      "notEstablished": [
+        "What the quoted text means, or how it should be interpreted.",
+        "Whether it applies to any particular person, claim or situation.",
+        "Whether the clause is legally valid or enforceable.",
+        "Whether the source document is authentic and unaltered, or who issued it.",
+        "Whether the source is the current version in force."
+      ]
+    },
+    "clauses": [],
+    "method": [
+      "Stage 1 calls the QuoteVerifier contract, implemented here by the assessed KMP matcher (KmpQuoteVerifier). Text is matched exactly as entered: no Unicode normalisation, case folding or whitespace folding.",
+      "Each occurrence's start and end are checked conservatively for combining marks, viramas (conjuncts), joiners and CR LF, in Latin, Greek, Cyrillic and nine Indic scripts. This is not full Unicode grapheme segmentation. An occurrence whose boundaries cannot be established is not accepted.",
+      "Clauses are the non-blank lines of the source; a leading number such as 4.2 becomes the clause id (a simple heuristic).",
+      "Stage 2 fingerprints each clause's exact wording (SHA-256), screens the fingerprint with the assessed Bloom filter, and confirms every possible hit by comparing the wording itself.",
+      "The reference library is synthetic and generated from invented templates (docs/cia/DATA.md)."
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "20-bloom-visible-false-positives",
+  "endpoint": "/algo/membership",
+  "description": "Target p = 30 % makes false positives visible; each possible hit is confirmed exactly.",
+  "expectedStatus": 200,
+  "request": {
+    "fingerprints": [
+      "A grace period of 30 days is allowed.",
+      "A grace period of 15 days is allowed.",
+      "Notice of claim within 30 days of discharge.",
+      "Notice of claim within 30 days of discharge.",
+      "Free look period of 15 days.",
+      "Cooling-off period of 3 days.",
+      "Deposit refunded within 30 days of vacating.",
+      "Renews unless cancelled 7 days before renewal.",
+      "Warranty of 12 months from purchase.",
+      "Prepayment charge of 2 per cent."
+    ],
+    "probes": [
+      "A grace period of 15 days is allowed.",
+      "Notice of claim within 30 days of discharge.",
+      "Warranty of 12 months from purchase.",
+      "A grace period of 17 days is allowed.",
+      "Notice of claim within 45 days of discharge.",
+      "Free look period of 30 days.",
+      "Cooling-off period of 5 days.",
+      "Deposit refunded within 60 days of vacating.",
+      "Renews unless cancelled 3 days before renewal.",
+      "Warranty of 24 months from purchase.",
+      "Prepayment charge of 3 per cent.",
+      "Late payment charge of 2 per cent."
+    ],
+    "targetFalsePositiveRate": 0.3,
+    "seed": 7
+  }
+}
