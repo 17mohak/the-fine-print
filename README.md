@@ -1,58 +1,210 @@
-# THE FINE PRINT
+# The Fine Print — Evidence Integrity Lab
 
-*Understand what you agree to. Know what you're entitled to. Know what to do next.*
-An India-first personal consumer-intelligence platform ([PROJECT_FOUNDATION.md](PROJECT_FOUNDATION.md)).
+**CIA-3 Advanced Algorithm Project** · ATLAS–uGDX, School of Technology, B.Tech CS (AI & ML), Semester V
+**Student:** Mohak Mandwani · **Register / ID:** `<REGISTER-NO>` · individual project (see
+[docs/cia/CONTRIBUTIONS.md](docs/cia/CONTRIBUTIONS.md))
 
-## Status
+> *Does the document really say that?* Contracts, insurance policies and loan sheets are long, and language
+> models routinely "quote" clauses that are not in them. This project checks a claimed quotation against its source
+> **on a Java server**, using two algorithms implemented from scratch, and states plainly what was verified, what
+> was only screened, and what cannot be established.
 
-| Item | Status |
+## 1. What it does
+
+| Step | Algorithm (own Java implementation) | Syllabus unit | Role |
+|---|---|---|---|
+| Verify the quotation | **Knuth–Morris–Pratt** exact matching, O(n + m) worst case | Unit 4 | Finds every occurrence (code-point offsets); a conservative boundary check then rejects matches that would cut a character in two (Devanagari vowel signs, conjuncts, ZWJ…) |
+| Screen the clause wording | **Bloom filter** (own bit array, own 64-bit hash, double hashing with a coprime step) | Unit 6 / **CO5** (probabilistic structure) | "Definitely absent" skips an expensive exact lookup; every "possibly present" is **confirmed by exact comparison**, so a false positive is never reported as a match |
+
+The result is a three-part statement: **Verified** (where the quotation occurs), **Screened** (identical to a
+reference wording?), **Not established** (meaning, applicability, validity, authenticity, currency).
+Baselines (naive search, `String.indexOf`, `HashSet<Long>`) are used **only in tests and benchmarks**.
+All data is **synthetic**; no real documents are used anywhere.
+
+## 2. Where to find each CIA deliverable
+
+| Deliverable | Location |
 |---|---|
-| Architecture | **APPROVED v0.2.1 direction** (D-21, 2026-11-20), subject to unresolved decisions, limitations and review gates |
-| Implementation | **Track P, P0** (repository, build, CI, SPIs, dev stack). **Track C (C1–C2) authorised by D-31** in isolated `cia-*` modules. P1–P7 **not authorised** |
-| This code base | **P0 scaffolding.** No product functionality. Not secure, not production-ready, no compliance claim. **No real documents or personal data.** |
-| P0 acceptance | All criteria demonstrated locally and in CI ([verification record](docs/evidence/p0/VERIFICATION.md)); **closes at G0** with owner confirmation |
-| Next gates | **G0**: decisions recorded in D-30 and D-32 (pins retained; SeaweedFS for development only); the faculty-policy item (G0-2) is resolved by D-31 (owner statement; no written faculty evidence held) ([briefs](docs/g0/G0_DECISION_BRIEFS.md)). **G0-SEC**: security-specialist review before P1 ([package](docs/g0/G0-SEC_HANDOVER.md)) |
+| **A. Project proposal** | [docs/cia/submission/A_Project_Proposal.docx](docs/cia/submission/A_Project_Proposal.docx) (+ `.pdf`) |
+| **B. Source repository** | this repository: Java backend [`cia/cia-algorithms`](cia/cia-algorithms) · [`cia/cia-demo`](cia/cia-demo), JavaScript frontend [`cia/cia-demo/src/main/resources/static`](cia/cia-demo/src/main/resources/static), tests under each module's `src/test`, sample data [`data/samples`](data/samples), build files (`build.gradle.kts`, `gradle/libs.versions.toml`, `gradle.lockfile`s), dependency manifest [DEPENDENCIES.md](docs/cia/DEPENDENCIES.md), commit history (`git log`), contribution attribution [CONTRIBUTIONS.md](docs/cia/CONTRIBUTIONS.md) |
+| **C. Technical report** | [docs/cia/submission/C_Technical_Report.docx](docs/cia/submission/C_Technical_Report.docx) (+ `.pdf`) |
+| **D. Demonstration evidence** | [docs/cia/evidence/](docs/cia/evidence/README.md): screenshots, recorded inputs/outputs for 21 samples (14 successes, 7 error cases), test report, benchmark tables and charts, API latency |
+| **E. README + reproducibility** | this file, plus [docs/runbooks/local-setup.md](docs/runbooks/local-setup.md) |
+| Rubric → evidence map | [docs/cia/SUBMISSION_CHECKLIST.md](docs/cia/SUBMISSION_CHECKLIST.md) |
 
-## Repository map
+## 3. Prerequisites
 
-```
-core-api/            SPI interfaces + DTOs only (QuoteVerifier, ApproximateMembership, ReminderIndex, DocumentLinker)
-platform/app/        Spring Boot composition root (health endpoint only in P0)
-platform/<module>/   modular-monolith modules: empty placeholders in P0
-platform/domains/    domain modules: empty placeholders; must not depend on each other
-api/                 OpenAPI 3.1 skeleton (/api/v1) + validation test
-architecture-tests/  ArchUnit boundary rules + fixture proofs
-build-logic/         Gradle conventions + verifyBoundaries plugin (+ TestKit tests)
-cia/                 isolated academic track (D-31): cia-algorithms (KMP, Bloom), cia-bench, cia-demo
-doc-worker/ web/ db/ data/   placeholders for later phases
-ops/compose/         development stack (Postgres, S3 stub, dev IdP, inert worker stub)
-ops/scripts/         stack verification, commit-attribution check
-docs/adr/            architecture decision records
-docs/runbooks/       local setup
-docs/evidence/p0/    P0 verification record
-docs/g0/             G0 decision briefs and G0-SEC security-review handover
-*.md (root)          governing documents (v0.2.1) — authoritative specifications
-Gate1B/, WS0*.md     historical research (unchanged); _archive/ = superseded v0.1
-```
+| Tool | Version | Notes |
+|---|---|---|
+| **JDK** | **21** (any 21.x) | Required. Gradle's toolchain must find a JDK 21 (`java -version`) |
+| Git | 2.40+ | To clone |
+| Python | 3.9+ | **Optional**: sample replay, latency script, chart/figure scripts (replay and latency need only the standard library; figures need `matplotlib`) |
+| Browser | any current one | To use the UI |
 
-## Quick start
+No separate Gradle, Node, npm or database is needed: the Gradle wrapper downloads Gradle 9.9.2 (checksum-verified)
+and the frontend is plain HTML/CSS/JavaScript served by the backend. The first build needs internet access
+(Maven Central, Gradle plugin portal). Docker is **not** needed for this project.
+
+## 4. Build, test, run
+
+Use `./gradlew` in Git Bash / macOS / Linux, or `.\gradlew.bat` in Windows PowerShell.
 
 ```bash
-./gradlew build                 # JDK 21 required; Gradle is fetched by the wrapper
+git clone https://github.com/17mohak/the-fine-print.git
+cd the-fine-print
+
+./gradlew build                                   # compile + all tests + boundary checks (whole repo)
+./gradlew :cia:cia-algorithms:test :cia:cia-bench:test :cia:cia-demo:test   # only the assessed track: 101 tests
 ```
 
-Full instructions, including the Docker development stack:
-[docs/runbooks/local-setup.md](docs/runbooks/local-setup.md).
+**Run the backend and the frontend** (one process: the Java server also serves the browser UI):
 
-## Governing documents
+```bash
+./gradlew :cia:cia-demo:bootRun
+```
 
-[PROJECT_FOUNDATION](PROJECT_FOUNDATION.md) · [ARCHITECTURE_OVERVIEW](ARCHITECTURE_OVERVIEW.md) ·
-[SYSTEM_DESIGN](SYSTEM_DESIGN.md) · [TECHNOLOGY_DECISIONS](TECHNOLOGY_DECISIONS.md) ·
-[CIA_REQUIREMENTS_MATRIX](CIA_REQUIREMENTS_MATRIX.md) · [SECURITY_AND_PRIVACY](SECURITY_AND_PRIVACY.md) ·
-[PRODUCT_EXPERIENCE_SPEC](PRODUCT_EXPERIENCE_SPEC.md) · [IMPLEMENTATION_ROADMAP](IMPLEMENTATION_ROADMAP.md) ·
-[RESEARCH_BACKLOG](RESEARCH_BACKLOG.md) · [DECISION_LOG](DECISION_LOG.md) (authoritative for authorisations) ·
-[OPUS_BUILD_HANDOVER](OPUS_BUILD_HANDOVER.md)
+Open **http://127.0.0.1:8090/**. Stop with `Ctrl+C`. The server listens on loopback only.
 
-## Contributing
+### Environment variables
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), including the commit-attribution rules.
+None are required and **no secrets are used** anywhere. Optional overrides (Spring Boot relaxed binding):
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `SERVER_PORT` | `8090` | Port, if 8090 is busy (e.g. `SERVER_PORT=8095`) |
+| `SERVER_ADDRESS` | `127.0.0.1` | Bind address (leave on loopback) |
+| `JAVA_HOME` | — | Point Gradle at a JDK 21 if `java -version` shows another version |
+
+PowerShell: `$env:SERVER_PORT = 8095; .\gradlew.bat :cia:cia-demo:bootRun`
+
+## 5. Using the application
+
+1. Open the page. Click **Verified quotation** (a synthetic example), then **Check the evidence**.
+2. Read the three stages: *Verify the quotation* (KMP), *Screen the clause wording* (Bloom filter + exact
+   confirmation), *Evidence statement* (verified / screened / not established).
+3. Try the other examples: **Looks standard, but is not** (a Bloom false positive that exact comparison rejects),
+   **Appears twice** (ambiguous), **हिन्दी: verified**, **हिन्दी: part of a syllable** (rejected: it would split a character).
+4. Edit the source or the quotation and re-run. Scroll to **How it works** for the KMP prefix function and the
+   Bloom bit array in isolation.
+
+## 6. API
+
+All endpoints are `POST`, take and return JSON (UTF-8), and run the algorithms on the server.
+
+| Endpoint | Request | Returns |
+|---|---|---|
+| `POST /algo/evidence-check` | `{ "sourceText": "...", "claimedQuotation": "..." }` | `verification` (verdict, match class, occurrences with code-point offsets and clause ids, near-miss hints), `screening` (per-clause Bloom verdict and exact verdict, counts of lookups avoided and false positives rejected, filter parameters), `evidence` (verified / screened / notEstablished), `clauses`, `method` |
+| `POST /algo/quote-match` | `{ "text": "...", "quote": "..." }` | Every occurrence, the KMP prefix function, comparison count versus the 2n bound, server time |
+| `POST /algo/membership` | `{ "fingerprints": [...], "probes": [...], "targetFalsePositiveRate": 0.01, "expectedInsertions"?: n, "seed"?: s }` | Filter size m and hash count k, fill ratio, per-probe Bloom verdict then exact confirmation, bit pattern |
+
+Verdicts: `VERIFIED`, `AMBIGUOUS` (more than one accepted occurrence), `BOUNDARY_NOT_ESTABLISHED`, `NOT_FOUND`.
+
+**Input limits** (violations return **HTTP 400** `application/problem+json`; submitted text is never echoed back):
+source ≤ 100,000 code points and ≤ 400 clauses; quotation 1–2,000 code points; ≤ 5,000 members, 1–500 probes,
+p ∈ [0.0001, 0.5]. An empty source is valid (nothing found), an empty quotation is not.
+
+Example (Git Bash / macOS / Linux):
+
+```bash
+curl -s -X POST http://127.0.0.1:8090/algo/quote-match \
+  -H "Content-Type: application/json" \
+  -d '{"text":"fee, late fee, fee","quote":"fee"}'
+```
+
+PowerShell:
+
+```powershell
+$b = @{ text = "fee, late fee, fee"; quote = "fee" } | ConvertTo-Json -Compress
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8090/algo/quote-match -ContentType "application/json" -Body $b
+```
+
+Expected: matches starting at code points `0`, `10` and `15`. Full request/response pairs for all
+endpoints, including every error case, are in [data/samples](data/samples). The machine-readable contract of the
+(separate, later-phase) platform API skeleton is [api/openapi.yaml](api/openapi.yaml); the `/algo/*` endpoints are
+documented in [cia/cia-demo/README.md](cia/cia-demo/README.md).
+
+## 7. Sample data and replaying the examples
+
+[`data/samples/requests`](data/samples/requests) holds 21 synthetic requests (14 successes and 7 error cases),
+each with a description and the expected HTTP status; [`data/samples/responses`](data/samples/responses) holds the
+recorded server answers. With the demo running:
+
+```bash
+python ops/scripts/replay_samples.py --check     # replays all 21 and compares with the recorded responses
+```
+
+The reference clause library (477 synthetic wordings) is generated in code at start-up; see
+[docs/cia/DATA.md](docs/cia/DATA.md) for how it is built and what it does and does not represent.
+
+## 8. Tests
+
+```bash
+./gradlew :cia:cia-algorithms:test :cia:cia-bench:test :cia:cia-demo:test
+```
+
+| Module | Tests | What they establish |
+|---|---|---|
+| `cia-algorithms` | 53 | KMP (11 + 6): hand-computed prefix function, overlaps, empty/longer/equal pattern, surrogate pairs and Devanagari code points, ≤ 2n comparisons on adversarial input, agreement with a naive reference on 5,000 random cases. Bloom (15 + 10 + 6): **no false negatives**, measured false-positive rate within a tolerance band, saturation, parameter validation, distinct probe positions for every m, overflow-free arithmetic, seed reproducibility. Isolation (5): assessed code uses no JDK search/set/bit-set classes (ArchUnit, with a "cheating" fixture proving the rule detects violations) |
+| `cia-bench` | 4 | The benchmark harness itself |
+| `cia-demo` | 44 | Evidence-check workflow, boundary rules, reference library (no false negatives, held-out variants never match), all endpoints over HTTP, 400 problem responses |
+
+Gap: there is no automated browser test; the UI was checked manually (screenshots in `docs/cia/evidence`).
+
+## 9. Benchmarks (reproducible)
+
+Results from the author's machine are committed in [`cia/cia-bench/results`](cia/cia-bench/results) (raw JMH JSON,
+CSV, charts) and analysed in [docs/cia/BENCHMARKS.md](docs/cia/BENCHMARKS.md). To reproduce (several minutes; leave
+the machine idle):
+
+```bash
+./gradlew :cia:cia-bench:jmh -PjmhArgs="-f 1 -wi 2 -w 1s -i 3 -r 1s KmpBenchmark"
+./gradlew :cia:cia-bench:jmh -PjmhResultFile=jmh-bloom-results.json -PjmhArgs="-f 2 -wi 3 -w 1s -i 5 -r 1s BloomBenchmark"
+./gradlew :cia:cia-bench:bloomExperiment          # FPR and memory vs HashSet: 9 configs x 5 seeds x 1M probes
+python cia/cia-bench/scripts/make_charts.py       # SVG charts (standard library only)
+python docs/cia/submission/make_figures.py        # PNG figures for the report (needs matplotlib)
+python ops/scripts/measure_api_latency.py         # HTTP latency, needs the demo running
+```
+
+Sizes: KMP n ∈ {10⁴, 10⁵, 10⁶} × m ∈ {8, 64, 512}, ordinary and adversarial text; Bloom n ∈ {10⁴, 10⁵, 10⁶} × bits per
+element ∈ {6, 10, 14}. **Honest headline:** `String.indexOf` beats KMP on ordinary text (9–20× at n ≤ 10⁵); KMP wins by
+~55–100× on adversarial input where it keeps its linear guarantee. The Bloom filter uses 36–103× less memory than a
+`HashSet<Long>` but is 23–40× slower per query, so it is a memory tool, not a speed tool.
+
+## 10. Repository map
+
+```
+cia/cia-algorithms/   assessed algorithms (KmpMatcher, BloomFilter, BitArray, SeededHash64, ProbeSequence) + their tests
+cia/cia-demo/         Spring Boot backend (/algo/*) and the JavaScript UI (src/main/resources/static)
+cia/cia-bench/        JMH benchmarks, FPR/memory experiment, committed results and chart scripts
+core-api/             small SPI contracts (QuoteVerifier, ApproximateMembership, ...) the algorithms implement
+data/samples/         synthetic requests + recorded responses (deliverable D)
+docs/cia/             algorithm write-ups, benchmarks, data, demo script, viva prep, submission docs and evidence
+ops/scripts/          replay_samples.py, measure_api_latency.py, commit-attribution check
+platform/, api/, ...  wider product scaffolding (not part of the graded slice; see docs/PLATFORM_README.md)
+```
+
+The wider platform ("THE FINE PRINT", an India-first consumer-document assistant) is **context, not the graded
+artefact**. The assessed code is isolated: the platform may not depend on it (enforced by Gradle and ArchUnit checks).
+Platform status and governing documents: [docs/PLATFORM_README.md](docs/PLATFORM_README.md).
+
+## 11. Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `Port 8090 was already in use` | `SERVER_PORT=8095` (see section 4) |
+| Gradle says no matching toolchain / wrong Java | Install JDK 21 and set `JAVA_HOME` |
+| Hindi text looks like `?` in a terminal | Use the browser UI, or `replay_samples.py` (UTF-8); PowerShell 5 mangles non-ASCII in command lines |
+| `replay_samples.py` cannot connect | Start the demo first and wait for "Started CiaDemoApplication" |
+| Dependency verification failure | Do not disable it; re-run with network access (checksums are in `gradle/verification-metadata.xml`) |
+
+## 12. Limitations
+
+Exact matching only (a paraphrase is "not found" by design); the boundary check is conservative, **not** full
+Unicode grapheme segmentation; a verified quotation proves presence, not meaning or validity; the reference library is
+synthetic and small (an exact set would suffice at this size: the Bloom filter is demonstrated for the memory case);
+benchmarks are from one laptop with short JMH runs. Details: technical report §8 and [docs/cia](docs/cia).
+
+## 13. Contributing and attribution
+
+Commits carry the human author's identity only; AI tools are not git co-authors ([CONTRIBUTING.md](CONTRIBUTING.md)).
+AI assistance **is disclosed** in [docs/cia/CONTRIBUTIONS.md](docs/cia/CONTRIBUTIONS.md) and in the technical report.
