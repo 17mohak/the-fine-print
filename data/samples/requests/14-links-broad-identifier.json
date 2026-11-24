@@ -1,0 +1,47 @@
+{
+  "name": "14-links-broad-identifier",
+  "endpoint": "/algo/document-links",
+  "expectedStatus": 200,
+  "description": "One identifier (an insurer name) shared by four documents is flagged broad: it links them all, and may be a false merge.",
+  "request": {
+    "documents": [
+      {
+        "id": "a",
+        "identifiers": [
+          "INSURER-ACME"
+        ]
+      },
+      {
+        "id": "b",
+        "identifiers": [
+          "INSURER-ACME"
+        ]
+      },
+      {
+        "id": "c",
+        "identifiers": [
+          "INSURER-ACME"
+        ]
+      },
+      {
+        "id": "d",
+        "identifiers": [
+          "INSURER-ACME",
+          "POL-1"
+        ]
+      },
+      {
+        "id": "e",
+        "identifiers": [
+          "POL-1"
+        ]
+      },
+      {
+        "id": "f",
+        "identifiers": [
+          "OTHER"
+        ]
+      }
+    ]
+  }
+}

@@ -39,6 +39,7 @@ function and comparison count, and the Bloom filter with its bit array.
 |---|---|
 | `POST /algo/evidence-check` `{sourceText, claimedQuotation}` | The workflow above: verification, clause screening, three-part statement |
 | `POST /algo/quote-match` `{text, quote}` | KMP explanation panel: every code-point occurrence, comparisons against the 2n bound, the prefix function |
+| `POST /algo/document-links` `{documents: [{id, identifiers[]}]}` | A3 panel: families of documents that share identifiers (disjoint-set forest), the identifier behind every link, broad-identifier warnings |
 | `POST /algo/membership` `{fingerprints, probes, targetFalsePositiveRate, expectedInsertions?, seed?}` | Bloom explanation panel: screening, then exact confirmation per probe; bit pattern (≤ 4,096 bits) |
 
 - Loopback only; no database; no outbound calls; synthetic input only. The reference library is built once at
@@ -75,7 +76,7 @@ is unchanged.)
 
 ## Testing
 - `./gradlew :cia:cia-demo:test` runs `EvidenceCheckServiceTest` (13), `BoundaryCheckTest` (8),
-  `ReferenceClauseLibraryTest` (7), `DemoServicesTest` (9) and `DemoHttpTest` (7).
+  `ReferenceClauseLibraryTest` (7), `DemoServicesTest` (9), `DocumentLinkServiceTest` (9) and `DemoHttpTest` (8).
 - They cover: the discovered sub-syllable defect and virama, ZWJ/ZWNJ, nukta, Tamil, Bengali and uncovered-script
   cases; NFC and case near-miss hints; ambiguity; clauses spanning a quotation; every reference wording screening
   as identical (no false negatives); held-out variants never matching; a resolved Bloom false positive; duplicate

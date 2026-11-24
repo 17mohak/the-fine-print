@@ -1,0 +1,60 @@
+{
+  "name": "13-links-families",
+  "endpoint": "/algo/document-links",
+  "expectedStatus": 200,
+  "description": "Eight synthetic documents: policy, endorsement, renewal notice and claim letter form one family (the claim letter shares nothing with the policy directly); the loan pair is a second family; two documents stand alone.",
+  "request": {
+    "documents": [
+      {
+        "id": "policy-2026",
+        "identifiers": [
+          "POL-8841",
+          "PAN-AAAPL1234C"
+        ]
+      },
+      {
+        "id": "endorsement-1",
+        "identifiers": [
+          "POL-8841"
+        ]
+      },
+      {
+        "id": "renewal-notice",
+        "identifiers": [
+          "POL-8841",
+          "RENEWAL-2027-17"
+        ]
+      },
+      {
+        "id": "claim-letter",
+        "identifiers": [
+          "RENEWAL-2027-17"
+        ]
+      },
+      {
+        "id": "loan-sanction",
+        "identifiers": [
+          "LN-5520"
+        ]
+      },
+      {
+        "id": "emi-schedule",
+        "identifiers": [
+          "LN-5520"
+        ]
+      },
+      {
+        "id": "rent-agreement",
+        "identifiers": [
+          "TEN-77"
+        ]
+      },
+      {
+        "id": "gym-invoice",
+        "identifiers": [
+          "INV-1"
+        ]
+      }
+    ]
+  }
+}

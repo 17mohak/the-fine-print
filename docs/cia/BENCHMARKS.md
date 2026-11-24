@@ -177,3 +177,30 @@ Charts: `bloom-fpr.svg` (mean over seeds and theory), `bloom-memory.svg`, `bloom
 - The FPR experiment uses sequential integer keys for both inserted and probe sets; other key distributions
   were not measured.
 - The throughput regression of the probe-sequence fix was measured but not profiled.
+
+## A3 — Disjoint-set forest vs breadth-first search (run 3, 2026-11-24)
+
+Random graph with n nodes and n edges (seed 5), as documents linked by shared identifiers. **Batch:** count the
+components once (BFS builds its adjacency structure inside the timing; the disjoint set needs none). **Incremental:**
+add the edges in 20 batches and ask "are these two documents connected?" after each batch (BFS rebuilds and rescans
+every time). JMH 1.37, 2 forks, 3 warm-up × 1 s, 5 measurement × 1 s, same machine and JVM as above, nothing else
+running. Raw data: `results/jmh-linking-results.json`, `results/jmh-linking-console.txt`. Reproduce:
+
+```bash
+./gradlew :cia:cia-bench:jmh -PjmhResultFile=jmh-linking-results.json -PjmhArgs="-f 2 -wi 3 -w 1s -i 5 -r 1s LinkingBenchmark"
+```
+
+| n | Batch: disjoint set | Batch: BFS | Speed-up | Incremental: disjoint set | Incremental: BFS | Speed-up |
+|---|---|---|---|---|---|---|
+| 10,000 | 109.8 ± 3.6 µs | 221.6 ± 11.8 µs | 2.0× | 120.1 ± 22.3 µs | 1,703 ± 118 µs | 14× |
+| 100,000 | 2,582 ± 133 µs | 7,659 ± 907 µs | 3.0× | 3,082 ± 98 µs | 27,999 ± 1,755 µs | 9× |
+| 1,000,000 | 89,746 ± 9,110 µs | 174,587 ± 18,653 µs | 1.9× | 89,075 ± 12,103 µs | 984,861 ± 56,764 µs | 11× |
+
+- **The disjoint set wins in both workloads, and by a lot when queries are interleaved:** about 9–14× at every size,
+  because BFS pays O(n + m) per query while the forest pays almost nothing. For a single batch count the advantage is
+  only about 2–3×, as both are linear and BFS must also build an adjacency array.
+- Per-element time grows faster than linearly at n = 10⁶ for both (cache misses on random access), which is a property
+  of random graphs on this laptop, not of the algorithms' operation counts.
+- **Honest scale note:** one person's vault holds tens of documents, where either method is instantaneous. The forest
+  matters for large or continuously growing collections and repeated queries.
+- Limits: one machine, short runs, one random-graph family (n nodes, n edges); the 99.9 % intervals are given.

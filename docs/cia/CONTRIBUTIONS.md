@@ -12,7 +12,7 @@ used through Claude Code sessions directed by the owner.
 | Area | AI assistance | Human role |
 |---|---|---|
 | Research record, architecture and governing documents (`*.md` in the repository root, `Gate1B/`) | Drafted and revised in AI sessions | Owner directed scope, answered open questions, recorded decisions D-10…D-32 in [DECISION_LOG.md](../../DECISION_LOG.md) |
-| Assessed algorithms (A1 KMP, A2 Bloom filter), their tests, benchmark code and write-ups | AI-assisted implementation under the owner's direction, after the owner recorded the faculty approval (D-31) | Owner specified the problem and algorithms, reviewed, accepted and takes responsibility for the code; the algorithms must be explained by the owner in the viva ([VIVA.md](VIVA.md)) |
+| Assessed algorithms (A1 KMP, A2 Bloom filter, A3 disjoint-set forest), their tests, benchmark code and write-ups | AI-assisted implementation under the owner's direction, after the owner recorded the faculty approval (D-31) | Owner specified the problem and algorithms, reviewed, accepted and takes responsibility for the code; the algorithms must be explained by the owner in the viva ([VIVA.md](VIVA.md)) |
 | Demo backend, UI, sample data, scripts, evidence pack | AI-assisted | Owner directed and reviewed; ran the application and benchmarks on the owner's machine |
 | Proposal and technical report | Drafted with AI assistance from the repository's own records and measured results | Owner reviews and submits |
 

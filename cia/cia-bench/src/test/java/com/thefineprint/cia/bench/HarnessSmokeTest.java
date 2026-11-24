@@ -55,4 +55,13 @@ class HarnessSmokeTest {
         assertThat(b.bloomInsert().insertionCount()).isEqualTo(BloomBenchmark.BATCH);
         assertThat(b.hashSetInsert()).hasSize(BloomBenchmark.BATCH);
     }
+
+    @Test
+    void linkingBenchmarkCompetitorsAgree() {
+        LinkingBenchmark b = new LinkingBenchmark();
+        b.nodes = 20_000;
+        b.prepare();
+        assertThat(b.batchDsu()).isEqualTo(b.batchBfs());
+        assertThat(b.incrementalDsu()).isEqualTo(b.incrementalBfs());
+    }
 }

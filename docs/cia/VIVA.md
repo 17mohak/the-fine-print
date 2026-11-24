@@ -122,3 +122,21 @@ walkthroughs on paper; an examiner may change the inputs.
   no algorithm runs in the browser.
 - **Why are inputs limited (100k text, 5,000 fingerprints, 500 probes)?** They bound the server's work for a
   public demo endpoint.
+
+## F. A3 disjoint-set forest (document families)
+1. **What does it do in the product?** It groups a person's documents into families (one agreement) from shared
+   identifiers, incrementally, and answers "same family?" without re-scanning. It only suggests; the user can override.
+2. **Walk through `union(a, b)`.** Find both roots; if equal return false; attach the root of the smaller tree under the
+   larger; add the sizes; decrement the component count.
+3. **What is path halving?** During `find`, each visited node is pointed at its grandparent. It flattens trees without
+   recursion and never changes which elements are together.
+4. **Why is the height at most log₂ n?** A node gets deeper only when its tree is attached under one at least as large, so
+   its tree at least doubles each time. Test: the worst-case merge order for n = 4096 gives depth 12.
+5. **Complexity?** Amortised O(m · α(n)) for m operations (a cited result, Tarjan and van Leeuwen); height bound
+   O(log n) proved above; space O(n).
+6. **Can you undo a union?** No. "Unlink" means rebuilding the family from the retained reason edges.
+7. **What goes wrong in practice?** A common identifier (an insurer name) merges unrelated documents transitively. The demo
+   flags identifiers shared by four or more documents as broad and lists the identifier behind every link.
+8. **Why is BFS not enough?** It is correct, and faster to write, but costs O(n + m) per query; the benchmark shows the
+   gap for interleaved queries and for the one-shot case.
+9. **Trace:** documents A{p}, B{p, q}, C{q}, D{} → unions (A,B), (B,C): families {A, B, C} and {D}; 2 merges.

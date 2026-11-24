@@ -220,6 +220,39 @@
           </div>
           <p id="bloom-error" class="error" role="alert" hidden></p>
         </section>
+
+        <!-- A3: document families (disjoint-set forest) -->
+        <section id="link-panel" class="panel wide" aria-labelledby="link-title">
+          <div class="panel-head">
+            <p class="tag">A3 · Disjoint-set forest · Unit 2 · near-constant amortised time</p>
+            <h3 id="link-title">Which documents belong together?</h3>
+          </div>
+          <form id="link-form" class="stack" novalidate>
+            <div class="field">
+              <label for="link-docs">Documents <span class="hint">(one per line: <code>id: identifier, identifier</code>;
+                documents sharing an identifier exactly are linked, transitively)</span></label>
+              <textarea id="link-docs" rows="7" spellcheck="false" required></textarea>
+            </div>
+            <div class="actions">
+              <button type="submit" class="primary">Group the documents</button>
+              <button type="button" class="ghost" id="link-example">Load synthetic example</button>
+            </div>
+          </form>
+          <div id="link-result" class="result" aria-live="polite" hidden>
+            <dl class="facts" id="link-facts"></dl>
+            <div id="link-broad" class="warning" hidden></div>
+            <div class="table-scroll">
+              <table class="verdicts">
+                <caption>Families, and the shared identifier that linked each pair of documents</caption>
+                <thead><tr><th scope="col">Family</th><th scope="col">Documents</th>
+                  <th scope="col">Linked by (shared identifier)</th></tr></thead>
+                <tbody id="link-rows"></tbody>
+              </table>
+            </div>
+            <p id="link-caveat" class="hint"></p>
+          </div>
+          <p id="link-error" class="error" role="alert" hidden></p>
+        </section>
       </div>
     </section>
   </main>

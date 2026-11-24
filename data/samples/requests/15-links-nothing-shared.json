@@ -1,0 +1,26 @@
+{
+  "name": "15-links-nothing-shared",
+  "endpoint": "/algo/document-links",
+  "expectedStatus": 200,
+  "description": "No identifier is shared (case differs, so no exact match): every document is its own family.",
+  "request": {
+    "documents": [
+      {
+        "id": "a",
+        "identifiers": [
+          "pol-1"
+        ]
+      },
+      {
+        "id": "b",
+        "identifiers": [
+          "POL-1"
+        ]
+      },
+      {
+        "id": "c",
+        "identifiers": []
+      }
+    ]
+  }
+}

@@ -559,3 +559,86 @@ function drawBits(result, selected) {
   caption.textContent = "Bit array: " + description + ".";
   canvas.setAttribute("aria-label", "Bloom filter bit array. " + description);
 }
+
+
+// ---------- A3: document families (disjoint-set forest) ----------
+
+const LINK_EXAMPLE = [
+  "policy-2026: POL-8841, PAN-AAAPL1234C",
+  "endorsement-1: POL-8841",
+  "renewal-notice: POL-8841, RENEWAL-2027-17",
+  "claim-letter: RENEWAL-2027-17",
+  "loan-sanction: LN-5520",
+  "emi-schedule: LN-5520",
+  "rent-agreement: TEN-77",
+  "gym-invoice: INV-1",
+].join("\n");
+
+const linkForm = document.getElementById("link-form");
+document.getElementById("link-example").addEventListener("click", () => {
+  document.getElementById("link-docs").value = LINK_EXAMPLE;
+});
+
+function parseLinkInput(text) {
+  return text.split("\n").map((line) => line.trim()).filter((line) => line.length > 0).map((line) => {
+    const colon = line.indexOf(":");
+    const id = colon < 0 ? line : line.slice(0, colon).trim();
+    const rest = colon < 0 ? "" : line.slice(colon + 1);
+    const identifiers = rest.split(",").map((s) => s.trim()).filter((s) => s.length > 0);
+    return { id, identifiers };
+  });
+}
+
+linkForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const errorNode = document.getElementById("link-error");
+  showError(errorNode, "");
+  const documents = parseLinkInput(document.getElementById("link-docs").value);
+  if (documents.length === 0) {
+    showError(errorNode, "Enter at least one document.");
+    return;
+  }
+  setBusy(linkForm, true);
+  try {
+    renderLinks(await postJson("/algo/document-links", { documents }));
+  } catch (error) {
+    document.getElementById("link-result").hidden = true;
+    showError(errorNode, error.message);
+  } finally {
+    setBusy(linkForm, false);
+  }
+});
+
+function renderLinks(result) {
+  const s = result.stats;
+  document.getElementById("link-facts").replaceChildren(
+    fact("Documents", String(s.documents)),
+    fact("Identifiers", String(s.identifiers)),
+    fact("Union calls", String(s.unionCalls)),
+    fact("Merges", String(s.merges)),
+    fact("Families", String(s.families)),
+    fact("Parent hops", String(s.parentHops)));
+  const broad = result.links.filter((l) => l.broad);
+  const warn = document.getElementById("link-broad");
+  warn.hidden = broad.length === 0;
+  warn.textContent = broad.length === 0 ? "" : "Broad identifier"
+    + (broad.length > 1 ? "s" : "") + ": " + broad.map((l) => l.identifier).join(", ")
+    + ". Shared by four or more documents, so it may have merged unrelated documents. Review these links.";
+  document.getElementById("link-rows").replaceChildren(...result.groups.map((g) => {
+    const reasons = result.links.filter((l) => l.group === g.number);
+    const cell = el("td", {});
+    if (reasons.length === 0) {
+      cell.append(el("span", { className: "hint", text: "shares no identifier" }));
+    } else {
+      reasons.forEach((l, i) => {
+        if (i > 0) cell.append(document.createElement("br"));
+        cell.append(el("code", { text: l.identifier }), document.createTextNode(" → " + l.documentIds.join(", ")
+          + (l.broad ? " (broad)" : "")));
+      });
+    }
+    return el("tr", {}, el("th", { text: String(g.number), attrs: { scope: "row" } }),
+      el("td", { text: g.documentIds.join(", ") }), cell);
+  }));
+  document.getElementById("link-caveat").textContent = result.caveats[0];
+  document.getElementById("link-result").hidden = false;
+}

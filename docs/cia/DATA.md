@@ -71,12 +71,20 @@ Annexure") matches no template.
 
 Details and limitations: [BENCHMARKS.md](BENCHMARKS.md).
 
+## 3b. Document-linking inputs (A3)
+
+Synthetic only: the UI example and `data/samples/requests/13-15-*.json` use invented document ids
+(`policy-2026`, `loan-sanction`, …) and invented identifiers (`POL-8841`, `LN-5520`, `INV-1`). The PAN-like value
+`PAN-AAAPL1234C` is a made-up string and not a real identifier. Benchmark graphs (`LinkingBenchmark`) are random graphs
+with `n` nodes and `n` edges drawn with a fixed seed (5).
+
 ## 4. Validation of inputs (`cia-demo`)
 
 | Endpoint | Limits | Rejected with 400 (problem+json) |
 |---|---|---|
 | `/algo/evidence-check` | source ≤ 100,000 code points and ≤ 400 clauses (non-blank lines); quotation 1–2,000 code points | missing fields, empty quotation, over-limit input, malformed JSON |
 | `/algo/quote-match` | text ≤ 100,000; quote 1–2,000 code points | as above |
+| `/algo/document-links` | 1–200 documents; unique ids of 1–100 characters; ≤ 20 identifiers per document, each 1–100 characters | empty list, duplicate or blank ids, empty or over-long identifiers, too many identifiers, malformed JSON |
 | `/algo/membership` | ≤ 5,000 members, 1–500 probes, each 1–200 characters; p in [0.0001, 0.5]; capacity 1–1,000,000 | as above |
 
 Error messages are our own validation texts; submitted text is never echoed back.
